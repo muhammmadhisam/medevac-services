@@ -1,0 +1,23 @@
+{
+  "name": "@medevac/repo-auth",
+  "version": "1.0.0",
+  "description": "",
+  "author": "",
+  "license": "ISC",
+  "keywords": [],
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsup",
+    "build:packages": "pnpm run build",
+    "prisma:generate": "prisma generate"
+  },
+  "dependencies": {
+    "@prisma/client": "6.4.1"
+  },
+  "devDependencies": {
+    "prisma": "*",
+    "tsup": "*",
+    "typescript": "*"
+  }
+}

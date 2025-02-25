@@ -1,0 +1,17 @@
+{
+  "name": "auth",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.13.8",
+    "@medevac/repo-auth": "workspace:*",
+    "hono": "^4.7.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.17",
+    "effect": "*",
+    "tsx": "^4.7.1"
+  }
+}
