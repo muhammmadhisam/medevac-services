@@ -5,11 +5,29 @@
   "author": "",
   "license": "ISC",
   "keywords": [],
-  "main": "index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./schema": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**"
+  ],
+  "source": "./src/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsup",
-    "build:packages": "pnpm run build",
+    "build:packages": "pnpm prisma:generate && pnpm  run build",
     "prisma:generate": "prisma generate"
   },
   "dependencies": {
@@ -18,6 +36,7 @@
   "devDependencies": {
     "prisma": "*",
     "tsup": "*",
-    "typescript": "*"
+    "typescript": "*",
+    "zod-prisma-types": "^3.2.4"
   }
 }

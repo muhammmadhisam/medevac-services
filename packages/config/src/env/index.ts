@@ -16,6 +16,7 @@ const ZEnv = z.object({
     .transform(v => Number.parseInt(v))
     .optional(),
   REDIS_URL: z.string().optional(),
+  SECRET_TOKEN: z.string(),
 })
 export type TEnv = z.infer<typeof ZEnv>
 export const GetEnv = () => ZEnv.parse(process.env)

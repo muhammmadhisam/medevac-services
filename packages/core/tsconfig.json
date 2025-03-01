@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "../typescript-config/base.json",
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "paths": {
+      "@/core/*": ["./src/*"]
+    },
+    "resolveJsonModule": true,
+    "outDir": "./dist"
+  }
+}

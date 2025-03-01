@@ -7,6 +7,6 @@ export default defineConfig({
   format: ["cjs"],
   minify: false, // ปิด minification
   sourcemap: false, // ปิดการสร้าง source map
-  splitting: false, // ปิดการแบ่งไฟล์
+  splitting: true, // ปิดการแบ่งไฟล์
   treeshake: true,
 })

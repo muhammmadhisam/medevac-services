@@ -10,6 +10,26 @@ generator client {
   binaryTargets = ["native"]
 }
 
+generator zod {
+  provider                         = "zod-prisma-types"
+  output                           = "../src/schema" // default is ./generated/zod
+  useMultipleFiles                 = false // default is false
+  writeBarrelFiles                 = false // default is true
+  createInputTypes                 = true // default is true
+  createModelTypes                 = true // default is true
+  addInputTypeValidation           = true // default is true
+  addIncludeType                   = true // default is true
+  addSelectType                    = true // default is true
+  validateWhereUniqueInput         = true // default is true
+  createOptionalDefaultValuesTypes = true // default is false
+  createRelationValuesTypes        = true // default is false
+  createPartialTypes               = true // default is false
+  useDefaultValidators             = true // default is true
+  coerceDate                       = true // default is true
+  writeNullishInModelTypes         = true // default is false
+  prismaClientPath                 = "@prisma/client" // default is client output path
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")

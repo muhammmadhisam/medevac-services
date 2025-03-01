@@ -3,7 +3,8 @@ import { defineConfig } from "tsup"
 export default defineConfig({
   clean: true,
   dts: true,
-  entry: ["./src/index.ts"],
+  entry: ["./src/**"],
+  external: ["@node-rs/argon2"],
   format: ["cjs", "esm"],
   minify: false, // ปิด minification
   sourcemap: false, // ปิดการสร้าง source map

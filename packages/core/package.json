@@ -1,5 +1,5 @@
 {
-  "name": "@medevac/configs",
+  "name": "@medevac/core",
   "version": "1.0.0",
   "description": "",
   "author": "",
@@ -24,9 +24,19 @@
     "build": "tsup",
     "build:packages": "pnpm run build"
   },
+  "dependencies": {
+    "argon2": "^0.41.1"
+  },
   "devDependencies": {
+    "@medevac/build-config": "workspace:*",
+    "@medevac/configs": "workspace:*",
+    "@medevac/repo-auth": "workspace:*",
+    "@node-rs/argon2": "^2.0.2",
+    "@scalar/hono-api-reference": "^0.5.177",
+    "effect": "*",
+    "hono": "^4.7.2",
+    "hono-openapi": "^0.4.5",
     "tsup": "*",
-    "typescript": "*",
-    "zod": "*"
+    "typescript": "*"
   }
 }
