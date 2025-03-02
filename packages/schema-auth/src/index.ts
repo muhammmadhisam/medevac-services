@@ -1,4 +1,4 @@
-import type { Prisma } from "@prisma/client"
+import type { Prisma } from "@medevac/repo-auth"
 import { z } from "zod"
 
 /////////////////////////////////////////

@@ -1,5 +1,5 @@
 {
-  "name": "@medevac/core",
+  "name": "@medevac/schema-auth",
   "version": "1.0.0",
   "description": "",
   "author": "",
@@ -7,7 +7,7 @@
   "keywords": [],
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
+      "types": "./dist/index.d.mts",
       "import": "./dist/index.mjs",
       "require": "./dist/index.js"
     }
@@ -24,19 +24,9 @@
     "build": "tsup",
     "build:packages": "pnpm run build"
   },
-  "dependencies": {
-    "@medevac/build-config": "workspace:*",
-    "@medevac/configs": "workspace:*",
-    "@medevac/repo-auth": "workspace:*",
-    "@medevac/schema-auth": "workspace:*"
-  },
   "devDependencies": {
-    "@node-rs/argon2": "^2.0.2",
-    "@scalar/hono-api-reference": "^0.5.177",
-    "argon2": "^0.41.1",
-    "effect": "*",
-    "hono": "^4.7.2",
-    "hono-openapi": "^0.4.5",
+    "@medevac/build-config": "workspace:*",
+    "@medevac/repo-auth": "workspace:*",
     "tsup": "*",
     "typescript": "*"
   }

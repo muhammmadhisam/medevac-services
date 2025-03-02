@@ -12,7 +12,7 @@ generator client {
 
 generator zod {
   provider                         = "zod-prisma-types"
-  output                           = "../src/schema" // default is ./generated/zod
+  output                           = "./../../schema-auth/src" // default is ./generated/zod
   useMultipleFiles                 = false // default is false
   writeBarrelFiles                 = false // default is true
   createInputTypes                 = true // default is true
@@ -27,7 +27,7 @@ generator zod {
   useDefaultValidators             = true // default is true
   coerceDate                       = true // default is true
   writeNullishInModelTypes         = true // default is false
-  prismaClientPath                 = "@prisma/client" // default is client output path
+  prismaClientPath                 = "@medevac/repo-auth" // default is client output path
 }
 
 datasource db {

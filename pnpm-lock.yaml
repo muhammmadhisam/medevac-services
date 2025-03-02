@@ -133,10 +133,6 @@ importers:
 
   packages/core:
     dependencies:
-      argon2:
-        specifier: ^0.41.1
-        version: 0.41.1
-    devDependencies:
       "@medevac/build-config":
         specifier: workspace:*
         version: link:../build-config
@@ -146,12 +142,19 @@ importers:
       "@medevac/repo-auth":
         specifier: workspace:*
         version: link:../repository-auth
+      "@medevac/schema-auth":
+        specifier: workspace:*
+        version: link:../schema-auth
+    devDependencies:
       "@node-rs/argon2":
         specifier: ^2.0.2
         version: 2.0.2
       "@scalar/hono-api-reference":
         specifier: ^0.5.177
         version: 0.5.177(@hyperjump/browser@1.2.0)(hono@4.7.2)(tailwindcss@4.0.9)(typescript@5.7.3)
+      argon2:
+        specifier: ^0.41.1
+        version: 0.41.1
       effect:
         specifier: "*"
         version: 3.13.2
@@ -196,6 +199,21 @@ importers:
       prisma:
         specifier: "*"
         version: 6.4.1(typescript@5.7.3)
+      tsup:
+        specifier: "*"
+        version: 8.3.6(jiti@2.4.2)(postcss@8.5.3)(tsx@4.19.3)(typescript@5.7.3)(yaml@2.7.0)
+      typescript:
+        specifier: "*"
+        version: 5.7.3
+
+  packages/schema-auth:
+    devDependencies:
+      "@medevac/build-config":
+        specifier: workspace:*
+        version: link:../build-config
+      "@medevac/repo-auth":
+        specifier: workspace:*
+        version: link:../repository-auth
       tsup:
         specifier: "*"
         version: 8.3.6(jiti@2.4.2)(postcss@8.5.3)(tsx@4.19.3)(typescript@5.7.3)(yaml@2.7.0)

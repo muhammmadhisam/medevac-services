@@ -1,4 +1,4 @@
-import { UsersOptionalDefaultsSchema } from "@medevac/repo-auth"
+import { UsersOptionalDefaultsSchema } from "@medevac/schema-auth"
 import { z } from "zod"
 
 import { UsersId } from "../private/users.js"
