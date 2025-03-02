@@ -1,5 +1,5 @@
 /* eslint-disable node/prefer-global/process */
-import { z } from "zod"
+import { z } from "zod";
 
 const ZEnv = z.object({
   DATABASE_URL: z.string(),
@@ -10,13 +10,13 @@ const ZEnv = z.object({
   NODE_ENV: z
     .enum(["development", "production", "test"])
     .default("development"),
-  PORT: z.string(),
+  PORT: z.string().transform(v => Number.parseInt(v)),
   REDIS_EXPIRE: z
     .string()
     .transform(v => Number.parseInt(v))
     .optional(),
   REDIS_URL: z.string().optional(),
   SECRET_TOKEN: z.string(),
-})
-export type TEnv = z.infer<typeof ZEnv>
-export const GetEnv = () => ZEnv.parse(process.env)
+});
+export type TEnv = z.infer<typeof ZEnv>;
+export const GetEnv = () => ZEnv.parse(process.env);

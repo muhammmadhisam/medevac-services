@@ -52,13 +52,25 @@ model Users {
   hospital_branch_id String?
   refresh_token      String?
 
-  create_date DateTime? @default(now())
-  update_date DateTime? @updatedAt
-  delete_date DateTime?
+  create_date       DateTime?          @default(now())
+  update_date       DateTime?          @updatedAt
+  delete_date       DateTime?
+  StoreRefreshToken StoreRefreshToken?
 
   @@index([username])
   @@index([id])
   @@index([id, username])
+}
+
+model StoreRefreshToken {
+  id            String   @id @default(uuid())
+  refresh_token String
+  user_id       String   @unique
+  user          Users    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  create_date   DateTime @default(now())
+
+  @@index([refresh_token])
+  @@index([id])
 }
 
 enum RoleUsers {

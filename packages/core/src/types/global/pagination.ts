@@ -1,13 +1,13 @@
-import { z } from "zod"
+import { z } from "zod";
 
 function transformToNumber(i: unknown) {
   return (default_value: number) => {
     if (typeof i === "string")
-      return Number.parseInt(i)
+      return Number.parseInt(i);
     if (typeof i === "number")
-      return i
-    return default_value
-  }
+      return i;
+    return default_value;
+  };
 }
 
 export const PaginationSchema = z
@@ -26,9 +26,9 @@ export const PaginationSchema = z
   .refine(
     () => {
       // Example refinement logic if needed
-      return true
+      return true;
     },
     { message: "Invalid pagination data" },
-  )
+  );
 
-export type TypePagination = z.infer<typeof PaginationSchema>
+export type TypePagination = z.infer<typeof PaginationSchema>;

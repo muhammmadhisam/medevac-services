@@ -8,8 +8,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsup",
-    "build:packages": "pnpm run build",
+    "build": "pnpm prisma:generate &&  tsup",
+    "build:packages": "pnpm prisma:generate && pnpm run build",
     "prisma:generate": "prisma generate"
   },
   "dependencies": {

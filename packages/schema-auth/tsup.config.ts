@@ -1,4 +1,4 @@
-import { defineConfig } from "tsup"
+import { defineConfig } from "tsup";
 
 export default defineConfig({
   clean: true,
@@ -9,4 +9,4 @@ export default defineConfig({
   sourcemap: false, // ปิดการสร้าง source map
   splitting: false, // ปิดการแบ่งไฟล์
   treeshake: false,
-})
+});

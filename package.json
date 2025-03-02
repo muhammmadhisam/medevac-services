@@ -1,6 +1,6 @@
 {
   "name": "medevac-application-api",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "private": true,
   "packageManager": "pnpm@9.0.0",
   "engines": {
@@ -10,6 +10,7 @@
     "build": "turbo run build",
     "build:packages": "turbo run build:packages",
     "dev": "turbo run dev",
+    "dev:auth": "turbo run dev --filter=auth",
     "lint": "eslint .",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types",

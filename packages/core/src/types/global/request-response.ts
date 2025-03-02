@@ -1,9 +1,9 @@
-import { createErrorFactoryResponseError } from "@/core/helpers/index.js"
-import { Data } from "effect"
-import { z } from "zod"
+import { createErrorFactoryResponseError } from "@/core/helpers/index.js";
+import { Data } from "effect";
+import { z } from "zod";
 
-export * from "./pagination.js"
-export * from "./param.js"
+export * from "./pagination.js";
+export * from "./param.js";
 export const MetaDataResponseSchema = z.object({
   cache_hit: z.boolean().optional(),
   code: z.string().optional(),
@@ -17,9 +17,9 @@ export const MetaDataResponseSchema = z.object({
   message: z.string().optional(),
   page: z.number().optional(),
   total: z.number().optional(),
-})
+});
 
-export type TypeMetaDataResponse = z.infer<typeof MetaDataResponseSchema>
+export type TypeMetaDataResponse = z.infer<typeof MetaDataResponseSchema>;
 
 export function SuccessResponseSchema<T extends z.ZodTypeAny>(data: T) {
   return z.object({
@@ -31,12 +31,12 @@ export function SuccessResponseSchema<T extends z.ZodTypeAny>(data: T) {
       data: true,
       message: true,
     }).optional(),
-  })
+  });
 }
 
 export type TypeSuccessResponse = z.infer<
   ReturnType<typeof SuccessResponseSchema>
->
+>;
 
 export const FailResponseSchema = z.object({
   error: z.unknown().nullable(),
@@ -48,18 +48,18 @@ export const FailResponseSchema = z.object({
     message: true,
   }).optional(),
   status: z.number().default(500),
-})
+});
 
-export type TypeFailResponse = z.infer<typeof FailResponseSchema>
+export type TypeFailResponse = z.infer<typeof FailResponseSchema>;
 
 export class TypeFailResponseError extends Data.TaggedError(
   "FailResponseError",
 )<TypeFailResponse> {
-  static new = createErrorFactoryResponseError(this)
+  static new = createErrorFactoryResponseError(this);
 }
 
-export type TypeResponse = TypeSuccessResponse | TypeFailResponse
+export type TypeResponse = TypeSuccessResponse | TypeFailResponse;
 export type TypeGetAllData<T> = {
-  total: number
-  data: T[]
-}
+  total: number;
+  data: T[];
+};

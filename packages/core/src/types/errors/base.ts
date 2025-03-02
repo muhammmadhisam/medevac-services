@@ -1,4 +1,4 @@
 export type ErrorMsg = {
-  error?: unknown
-  message?: string
-}
+  error?: unknown;
+  message?: string;
+};

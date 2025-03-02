@@ -1,5 +1,5 @@
-import type { TypeApplication } from "./create-application.js"
-import { cors } from "hono/cors"
+import type { TypeApplication } from "./create-application.js";
+import { cors } from "hono/cors";
 
 export function setUpCors(app: TypeApplication) {
   app.use(
@@ -8,5 +8,5 @@ export function setUpCors(app: TypeApplication) {
       allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
       origin: "*",
     }),
-  )
+  );
 }

@@ -1,4 +1,4 @@
-import type { Options } from "tsup"
+import type { Options } from "tsup";
 
 export default {
   clean: true,
@@ -9,4 +9,4 @@ export default {
   sourcemap: false, // ปิดการสร้าง source map
   splitting: false, // ปิดการแบ่งไฟล์
   treeshake: true,
-} satisfies Options
+} satisfies Options;

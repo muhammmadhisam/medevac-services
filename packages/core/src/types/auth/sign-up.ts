@@ -1,4 +1,4 @@
-import { z } from "zod"
+import { z } from "zod";
 
 export const SignUpSchema = z.object({
   first_name: z.string(),
@@ -6,5 +6,5 @@ export const SignUpSchema = z.object({
   password: z.string(),
   role: z.string(),
   username: z.string(),
-})
-export type TypeSignUp = z.infer<typeof SignUpSchema>
+});
+export type TypeSignUp = z.infer<typeof SignUpSchema>;

@@ -1,7 +1,7 @@
-import { Brand } from "effect"
+import { Brand } from "effect";
 
-export type UsersId = number & Brand.Brand<"UsersId">
+export type UsersId = string & Brand.Brand<"UsersId">;
 export const UsersId = Brand.refined<UsersId>(
-  n => typeof n === "number",
-  n => Brand.error(`Expected ${n} to be a number`),
-)
+  n => typeof n === "string",
+  n => Brand.error(`Expected ${n} to be a string UsersId`),
+);

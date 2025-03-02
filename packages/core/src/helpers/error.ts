@@ -2,13 +2,14 @@ import type {
   ErrorMsg,
   TypeFailResponse,
   TypeMetaDataResponse,
-} from "@/core/types"
+} from "@/core/types";
+import type { ResponseCode } from "../types/global/application-statust-cose";
 
 export function createErrorFactory<T>(Self: new (payload: ErrorMsg) => T) {
   return (message?: string) => (error?: unknown) => {
-    console.log({ error, message })
-    return new Self({ error, message })
-  }
+    console.log({ error, message });
+    return new Self({ error, message });
+  };
 }
 
 export function createErrorFactoryResponseError<T>(
@@ -17,10 +18,10 @@ export function createErrorFactoryResponseError<T>(
   return (message: string) =>
     (
       error?: unknown | null,
-      status?: number,
+      status?: ResponseCode,
       meta_data?: TypeMetaDataResponse,
     ) => {
-      console.log({ error, message })
-      return new Self({ error, message, meta_data, status: status || 500 })
-    }
+      console.log({ error, message });
+      return new Self({ error, message, meta_data, status: status || 500 });
+    };
 }

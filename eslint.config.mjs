@@ -1,5 +1,5 @@
-import antfu from "@antfu/eslint-config"
-import perfectionist from "eslint-plugin-perfectionist"
+import antfu from "@antfu/eslint-config";
+import perfectionist from "eslint-plugin-perfectionist";
 
 export default antfu({
   ignores: ["./.husky", "./packages/repository-auth/src/schema/index.ts"],
@@ -7,9 +7,11 @@ export default antfu({
   rules: {
     "@typescript-eslint/no-redeclare": "off",
     "@typescript-eslint/no-use-before-define": "off",
+    "jsonc/sort-keys": "off",
     "no-console": "off",
     "no-redeclare": "off",
     "no-use-before-define": "off",
+    "node/prefer-global/process": "warn",
     "perfectionist/sort-objects": "error",
     "ts/consistent-type-definitions": "off",
     "unicorn/throw-new-error": "off",
@@ -17,6 +19,7 @@ export default antfu({
   stylistic: {
     indent: 2,
     quotes: "double",
+    semi: true,
   },
   typescript: true,
-})
+});

@@ -74,22 +74,46 @@ importers:
       "@hono/node-server":
         specifier: ^1.13.8
         version: 1.13.8(hono@4.7.2)
+      "@medevac/configs":
+        specifier: workspace:*
+        version: link:../../packages/config
+      "@medevac/core":
+        specifier: workspace:*
+        version: link:../../packages/core
       "@medevac/repo-auth":
         specifier: workspace:*
         version: link:../../packages/repository-auth
+      "@medevac/schema-auth":
+        specifier: workspace:*
+        version: link:../../packages/schema-auth
       hono:
         specifier: ^4.7.2
         version: 4.7.2
     devDependencies:
+      "@scalar/hono-api-reference":
+        specifier: ^0.5.177
+        version: 0.5.177(@hyperjump/browser@1.2.0)(hono@4.7.2)(tailwindcss@4.0.9)(typescript@5.7.3)
       "@types/node":
         specifier: ^20.11.17
         version: 20.17.19
+      dotenv:
+        specifier: ^16.4.7
+        version: 16.4.7
       effect:
         specifier: "*"
         version: 3.13.2
+      hono-openapi:
+        specifier: ^0.4.5
+        version: 0.4.5(@hono/zod-validator@0.4.3(hono@4.7.2)(zod@3.24.2))(effect@3.13.2)(hono@4.7.2)(zod-openapi@4.2.3(zod@3.24.2))(zod@3.24.2)
+      tsup:
+        specifier: "*"
+        version: 8.3.6(jiti@2.4.2)(postcss@8.5.3)(tsx@4.19.3)(typescript@5.7.3)(yaml@2.7.0)
       tsx:
         specifier: ^4.7.1
         version: 4.19.3
+      zod-openapi:
+        specifier: ^4.2.3
+        version: 4.2.3(zod@3.24.2)
 
   apps/template:
     dependencies:
@@ -163,7 +187,7 @@ importers:
         version: 4.7.2
       hono-openapi:
         specifier: ^0.4.5
-        version: 0.4.5(@hono/zod-validator@0.4.3(hono@4.7.2)(zod@3.24.2))(effect@3.13.2)(hono@4.7.2)(zod@3.24.2)
+        version: 0.4.5(@hono/zod-validator@0.4.3(hono@4.7.2)(zod@3.24.2))(effect@3.13.2)(hono@4.7.2)(zod-openapi@4.2.3(zod@3.24.2))(zod@3.24.2)
       tsup:
         specifier: "*"
         version: 8.3.6(jiti@2.4.2)(postcss@8.5.3)(tsx@4.19.3)(typescript@5.7.3)(yaml@2.7.0)
@@ -3062,6 +3086,13 @@ packages:
         integrity: sha512-QM8q3zDe58hqUqjraQOmzZ1LIH9SWQJTlEKCH4kJ2oQvLZk7RbQXvtDM2XEq3fwkV9CCvvH4LA0AV+ogFsBM2Q==,
       }
     engines: { node: ">=8" }
+
+  dotenv@16.4.7:
+    resolution:
+      {
+        integrity: sha512-47qPchRCykZC03FhkYAhrvwU4xDBFIj1QPqaarj6mdM/hgUzfPHcpkHJOn3mJAufFeeAxAzeGsr5X0M4k6fLZQ==,
+      }
+    engines: { node: ">=12" }
 
   eastasianwidth@0.2.0:
     resolution:
@@ -6703,6 +6734,15 @@ packages:
         integrity: sha512-8F0OI5dpWIA5IGG5NHUg9staDwz/ZPxZtvGVf01j7vHqSyZ0raHY+78atOVxRqb73AotX22uV1pXt3gYSstGag==,
       }
 
+  zod-openapi@4.2.3:
+    resolution:
+      {
+        integrity: sha512-i0SqpcdXfsvVWTIY1Jl3Tk421s9fBIkpXvaA86zDas+8FjfZjm+GX6ot6SPB2SyuHwUNTN02gE5uIVlYXlyrDQ==,
+      }
+    engines: { node: ">=18" }
+    peerDependencies:
+      zod: ^3.21.4
+
   zod-prisma-types@3.2.4:
     resolution:
       {
@@ -8587,6 +8627,8 @@ snapshots:
     dependencies:
       is-obj: 2.0.0
 
+  dotenv@16.4.7: {}
+
   eastasianwidth@0.2.0: {}
 
   editor@1.0.0: {}
@@ -9339,7 +9381,7 @@ snapshots:
     dependencies:
       parse-passwd: 1.0.0
 
-  hono-openapi@0.4.5(@hono/zod-validator@0.4.3(hono@4.7.2)(zod@3.24.2))(effect@3.13.2)(hono@4.7.2)(zod@3.24.2):
+  hono-openapi@0.4.5(@hono/zod-validator@0.4.3(hono@4.7.2)(zod@3.24.2))(effect@3.13.2)(hono@4.7.2)(zod-openapi@4.2.3(zod@3.24.2))(zod@3.24.2):
     dependencies:
       json-schema-walker: 2.0.0
     optionalDependencies:
@@ -9347,6 +9389,7 @@ snapshots:
       effect: 3.13.2
       hono: 4.7.2
       zod: 3.24.2
+      zod-openapi: 4.2.3(zod@3.24.2)
 
   hono@4.7.2: {}
 
@@ -10969,6 +11012,10 @@ snapshots:
   yocto-queue@1.1.1: {}
 
   zhead@2.2.4: {}
+
+  zod-openapi@4.2.3(zod@3.24.2):
+    dependencies:
+      zod: 3.24.2
 
   zod-prisma-types@3.2.4(@prisma/client@6.4.1(prisma@6.4.1(typescript@5.7.3))(typescript@5.7.3))(prisma@6.4.1(typescript@5.7.3)):
     dependencies:
