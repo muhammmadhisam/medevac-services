@@ -32,6 +32,8 @@ jobs:
                   context: .
                   file: ./Dockerfile
                   push: true
+                  build-args: |
+                        APP=auth
                   tags: |
                       ${{ secrets.DOCKER_USERNAME }}/medevac-auth-api:latest
                       ${{ secrets.DOCKER_USERNAME }}/medevac-auth-api:${{ env.VERSION }}
