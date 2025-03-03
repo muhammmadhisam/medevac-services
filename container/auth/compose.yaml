@@ -3,10 +3,8 @@ services:
   auth:
     image: "devpala/medevac-auth:latest"
     build:
-      context: ../../
-      dockerfile: Dockerfile
-      args:
-        - APP=auth
+      context: ./../../
+      dockerfile: ./container/auth/Dockerfile
   database:
     container_name: medevac-auth-database
     image: postgres:16-alpine

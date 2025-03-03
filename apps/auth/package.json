@@ -7,7 +7,7 @@
     "build": "tsup"
   },
   "dependencies": {
-    "@hono/node-server": "^1.13.8",
+    "@hono/node-server": "*",
     "@medevac/configs": "workspace:*",
     "@medevac/core": "workspace:*",
     "@medevac/repo-auth": "workspace:*",

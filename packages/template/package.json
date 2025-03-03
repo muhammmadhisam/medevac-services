@@ -25,7 +25,6 @@
     "build:packages": "pnpm run build"
   },
   "devDependencies": {
-    "@medevac/build-config": "workspace:*",
     "tsup": "*",
     "typescript": "*"
   }

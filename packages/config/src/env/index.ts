@@ -1,4 +1,3 @@
-/* eslint-disable node/prefer-global/process */
 import { z } from "zod";
 
 const ZEnv = z.object({

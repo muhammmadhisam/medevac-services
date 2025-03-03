@@ -35,7 +35,6 @@
     "build:packages": "pnpm run build"
   },
   "dependencies": {
-    "@medevac/build-config": "workspace:*",
     "@medevac/configs": "workspace:*",
     "@medevac/repo-auth": "workspace:*",
     "@medevac/schema-auth": "workspace:*"
