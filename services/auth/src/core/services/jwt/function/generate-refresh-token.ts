@@ -18,19 +18,19 @@ export default (data: TypeRefreshTokenObject) =>
         try: () => sign(data, GetEnv().SECRET_TOKEN),
       }),
     ),
-    Effect.map((jwt) => RefreshToken(jwt)),
-    Effect.flatMap((refresh_token) =>
+    Effect.map(jwt => RefreshToken(jwt)),
+    Effect.flatMap(refresh_token =>
       tapCreateItemStoreRefreshToken(data.user_id, refresh_token),
     ),
     Effect.andThen(({ refresh_token }) => RefreshToken(refresh_token)),
     Effect.catchTags({
-      CreateStoreRefreshTokenError: (e) =>
+      CreateStoreRefreshTokenError: e =>
         Effect.fail(TypeFailResponseError.new(e.message)(e)),
-      GenRefreshTokenError: (e) =>
+      GenRefreshTokenError: e =>
         Effect.fail(TypeFailResponseError.new(e.message)(e)),
-      GetOneStoreRefreshTokenError: (e) =>
+      GetOneStoreRefreshTokenError: e =>
         Effect.fail(TypeFailResponseError.new(e.message)(e)),
-      RemoveStoreRefreshTokenError: (e) =>
+      RemoveStoreRefreshTokenError: e =>
         Effect.fail(TypeFailResponseError.new(e.message)(e)),
     }),
   );

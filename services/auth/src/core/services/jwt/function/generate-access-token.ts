@@ -15,9 +15,9 @@ export default (data: TypeJwtObject) =>
         try: () => sign(data, GetEnv().SECRET_TOKEN),
       }),
     ),
-    Effect.map((jwt) => AccessToken(jwt)),
+    Effect.map(jwt => AccessToken(jwt)),
     Effect.catchTags({
-      GenAccessTokenError: (e) =>
+      GenAccessTokenError: e =>
         Effect.fail(TypeFailResponseError.new(e.message)(e)),
     }),
   );

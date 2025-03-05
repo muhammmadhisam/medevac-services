@@ -61,12 +61,12 @@ export default (app: TypeApplication) =>
     const data = c.req.valid("json");
     const q = c.req.valid("param");
     const program = MissionServiceContext.pipe(
-      Effect.andThen((service) => service.update(MissionId(q.id), data)),
-      Effect.andThen((data) =>
+      Effect.andThen(service => service.update(MissionId(q.id), data)),
+      Effect.andThen(data =>
         ResponseSchema.parse({ data, message: "updated" }),
       ),
-      Effect.andThen((data) => c.json(data, 200)),
-      Effect.catchAll((error) =>
+      Effect.andThen(data => c.json(data, 200)),
+      Effect.catchAll(error =>
         Effect.succeed(c.json(error, { status: error.status as 500 })),
       ),
     );

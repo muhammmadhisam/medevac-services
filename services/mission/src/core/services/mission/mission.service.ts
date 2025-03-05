@@ -19,7 +19,7 @@ function init({ MissionRepo }: { MissionRepo: TypeMissionRepository }) {
     ): Effect.Effect<TypeReturnItem, TypeFailResponse> {
       return MissionRepo.create(data).pipe(
         Effect.catchTags({
-          CreateMissionError: (error) =>
+          CreateMissionError: error =>
             Effect.fail(
               TypeFailResponseError.new("เพิ่มข้อมุลภารกิจล้มเหลว")(error),
             ),
@@ -33,21 +33,19 @@ function init({ MissionRepo }: { MissionRepo: TypeMissionRepository }) {
         Effect.bind("data", () =>
           MissionRepo.getAll(param).pipe(
             Effect.catchTags({
-              GetAllMissionError: (error) =>
+              GetAllMissionError: error =>
                 Effect.fail(
                   TypeFailResponseError.new("ขอข้อมุล ภารกิจ ล้มเหลว")(error),
                 ),
             }),
-          ),
-        ),
+          )),
         Effect.bind("total", () =>
           MissionRepo.count(param.where).pipe(
             Effect.catchTags({
-              CountMissionError: (error) =>
+              CountMissionError: error =>
                 Effect.fail(TypeFailResponseError.new("get data fail")(error)),
             }),
-          ),
-        ),
+          )),
       );
     },
     getOne(
@@ -55,9 +53,9 @@ function init({ MissionRepo }: { MissionRepo: TypeMissionRepository }) {
     ): Effect.Effect<TypeReturnItem, TypeFailResponse> {
       return MissionRepo.getOne(param).pipe(
         Effect.catchTags({
-          GetOneMissionError: (error) =>
+          GetOneMissionError: error =>
             Effect.fail(TypeFailResponseError.new("get data fail")(error)),
-          NoSuchElementException: (error) =>
+          NoSuchElementException: error =>
             Effect.fail(
               TypeFailResponseError.new("ไม่พบข้อมุล ภารกิจ")(error, 404),
             ),
@@ -67,9 +65,9 @@ function init({ MissionRepo }: { MissionRepo: TypeMissionRepository }) {
     getOneById(id: MissionId): Effect.Effect<TypeReturnItem, TypeFailResponse> {
       return MissionRepo.getOne({ id }).pipe(
         Effect.catchTags({
-          GetOneMissionError: (error) =>
+          GetOneMissionError: error =>
             Effect.fail(TypeFailResponseError.new("get data fail")(error)),
-          NoSuchElementException: (error) =>
+          NoSuchElementException: error =>
             Effect.fail(
               TypeFailResponseError.new("ไม่พบข้อมุล ภารกิจ")(error, 404),
             ),
@@ -81,7 +79,7 @@ function init({ MissionRepo }: { MissionRepo: TypeMissionRepository }) {
         Effect.tap(() => this.getOneById(id)),
         Effect.flatMap(() => MissionRepo.remove(id)),
         Effect.catchTags({
-          RemoveMissionError: (error) =>
+          RemoveMissionError: error =>
             Effect.fail(
               TypeFailResponseError.new("ลบข้อมุล ภารกิจ ล้มเหลว")(error),
             ),
@@ -96,7 +94,7 @@ function init({ MissionRepo }: { MissionRepo: TypeMissionRepository }) {
         Effect.tap(() => this.getOneById(id)),
         Effect.flatMap(() => MissionRepo.update(id, data)),
         Effect.catchTags({
-          UpdateMissionError: (error) =>
+          UpdateMissionError: error =>
             Effect.fail(
               TypeFailResponseError.new("แก้ไขข้อมุล ภารกิจ ล้มเหลว")(error),
             ),

@@ -31,7 +31,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ./services/auth/
-          file: ./services/auth/Dockerfile
+          file: ./Dockerfile
           push: true
           build-args: |
             APP=auth
@@ -44,7 +44,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ./services/auth/
-          file: ./services/auth/Dockerfile.migration
+          file: ./Dockerfile.migration
           push: true
           build-args: |
             APP=auth
@@ -56,27 +56,30 @@ jobs:
       - name: Build and push Medevac Mission Api
         uses: docker/build-push-action@v5
         with:
-            context: ./services/mission/
-            file: ./services/mission/Dockerfile
-            push: true
-            build-args: |
-              APP=mission
-            tags: |
-              ${{ secrets.DOCKER_USERNAME }}/medevac-mission-api:latest
-              ${{ secrets.DOCKER_USERNAME }}/medevac-mission-api:${{ env.VERSION_MISSION_SERVICE }}
-            cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/medevac-mission-api:buildcache
-            cache-to: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/medevac-mission-api:buildcache,mode=max
+          context: ./services/mission/
+          file: ./Dockerfile
+          push: true
+          build-args: |
+            APP=mission
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/medevac-mission-api:latest
+            ${{ secrets.DOCKER_USERNAME }}/medevac-mission-api:${{ env.VERSION_MISSION_SERVICE }}
+          cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/medevac-mission-api:buildcache
+          cache-to: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/medevac-mission-api:buildcache,mode=max
       - name: Build and push Medevac Mission Migrate Database
         uses: docker/build-push-action@v5
         with:
-              context: ./services/mission/
-              file: ./services/mission/Dockerfile.migration
-              push: true
-              build-args: |
-                APP=mission
-              tags: |
-                ${{ secrets.DOCKER_USERNAME }}/medevac-mission-migration:latest
-                ${{ secrets.DOCKER_USERNAME }}/medevac-mission-migration:${{ env.VERSION_MISSION_SERVICE }}
-              cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/medevac-mission-migration:buildcache
-              cache-to: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/medevac-mission-migration:buildcache,mode=max
-      
+          context: ./services/mission/
+          file: ./Dockerfile.migration
+          push: true
+          build-args: |
+            APP=mission
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/medevac-mission-migration:latest
+            ${{ secrets.DOCKER_USERNAME }}/medevac-mission-migration:${{ env.VERSION_MISSION_SERVICE }}
+          cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/medevac-mission-migration:buildcache
+          cache-to: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/medevac-mission-migration:buildcache,mode=max
+      # - name: Build and Push Docker Images
+      #   run: |
+      #           docker-compose -f docker-compose.build.yml build
+      #           docker-compose -f docker-compose.build.yml push
