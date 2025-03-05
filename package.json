@@ -1,0 +1,27 @@
+{
+  "name": "madivac-service",
+  "version": "1.0.1",
+  "scripts": {
+    "prepare": "husky",
+    "cz": "lint-staged && cz",
+    "commit": "lint-staged && cz",
+    "check-changed-services": "node scripts/check-changed-services.js"
+  },
+  "workspaces": [
+    "./services/*"
+  ],
+  "devDependencies": {
+    "@antfu/eslint-config": "^4.4.0",
+    "@commitlint/cli": "^19.7.1",
+    "commitizen": "^4.3.1",
+    "commitlint-config-gitmoji": "^2.3.1",
+    "cz-customizable": "^7.4.0",
+    "eslint": "^9.21.0",
+    "eslint-plugin-perfectionist": "^4.9.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.4.3"
+  },
+  "dependencies": {
+    "prettier": "^3.5.3"
+  }
+}

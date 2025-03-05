@@ -1,0 +1,31 @@
+version: "3.8"
+services:
+  mission:
+    image: "devpala/medevac-mission:latest"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - ${PORT}:3000
+    environment:
+      - DATABASE_URL=postgresql://medevac-mission-user:medevac-mission-password@database:5432/medevac-mission-database?schema=public
+      - SECRET_TOKEN=${SECRET_TOKEN}
+      - PORT=${PORT}
+    networks:
+      - medevac-networks
+  database:
+    container_name: medevac-auth-database
+    image: postgres:16-alpine
+    ports:
+      - 5433:5432
+    volumes:
+      - ./.database:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=medevac-mission-password
+      - POSTGRES_USER=medevac-mission-user
+      - POSTGRES_DB=medevac-mission-database
+    networks:
+      - medevac-networks
+networks:
+  medevac-networks:
+    external: true

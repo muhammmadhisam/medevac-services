@@ -1,0 +1,86 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider      = "prisma-client-js"
+  engineType    = "library"
+  binaryTargets = ["native"]
+}
+
+generator zod {
+  provider                         = "zod-prisma-types"
+  output                           = "./../lib/schema" // default is ./generated/zod
+  useMultipleFiles                 = false // default is false
+  writeBarrelFiles                 = false // default is true
+  createInputTypes                 = true // default is true
+  createModelTypes                 = true // default is true
+  addInputTypeValidation           = true // default is true
+  addIncludeType                   = true // default is true
+  addSelectType                    = true // default is true
+  validateWhereUniqueInput         = true // default is true
+  createOptionalDefaultValuesTypes = true // default is false
+  createRelationValuesTypes        = true // default is false
+  createPartialTypes               = true // default is false
+  useDefaultValidators             = true // default is true
+  coerceDate                       = true // default is true
+  writeNullishInModelTypes         = true // default is false
+  prismaClientPath                 = "@prisma/client" // default is client output path
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id                 String     @id @default(uuid())
+  username           String     @unique()
+  password           String
+  first_name         String
+  last_name          String
+  status             StatusUser @default(Pending)
+  role               RoleUsers  @default(User)
+  email              String?
+  address            String?
+  phone_number       String?
+  career             String?
+  id_card            String?
+  image              String?
+  hospital_branch_id String?
+  refresh_token      String?
+
+  create_date       DateTime?          @default(now())
+  update_date       DateTime?          @updatedAt
+  delete_date       DateTime?
+  StoreRefreshToken StoreRefreshToken?
+
+  @@index([username])
+  @@index([id])
+  @@index([id, username])
+}
+
+model StoreRefreshToken {
+  id            String   @id @default(uuid())
+  refresh_token String
+  user_id       String   @unique
+  user          Users    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  create_date   DateTime @default(now())
+
+  @@index([refresh_token])
+  @@index([id])
+}
+
+enum RoleUsers {
+  RootAdmin
+  Admin
+  User
+}
+
+enum StatusUser {
+  Pending
+  Activate
+  Block
+}

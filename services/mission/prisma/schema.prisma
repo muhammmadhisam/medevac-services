@@ -1,0 +1,69 @@
+generator client {
+  provider      = "prisma-client-js"
+  engineType    = "library"
+  binaryTargets = ["native"]
+}
+
+generator zod {
+  provider                         = "zod-prisma-types"
+  output                           = "../lib/schema" // default is ./generated/zod
+  useMultipleFiles                 = false // default is false
+  writeBarrelFiles                 = false // default is true
+  createInputTypes                 = true // default is true
+  createModelTypes                 = true // default is true
+  addInputTypeValidation           = true // default is true
+  addIncludeType                   = true // default is true
+  addSelectType                    = true // default is true
+  validateWhereUniqueInput         = true // default is true
+  createOptionalDefaultValuesTypes = true // default is false
+  createRelationValuesTypes        = true // default is false
+  createPartialTypes               = true // default is false
+  useDefaultValidators             = true // default is true
+  coerceDate                       = true // default is true
+  writeNullishInModelTypes         = true // default is false
+  prismaClientPath                 = "@prisma/client" // default is client output path
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Mission {
+  id          String        @id @default(uuid())
+  status      MissionStatus @default(Pending)
+  type        MissionType
+  title       String        @unique
+  case_number String?
+  description String?
+  end_date    DateTime?
+  address     String
+  image       String
+  lat         String
+  long        String
+  utm         String
+  mgrs        String
+  create_date DateTime?     @default(now())
+  update_date DateTime?     @updatedAt
+  delete_date DateTime?
+}
+
+enum MissionStatus {
+  Pending
+  Progress
+  Completed
+  Close
+  Cancel
+}
+
+enum MissionType {
+  SAR
+  MarineSAR
+  HlcMarinSAR
+  MERT
+  MarinEMS
+  HlcMS
+  EMS
+  MarineMERT
+  HlcMERT
+}
