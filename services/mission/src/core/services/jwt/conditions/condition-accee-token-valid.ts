@@ -6,13 +6,13 @@ import verifyToken from "../function/verify-token.js";
 
 export default (data: TypeToken) =>
   verifyToken(data).pipe(
-    Effect.flatMap(verify =>
+    Effect.flatMap((verify) =>
       Effect.if(verify, {
         onFalse: () =>
           Effect.fail(TypeFailResponseError.new("Unauthorized")(null, 401)),
         onTrue: () =>
           verifyAccessToken(data.access_token).pipe(
-            Effect.andThen(v => v.user),
+            Effect.andThen((v) => v.user),
           ),
       }),
     ),

@@ -50,7 +50,7 @@ export default (app: TypeApplication) =>
   app.post("/sign-in", Docs, RequestBody, async (c) => {
     const data = c.req.valid("json");
     const program = AuthServiceContext.pipe(
-      Effect.andThen(service => service.signIn(data)),
+      Effect.andThen((service) => service.signIn(data)),
       Effect.tap(({ access_token }) =>
         setCookie(c, "access_token", access_token, {
           httpOnly: true,
@@ -68,8 +68,8 @@ export default (app: TypeApplication) =>
       Effect.andThen(() =>
         ResponseSchema.parse({ data: "ok", message: "signin success" }),
       ),
-      Effect.andThen(data => c.json(data, 200)),
-      Effect.catchAll(error =>
+      Effect.andThen((data) => c.json(data, 200)),
+      Effect.catchAll((error) =>
         Effect.succeed(c.json(error, { status: error.status as 500 })),
       ),
     );

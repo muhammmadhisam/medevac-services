@@ -40,5 +40,6 @@ const Docs = describeRoute({
 });
 
 export default (app: TypeApplication) =>
-  app.get("/me", Docs, authorizationMiddleware, c =>
-    c.json(c.get("user"), { status: 200 }));
+  app.get("/me", Docs, authorizationMiddleware, (c) =>
+    c.json(c.get("user"), { status: 200 }),
+  );

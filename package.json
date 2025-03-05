@@ -23,5 +23,13 @@
   },
   "dependencies": {
     "prettier": "^3.5.3"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-customizable"
+    },
+    "cz-customizable": {
+      "config": "./cz.config.cjs"
+    }
   }
 }

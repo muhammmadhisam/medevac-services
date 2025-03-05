@@ -12,8 +12,8 @@ import { z } from "zod";
 export const StoreRefreshTokenItemSchema = StoreRefreshTokenSchema;
 export const StoreRefreshTokenCreateSchema = StoreRefreshTokenCreateInputSchema;
 export const StoreRefreshTokenUpdateSchema = StoreRefreshTokenUpdateInputSchema;
-export const StoreRefreshTokenGetOneParamSchema
-  = StoreRefreshTokenWhereInputSchema;
+export const StoreRefreshTokenGetOneParamSchema =
+  StoreRefreshTokenWhereInputSchema;
 export const StoreRefreshTokenGetAllParamSchema = z.object({
   orderBy: StoreRefreshTokenOrderByWithAggregationInputSchema,
   pagination: PaginationSchema,

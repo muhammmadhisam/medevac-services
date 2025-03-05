@@ -51,12 +51,12 @@ export default (app: TypeApplication) =>
   app.delete("/:id", Docs, RequestParam, async (c) => {
     const query = c.req.valid("param");
     const program = MissionServiceContext.pipe(
-      Effect.andThen(service => service.remove(MissionId(query.id))),
-      Effect.andThen(data =>
+      Effect.andThen((service) => service.remove(MissionId(query.id))),
+      Effect.andThen((data) =>
         ResponseSchema.parse({ data, message: "remove by id" }),
       ),
-      Effect.andThen(data => c.json(data, 200)),
-      Effect.catchAll(error =>
+      Effect.andThen((data) => c.json(data, 200)),
+      Effect.catchAll((error) =>
         Effect.succeed(c.json(error, { status: error.status as 500 })),
       ),
     );

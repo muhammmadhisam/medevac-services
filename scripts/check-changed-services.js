@@ -8,21 +8,19 @@ function checkChangedServices() {
       .split("\n");
 
     // คุณสามารถใส่ logic ของการตรวจสอบว่าไฟล์ไหนเกี่ยวข้องกับ service อะไร
-    const changedServices = changedFiles.filter(file =>
+    const changedServices = changedFiles.filter((file) =>
       file.includes("services/"),
     );
 
     if (changedServices.length > 0) {
       console.log("มีการเปลี่ยนแปลงใน services ต่อไปนี้:");
-      changedServices.forEach(service => console.log(service));
+      changedServices.forEach((service) => console.log(service));
       // หากมีการเปลี่ยนแปลงใน service ให้อัพเดตเวอร์ชั่นที่จำเป็น
       execSync("npm version patch"); // หรือใช้คำสั่งที่เหมาะสมกับเครื่องมือของคุณ
-    }
-    else {
+    } else {
       console.log("ไม่มีการเปลี่ยนแปลงใน services");
     }
-  }
-  catch (error) {
+  } catch (error) {
     console.error("Error checking changed services:", error);
     process.exit(1); // หยุดการ commit หากเกิดข้อผิดพลาด
   }

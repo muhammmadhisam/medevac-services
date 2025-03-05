@@ -41,12 +41,12 @@ export default (app: TypeApplication) =>
   app.post("/sign-up", Docs, RequestBody, async (c) => {
     const data = c.req.valid("json");
     const program = AuthServiceContext.pipe(
-      Effect.andThen(service => service.signUp(data)),
+      Effect.andThen((service) => service.signUp(data)),
       Effect.andThen(() =>
         ResponseSchema.parse({ data: "ok", message: "signup success" }),
       ),
-      Effect.andThen(data => c.json(data, 200)),
-      Effect.catchAll(error =>
+      Effect.andThen((data) => c.json(data, 200)),
+      Effect.catchAll((error) =>
         Effect.succeed(c.json(error, { status: error.status as 500 })),
       ),
     );
