@@ -28,7 +28,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./service/auth/Dockerfile
+          file: ./services/auth/Dockerfile
           push: true
           build-args: |
             APP=auth
@@ -41,7 +41,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./service/auth/Dockerfile.migration
+          file: ./services/auth/Dockerfile.migration
           push: true
           build-args: |
             APP=auth
