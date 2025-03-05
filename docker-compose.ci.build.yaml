@@ -1,0 +1,12 @@
+version: "3.8"
+services:
+  auth:
+    image: "devpala/medevac-auth:${VERSION_AUTH_SERVICE}"
+    build:
+      context: ./services/auth/
+      dockerfile: ./Dockerfile
+  mission:
+    image: "devpala/medevac-auth:${VERSION_MISSION_SERVICE}"
+    build:
+      context: ./services/mission/
+      dockerfile: ./Dockerfile

@@ -9,10 +9,10 @@ const ZEnv = z.object({
   NODE_ENV: z
     .enum(["development", "production", "test"])
     .default("development"),
-  PORT: z.string().transform((v) => Number.parseInt(v)),
+  PORT: z.string().transform(v => Number.parseInt(v)),
   REDIS_EXPIRE: z
     .string()
-    .transform((v) => Number.parseInt(v))
+    .transform(v => Number.parseInt(v))
     .optional(),
   REDIS_URL: z.string().optional(),
   SECRET_TOKEN: z.string(),

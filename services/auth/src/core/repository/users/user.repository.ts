@@ -48,9 +48,9 @@ function init(db: PrismaClient) {
     getOne(
       where: TypeGetOneParam,
     ): Effect.Effect<
-      TypeReturnItem,
+        TypeReturnItem,
       Errors.GetOneError | NoSuchElementException
-    > {
+      > {
       return Effect.tryPromise({
         catch: Errors.GetOneError.new("get  Users one error"),
         try: async () =>

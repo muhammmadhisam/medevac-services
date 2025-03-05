@@ -17,9 +17,9 @@ export default (data: RefreshToken) =>
         try: () => verify(data, GetEnv().SECRET_TOKEN),
       }),
     ),
-    Effect.map((paload) => RefreshTokenObjectSchema.parse(paload)),
+    Effect.map(paload => RefreshTokenObjectSchema.parse(paload)),
     Effect.catchTags({
-      VerifyAccessTokenError: (e) =>
+      VerifyAccessTokenError: e =>
         Effect.fail(TypeFailResponseError.new("Unauthorized")(e, 401)),
     }),
   );

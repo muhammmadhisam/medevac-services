@@ -15,23 +15,25 @@ export const authorizationMiddleware = createMiddleware<TypeAppBindings>(
     if (!access_token || !refresh_token)
       return c.json({ data: "unauthorization" }, { status: 401 });
     const program = JwtServiceContext.pipe(
-      Effect.flatMap((service) =>
+      Effect.flatMap(service =>
         service.verifyTokenAndReturnJwtObject({
           access_token: AccessToken(access_token),
           refresh_token: RefreshToken(refresh_token),
         }),
       ),
-      Effect.tap((data) => c.set("user", data)),
+      Effect.tap(data => c.set("user", data)),
       Effect.flatMap(() => Effect.succeed(true)),
-      Effect.catchAll((error) =>
+      Effect.catchAll(error =>
         Effect.succeed(c.json(error, { status: error.status as 500 })),
       ),
     );
     const result = await ServicesRuntime.runPromise(program);
     if (typeof result === "boolean") {
-      if (result === true) await next();
+      if (result === true)
+        await next();
       return c.json({ data: "unauthorization" }, { status: 401 });
-    } else {
+    }
+    else {
       return result;
     }
   },
