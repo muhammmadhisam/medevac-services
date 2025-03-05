@@ -2,10 +2,12 @@ version: "3.8"
 services:
   auth:
     image: "devpala/medevac-auth:latest"
+    depends_on:
+      - database-auth
     ports:
       - 3000:3000
     environment:
-      - DATABASE_URL=postgresql://medevac-auth-user:medevac-auth-password@database:5432/medevac-auth-database?schema=public
+      - DATABASE_URL=postgresql://medevac-auth-user:medevac-auth-password@database-auth:5432/medevac-auth-database?schema=public
       - SECRET_TOKEN=${SECRET_TOKEN}
       - PORT=3000
     networks:
@@ -13,7 +15,7 @@ services:
   database-auth:
     image: postgres:16-alpine
     ports:
-      - 5432:5432
+      - 5432
     volumes:
       - ./.database/auth:/var/lib/postgresql/data
     environment:
@@ -22,7 +24,7 @@ services:
       - POSTGRES_DB=medevac-auth-database
     networks:
       - medevac-networks
-  migrate-database:
+  migrate-database-auth:
     image: "devpala/medevac-auth-migration-database:latest"
     depends_on:
       - database-auth
@@ -32,23 +34,36 @@ services:
     networks:
       - medevac-networks
   mission:
-    image: "devpala/medevac-auth:latest"
+    image: "devpala/medevac-mission:latest"
+    depends_on:
+      - database-mission
     ports:
-      - 3001:3000
+      - 3001:3001
     environment:
-      - DATABASE_URL=postgresql://medevac-auth-user:medevac-auth-password@database:5432/medevac-mission-database?schema=public
+      - DATABASE_URL=postgresql://medevac-mission-user:medevac-mission-password@database-mission:5432/medevac-mission-database?schema=public
       - SECRET_TOKEN=${SECRET_TOKEN}
       - PORT=3001
+    networks:
+      - medevac-networks
   database-mission:
     image: postgres:16-alpine
     ports:
-      - 5432:5432
+      - 5432
     volumes:
       - ./.database/mission:/var/lib/postgresql/data
     environment:
-      - POSTGRES_PASSWORD=medevac-auth-password
-      - POSTGRES_USER=medevac-auth-user
-      - POSTGRES_DB=medevac-auth-database
+      - POSTGRES_PASSWORD=medevac-mission-password
+      - POSTGRES_USER=medevac-mission-user
+      - POSTGRES_DB=medevac-mission-database
+    networks:
+      - medevac-networks
+  migrate-database-mission:
+    image: "devpala/medevac-mission-migration-database:latest"
+    depends_on:
+      - database-mission
+    environment:
+      - DATABASE_URL=postgresql://medevac-mission-user:medevac-mission-password@database-mission:5432/medevac-mission-database?schema=public
+    command: bunx prisma migrate deploy
     networks:
       - medevac-networks
 networks:

@@ -5,7 +5,6 @@ RUN apk add --no-cache libc6-compat
 RUN apk update
 WORKDIR /app
 COPY . .
-RUN bun update
 RUN bun install --frozen-lockfile --ignore-scripts
 
 
@@ -26,5 +25,5 @@ WORKDIR /app
 COPY --from=installer ./app/node_modules/ ./node_modules
 COPY --from=build ./app/dist/ ./
 
-EXPOSE 3000
+EXPOSE 3001
 CMD [ "bun","./index.js" ]

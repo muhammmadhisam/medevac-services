@@ -19,7 +19,7 @@ module.exports = {
       */
   // override the messages, defaults are as follows
   messages: {
-    body: "Provide a LONGER description of the change (optional). Use \"|\" to break new line:\n",
+    body: 'Provide a LONGER description of the change (optional). Use "|" to break new line:\n',
     breaking: "List any BREAKING CHANGES (optional):\n",
     confirmCommit: "Are you sure you want to proceed with the commit above?",
     // used if allowCustomScopes is true
