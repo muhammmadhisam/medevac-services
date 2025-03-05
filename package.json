@@ -4,8 +4,7 @@
   "scripts": {
     "prepare": "husky",
     "cz": "lint-staged && cz",
-    "commit": "lint-staged && cz",
-    "check-changed-services": "node scripts/check-changed-services.js"
+    "commit": "lint-staged && cz"
   },
   "workspaces": [
     "./services/*"

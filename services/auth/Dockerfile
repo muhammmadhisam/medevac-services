@@ -12,7 +12,7 @@ RUN bun install --frozen-lockfile --ignore-scripts
 FROM installer as prisma
 WORKDIR /app
 RUN bun add -D zod-prisma-types
-RUN bun prisma:generate
+RUN bunx prisma generate
 
 FROM installer as build
 COPY --from=prisma ./app/lib ./node_modules/.prisma
