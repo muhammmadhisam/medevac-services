@@ -32,7 +32,6 @@ datasource db {
 model Mission {
   id          String        @id @default(uuid())
   status      MissionStatus @default(Pending)
-  type        MissionType
   title       String        @unique
   case_number String?
   description String?
@@ -56,14 +55,3 @@ enum MissionStatus {
   Cancel
 }
 
-enum MissionType {
-  SAR
-  MarineSAR
-  HlcMarinSAR
-  MERT
-  MarinEMS
-  HlcMS
-  EMS
-  MarineMERT
-  HlcMERT
-}

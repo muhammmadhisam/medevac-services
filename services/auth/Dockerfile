@@ -5,7 +5,6 @@ RUN apk add --no-cache libc6-compat
 RUN apk update
 WORKDIR /app
 COPY . .
-RUN bun update
 RUN bun install --frozen-lockfile --ignore-scripts
 
 

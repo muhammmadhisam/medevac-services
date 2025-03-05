@@ -1,25 +1,23 @@
 version: "3.8"
 services:
-  mission:
-    image: "devpala/medevac-mission:latest"
+  migrate-database:
+    image: "devpala/medevac-mission-migration-database:latest"
     build:
       context: .
-      dockerfile: Dockerfile
-    ports:
-      - ${PORT}:3000
+      dockerfile: Dockerfile.migration
+    depends_on:
+      - database-mission
     environment:
-      - DATABASE_URL=postgresql://medevac-mission-user:medevac-mission-password@database:5432/medevac-mission-database?schema=public
-      - SECRET_TOKEN=${SECRET_TOKEN}
-      - PORT=${PORT}
+      - DATABASE_URL=postgresql://medevac-mission-user:medevac-mission-password@database-mission:5432/medevac-mission-database?schema=public
+    command: bunx prisma migrate deploy
     networks:
       - medevac-networks
-  database:
-    container_name: medevac-auth-database
+  database-mission:
     image: postgres:16-alpine
     ports:
-      - 5433:5432
+      - 5432:5432
     volumes:
-      - ./.database:/var/lib/postgresql/data
+      - ./.database/auth:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=medevac-mission-password
       - POSTGRES_USER=medevac-mission-user
