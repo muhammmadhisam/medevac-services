@@ -1,0 +1,29 @@
+version: "3.8"
+services:
+  migrate-database:
+    image: "devpala/medevac-vehicle-migration-database:latest"
+    build:
+      context: .
+      dockerfile: Dockerfile.migration
+    depends_on:
+      - database-vehicle
+    environment:
+      - DATABASE_URL=postgresql://medevac-vehicle-user:medevac-vehicle-password@database-vehicle:5432/medevac-vehicle-database?schema=public
+    command: bunx prisma migrate deploy
+    networks:
+      - medevac-networks
+  database-vehicle:
+    image: postgres:16-alpine
+    ports:
+      - 5432:5432
+    volumes:
+      - ./.database/auth:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=medevac-vehicle-password
+      - POSTGRES_USER=medevac-vehicle-user
+      - POSTGRES_DB=medevac-vehicle-database
+    networks:
+      - medevac-networks
+networks:
+  medevac-networks:
+    external: true

@@ -5,7 +5,7 @@ RUN apk add --no-cache libc6-compat
 RUN apk update
 WORKDIR /app
 COPY . .
-RUN bun install --frozen-lockfile --ignore-scripts
+RUN bun install --no-frozen-lockfile --ignore-scripts
 
 
 FROM installer as prisma

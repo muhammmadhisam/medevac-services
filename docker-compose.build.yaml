@@ -10,3 +10,8 @@ services:
     build:
       context: ./services/mission/
       dockerfile: ./Dockerfile
+  vehicle:
+    image: "devpala/medevac-auth:latest"
+    build:
+      context: ./services/vehicle/
+      dockerfile: ./Dockerfile
