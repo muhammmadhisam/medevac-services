@@ -30,3 +30,13 @@ services:
     build:
       context: ./services/vehicle/
       dockerfile: Dockerfile.migration
+  patient:
+    image: "devpala/medevac-patient:latest"
+    build:
+      context: ./services/patient/
+      dockerfile: ./Dockerfile
+  migrate-database-patient:
+    image: "devpala/medevac-patient-migration-database:latest"
+    build:
+      context: ./services/patient/
+      dockerfile: Dockerfile.migration

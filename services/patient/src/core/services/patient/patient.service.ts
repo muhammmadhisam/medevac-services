@@ -1,25 +1,25 @@
-import type { MissionId, TypeFailResponse, TypeGetAllData } from "@/core/types";
-import type { TypeMissionRepository } from "@/core/types/repositories";
+import type { PatientId, TypeFailResponse, TypeGetAllData } from "@/core/types";
+import type { TypePatientRepository } from "@/core/types/repositories";
 import type {
   TypeGetAllParam,
   TypeGetOneParam,
-  TypeMissionCreate,
-  TypeMissionUpdate,
+  TypePatientCreate,
+  TypePatientUpdate,
   TypeReturnItem,
-} from "@/core/types/schema/mission";
-import type { TypeMissionService } from "@/core/types/services";
-import { MissionsRepositoryContext } from "@/core/repository";
+} from "@/core/types/schema/patient";
+import type { TypePatientService } from "@/core/types/services";
+import { PatientsRepositoryContext } from "@/core/repository";
 import { TypeFailResponseError } from "@/core/types";
 import { Context, Effect, Layer } from "effect";
 
-function init({ MissionRepo }: { MissionRepo: TypeMissionRepository }) {
+function init({ PatientRepo }: { PatientRepo: TypePatientRepository }) {
   return {
     create(
-      data: TypeMissionCreate,
+      data: TypePatientCreate,
     ): Effect.Effect<TypeReturnItem, TypeFailResponse> {
-      return MissionRepo.create(data).pipe(
+      return PatientRepo.create(data).pipe(
         Effect.catchTags({
-          CreateMissionError: error =>
+          CreatePatientError: error =>
             Effect.fail(
               TypeFailResponseError.new("เพิ่มข้อมุลภารกิจล้มเหลว")(error),
             ),
@@ -31,18 +31,18 @@ function init({ MissionRepo }: { MissionRepo: TypeMissionRepository }) {
     ): Effect.Effect<TypeGetAllData<TypeReturnItem>, TypeFailResponse> {
       return Effect.Do.pipe(
         Effect.bind("data", () =>
-          MissionRepo.getAll(param).pipe(
+          PatientRepo.getAll(param).pipe(
             Effect.catchTags({
-              GetAllMissionError: error =>
+              GetAllPatientError: error =>
                 Effect.fail(
                   TypeFailResponseError.new("ขอข้อมุล ภารกิจ ล้มเหลว")(error),
                 ),
             }),
           )),
         Effect.bind("total", () =>
-          MissionRepo.count(param.where).pipe(
+          PatientRepo.count(param.where).pipe(
             Effect.catchTags({
-              CountMissionError: error =>
+              CountPatientError: error =>
                 Effect.fail(TypeFailResponseError.new("get data fail")(error)),
             }),
           )),
@@ -51,9 +51,9 @@ function init({ MissionRepo }: { MissionRepo: TypeMissionRepository }) {
     getOne(
       param: TypeGetOneParam,
     ): Effect.Effect<TypeReturnItem, TypeFailResponse> {
-      return MissionRepo.getOne(param).pipe(
+      return PatientRepo.getOne(param).pipe(
         Effect.catchTags({
-          GetOneMissionError: error =>
+          GetOnePatientError: error =>
             Effect.fail(TypeFailResponseError.new("get data fail")(error)),
           NoSuchElementException: error =>
             Effect.fail(
@@ -62,51 +62,49 @@ function init({ MissionRepo }: { MissionRepo: TypeMissionRepository }) {
         }),
       );
     },
-    getOneById(id: MissionId): Effect.Effect<TypeReturnItem, TypeFailResponse> {
-      return MissionRepo.getOne({ id }).pipe(
+    getOneById(id: PatientId): Effect.Effect<TypeReturnItem, TypeFailResponse> {
+      return PatientRepo.getOne({ id }).pipe(
         Effect.catchTags({
-          GetOneMissionError: error =>
+          GetOnePatientError: error =>
             Effect.fail(TypeFailResponseError.new("get data fail")(error)),
           NoSuchElementException: error =>
-            Effect.fail(
-              TypeFailResponseError.new("ไม่พบข้อมุล ภารกิจ")(error, 404),
-            ),
+            Effect.fail(TypeFailResponseError.new("ไม่พบข้อมุล")(error, 404)),
         }),
       );
     },
-    remove(id: MissionId): Effect.Effect<TypeReturnItem, TypeFailResponse> {
+    remove(id: PatientId): Effect.Effect<TypeReturnItem, TypeFailResponse> {
       return Effect.Do.pipe(
         Effect.tap(() => this.getOneById(id)),
-        Effect.flatMap(() => MissionRepo.remove(id)),
+        Effect.flatMap(() => PatientRepo.remove(id)),
         Effect.catchTags({
-          RemoveMissionError: error =>
+          RemovePatientError: error =>
             Effect.fail(TypeFailResponseError.new("ลบข้อมูลล้มเหลว")(error)),
         }),
       );
     },
     update(
-      id: MissionId,
-      data: TypeMissionUpdate,
+      id: PatientId,
+      data: TypePatientUpdate,
     ): Effect.Effect<TypeReturnItem, TypeFailResponse> {
       return Effect.Do.pipe(
         Effect.tap(() => this.getOneById(id)),
-        Effect.flatMap(() => MissionRepo.update(id, data)),
+        Effect.flatMap(() => PatientRepo.update(id, data)),
         Effect.catchTags({
-          UpdateMissionError: error =>
+          UpdatePatientError: error =>
             Effect.fail(TypeFailResponseError.new("แก้ไขข้อมูลล้มเหลว")(error)),
         }),
       );
     },
-  } satisfies TypeMissionService;
+  } satisfies TypePatientService;
 }
-export class MissionServiceContext extends Context.Tag("service-mission")<
-  MissionServiceContext,
-  TypeMissionService
+export class PatientServiceContext extends Context.Tag("service-Patient")<
+  PatientServiceContext,
+  TypePatientService
 >() {
   static Live = Layer.effect(
     this,
     Effect.all({
-      MissionRepo: MissionsRepositoryContext,
+      PatientRepo: PatientsRepositoryContext,
     }).pipe(Effect.andThen(init)),
   );
 }

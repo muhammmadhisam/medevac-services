@@ -1,0 +1,14 @@
+FROM oven/bun:alpine as base
+
+# Install libc6-compat
+RUN apk add --no-cache libc6-compat
+
+# Set working directory
+WORKDIR /app
+
+# Copy the Prisma files
+COPY ./prisma .
+
+
+# # Run Prisma migrate deploy
+# CMD ["bunx", "prisma", "migrate", "deploy"]
