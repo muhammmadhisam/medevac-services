@@ -14,7 +14,7 @@ export function setupOpenApi(app: TypeApplication) {
     openAPISpecs(app, {
       documentation: {
         info: {
-          description: "Medevac Mission Api",
+          description: "Medevac Vehicle Api",
           title: "API",
           version: packageJson.version,
         },

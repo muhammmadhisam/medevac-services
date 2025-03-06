@@ -6,9 +6,6 @@
     "cz": "lint-staged && cz",
     "commit": "lint-staged && cz"
   },
-  "workspaces": [
-    "./services/*"
-  ],
   "devDependencies": {
     "@antfu/eslint-config": "^4.4.0",
     "@commitlint/cli": "^19.7.1",
