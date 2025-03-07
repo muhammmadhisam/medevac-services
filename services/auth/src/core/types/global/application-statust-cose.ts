@@ -1,4 +1,4 @@
-import type { StatusCode } from "hono/utils/http-status";
+import type { ContentfulStatusCode } from "hono/utils/http-status";
 
-export type ResponseCode = StatusCode;
+export type ResponseCode = ContentfulStatusCode;
 export const ResponseCode = (status: number) => status as ResponseCode;

@@ -1,5 +1,5 @@
 {
-  "name": "mission-service",
+  "name": "patient-service",
   "version": "1.0.1",
   "scripts": {
     "dev": "bun run --hot src/index.ts",

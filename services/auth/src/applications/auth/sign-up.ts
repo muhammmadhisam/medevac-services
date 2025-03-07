@@ -34,7 +34,7 @@ const Docs = describeRoute({
       description: "Create CcsProjectDetail Error",
     },
   },
-  tags: ["authentication"],
+  tags: ["Authentication"],
 });
 
 export default (app: TypeApplication) =>

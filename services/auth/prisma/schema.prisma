@@ -49,9 +49,6 @@ model Users {
   career             String?
   id_card            String?
   image              String?
-  hospital_branch_id String?
-  refresh_token      String?
-
   create_date       DateTime?          @default(now())
   update_date       DateTime?          @updatedAt
   delete_date       DateTime?

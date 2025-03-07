@@ -1,11 +1,15 @@
 import type { TypeApplication } from "@/core/configs/create-application.js";
 import {
+  TOKEN_ACCESS_TIME,
+  TOKEN_REFRESH_TIME,
+} from "@/core/constants/token-time.js";
+import {
   FailResponseSchema,
   SignInSchema,
   SuccessResponseSchema,
 } from "@/core/types/index.js";
-import { Duration, Effect } from "effect";
 
+import { Effect } from "effect";
 import { describeRoute } from "hono-openapi";
 import { resolver, validator } from "hono-openapi/zod";
 import { setCookie } from "hono/cookie";
@@ -43,7 +47,7 @@ const Docs = describeRoute({
       description: "SignIn  Error",
     },
   },
-  tags: ["authentication"],
+  tags: ["Authentication"],
 });
 
 export default (app: TypeApplication) =>
@@ -54,14 +58,14 @@ export default (app: TypeApplication) =>
       Effect.tap(({ access_token }) =>
         setCookie(c, "access_token", access_token, {
           httpOnly: true,
-          maxAge: Duration.toSeconds(Duration.minutes(5)),
+          maxAge: TOKEN_ACCESS_TIME,
           sameSite: "Lax",
         }),
       ),
       Effect.tap(({ refresh_token }) =>
         setCookie(c, "refresh_token", refresh_token, {
           httpOnly: true,
-          maxAge: Duration.toSeconds(Duration.minutes(5)),
+          maxAge: TOKEN_REFRESH_TIME,
           sameSite: "Lax",
         }),
       ),

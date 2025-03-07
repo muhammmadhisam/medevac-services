@@ -1,5 +1,5 @@
 {
-  "name": "serviceauth",
+  "name": "service-auth",
   "version": "1.0.1",
   "scripts": {
     "dev": "bun run --hot src/index.ts",
