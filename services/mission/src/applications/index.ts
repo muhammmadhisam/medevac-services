@@ -3,7 +3,7 @@ import { setupMissionHandler } from "./mission";
 
 export default () => {
   const app = createApplication();
-  app.route("/mission", setupMissionHandler());
+  app.route("/", setupMissionHandler());
 
   return app;
 };

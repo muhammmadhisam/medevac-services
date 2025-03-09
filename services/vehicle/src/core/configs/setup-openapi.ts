@@ -14,7 +14,7 @@ export function setupOpenApi(app: TypeApplication) {
     openAPISpecs(app, {
       documentation: {
         info: {
-          description: "Medevac Vehicle Api",
+          description: "Medevac Paient Api",
           title: "API",
           version: packageJson.version,
         },
@@ -22,6 +22,10 @@ export function setupOpenApi(app: TypeApplication) {
           {
             description: "Local server",
             url: `http://localhost:${env.PORT}`,
+          },
+          {
+            description: "Local Cotainer server",
+            url: "https://api.localhost",
           },
         ],
       },
