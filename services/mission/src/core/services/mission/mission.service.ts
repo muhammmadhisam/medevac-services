@@ -80,9 +80,7 @@ function init({ MissionRepo }: { MissionRepo: TypeMissionRepository }) {
         Effect.flatMap(() => MissionRepo.remove(id)),
         Effect.catchTags({
           RemoveMissionError: error =>
-            Effect.fail(
-              TypeFailResponseError.new("ลบข้อมุล ภารกิจ ล้มเหลว")(error),
-            ),
+            Effect.fail(TypeFailResponseError.new("ลบข้อมูลล้มเหลว")(error)),
         }),
       );
     },
@@ -95,9 +93,7 @@ function init({ MissionRepo }: { MissionRepo: TypeMissionRepository }) {
         Effect.flatMap(() => MissionRepo.update(id, data)),
         Effect.catchTags({
           UpdateMissionError: error =>
-            Effect.fail(
-              TypeFailResponseError.new("แก้ไขข้อมุล ภารกิจ ล้มเหลว")(error),
-            ),
+            Effect.fail(TypeFailResponseError.new("แก้ไขข้อมูลล้มเหลว")(error)),
         }),
       );
     },

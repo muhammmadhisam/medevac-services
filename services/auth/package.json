@@ -1,5 +1,5 @@
 {
-  "name": "mission-auth",
+  "name": "service-auth",
   "version": "1.0.1",
   "scripts": {
     "dev": "bun run --hot src/index.ts",
@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@node-rs/argon2": "^2.0.2",
+    "@node-rs/argon2-wasm32-wasi": "^2.0.2",
     "@prisma/client": "^6.4.1",
     "argon": "^2.0.21",
     "effect": "^3.13.6",
@@ -28,6 +29,7 @@
     "lint-staged": "^15.4.3",
     "prisma": "^6.4.1",
     "tsup": "^8.4.0",
+    "typescript": "^5.8.2",
     "zod": "^3.24.2",
     "zod-openapi": "^4.2.3",
     "zod-prisma-types": "^3.2.4"

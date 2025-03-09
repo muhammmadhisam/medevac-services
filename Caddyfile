@@ -1,0 +1,10 @@
+
+auth.localhost {
+        reverse_proxy auth:3000
+}
+mission.localhost {
+        reverse_proxy mission:3000
+}
+portainer.localhost {
+        reverse_proxy portainer:3000
+}

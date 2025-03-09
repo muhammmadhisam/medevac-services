@@ -1,6 +1,5 @@
 import type { TypeApplication } from "./create-application";
 import { apiReference } from "@scalar/hono-api-reference";
-import packageJson from "../../../package.json" with { type: "json" };
 
 export function setupScalarDocs(app: TypeApplication) {
   app.get(
@@ -9,9 +8,9 @@ export function setupScalarDocs(app: TypeApplication) {
       darkMode: true,
       favicon: "https://cdn-icons-png.flaticon.com/512/2164/2164832.png",
       layout: "modern", // "classic" | "modern" (default)
-      pageTitle: packageJson.name,
+      pageTitle: "Medevac Auth",
       spec: {
-        url: "/openapi.json",
+        url: "/auth/openapi.json",
       },
       theme: "deepSpace",
     }),

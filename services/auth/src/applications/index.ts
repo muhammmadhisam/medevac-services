@@ -3,7 +3,7 @@ import { setupAuthHandler } from "./auth";
 
 export default () => {
   const app = createApplication();
-  app.route("/auth", setupAuthHandler());
+  app.route("/", setupAuthHandler());
 
   return app;
 };

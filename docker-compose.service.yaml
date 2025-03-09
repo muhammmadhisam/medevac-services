@@ -10,6 +10,7 @@ services:
       - DATABASE_URL=postgresql://medevac-auth-user:medevac-auth-password@database-auth:5432/medevac-auth-database?schema=public
       - SECRET_TOKEN=${SECRET_TOKEN}
       - PORT=3000
+      - DOMAIN=localhost
     networks:
       - medevac-networks
   database-auth:
@@ -63,6 +64,39 @@ services:
       - database-mission
     environment:
       - DATABASE_URL=postgresql://medevac-mission-user:medevac-mission-password@database-mission:5432/medevac-mission-database?schema=public
+    command: bunx prisma migrate deploy
+    networks:
+      - medevac-networks
+  vehicle:
+    image: "devpala/medevac-vehicle:latest"
+    depends_on:
+      - database-vehicle
+    ports:
+      - 3002:3002
+    environment:
+      - DATABASE_URL=postgresql://medevac-vehicle-user:medevac-vehicle-password@database-vehicle:5432/medevac-vehicle-database?schema=public
+      - SECRET_TOKEN=${SECRET_TOKEN}
+      - PORT=3002
+    networks:
+      - medevac-networks
+  database-vehicle:
+    image: postgres:16-alpine
+    ports:
+      - 5432
+    volumes:
+      - ./.database/vehicle:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=medevac-vehicle-password
+      - POSTGRES_USER=medevac-vehicle-user
+      - POSTGRES_DB=medevac-vehicle-database
+    networks:
+      - medevac-networks
+  migrate-database-vehicle:
+    image: "devpala/medevac-vehicle-migration-database:latest"
+    depends_on:
+      - database-vehicle
+    environment:
+      - DATABASE_URL=postgresql://medevac-vehicle-user:medevac-vehicle-password@database-vehicle:5432/medevac-vehicle-database?schema=public
     command: bunx prisma migrate deploy
     networks:
       - medevac-networks

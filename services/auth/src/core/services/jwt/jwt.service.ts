@@ -1,3 +1,9 @@
+import type {
+  TypeFailResponse,
+  TypeJwtObject,
+  TypeRefreshTokenObject,
+  TypeToken,
+} from "@/core/types/index.js";
 import type { TypeJwtService } from "@/core/types/services/index.js";
 import { Context, Effect, Layer } from "effect";
 import conditionAcceeTokenValid from "./conditions/condition-accee-token-valid.js";
@@ -10,6 +16,14 @@ import verifyToken from "./function/verify-token.js";
 function init() {
   return Effect.succeed({
     genAccessToken: generateAccessToken,
+    generateToken(
+      param: TypeJwtObject & TypeRefreshTokenObject,
+    ): Effect.Effect<TypeToken, TypeFailResponse> {
+      return Effect.Do.pipe(
+        Effect.bind("access_token", () => this.genAccessToken({ ...param })),
+        Effect.bind("refresh_token", () => this.genRefreshToken({ ...param })),
+      );
+    },
     genRefreshToken: generateRefreshToken,
     verifyAccessToken,
     verifyRefreshToken,

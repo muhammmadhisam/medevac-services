@@ -7,7 +7,7 @@
     "commit": "lint-staged && cz"
   },
   "workspaces": [
-    "./services/*"
+    "services/*"
   ],
   "devDependencies": {
     "@antfu/eslint-config": "^4.4.0",

@@ -28,4 +28,7 @@ export type TypeJwtService = {
   verifyTokenAndReturnJwtObject: (
     data: TypeToken,
   ) => Effect.Effect<TypeUserJwt, TypeFailResponse>;
+  generateToken: (
+    param: TypeJwtObject & TypeRefreshTokenObject,
+  ) => Effect.Effect<TypeToken, TypeFailResponse>;
 };

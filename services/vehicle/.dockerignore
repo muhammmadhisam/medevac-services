@@ -1,0 +1,6 @@
+**/node_modules
+**/Dockerfile
+**/docker-compose.yaml
+**/docker-compose.build.yaml
+**/dist
+**/README.md
