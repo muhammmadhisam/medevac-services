@@ -1,6 +1,10 @@
 import { z } from "zod";
 
 const ZEnv = z.object({
+  CORS_ORIGIN: z
+    .string()
+    .default("")
+    .transform(v => v.split(",")),
   DATABASE_URL: z.string(),
   DOMAIN_URL: z.string().optional(),
   LOG_LEVEL: z

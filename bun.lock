@@ -44,6 +44,15 @@
         "zod-prisma-types": "^3.2.4",
       },
     },
+    "services/gateway": {
+      "name": "gateway",
+      "dependencies": {
+        "hono": "^4.7.4",
+      },
+      "devDependencies": {
+        "@types/bun": "latest",
+      },
+    },
     "services/mission": {
       "name": "mission-service",
       "version": "1.0.1",
@@ -934,6 +943,8 @@
     "function-bind": ["function-bind@1.1.2", "", {}, "sha512-7XHNxH7qX9xG5mIwxkhumTox/MIRNcOgDrxWsMt2pAr23WHp6MrRlN7FBSFpCpr+oVO0F744iUgR82nJMfG2SA=="],
 
     "fuse.js": ["fuse.js@7.1.0", "", {}, "sha512-trLf4SzuuUxfusZADLINj+dE8clK1frKdmqiJNb1Es75fmI5oY6X2mxLVUciLLjxqw/xr72Dhy+lER6dGd02FQ=="],
+
+    "gateway": ["gateway@workspace:services/gateway"],
 
     "get-caller-file": ["get-caller-file@2.0.5", "", {}, "sha512-DyFP3BM/3YHTQOCUL/w0OZHR0lpKeGrxotcHWcqNEdnltqFwXVfhEBQ94eIo34AfQpo0rGki4cyIiftY06h2Fg=="],
 

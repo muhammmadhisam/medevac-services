@@ -3,12 +3,13 @@ import {
   TOKEN_ACCESS_TIME,
   TOKEN_REFRESH_TIME,
 } from "@/core/constants/token-time.js";
+import { GetEnv } from "@/core/env/index.js";
+
 import {
   FailResponseSchema,
   SignInSchema,
   SuccessResponseSchema,
 } from "@/core/types/index.js";
-
 import { Effect } from "effect";
 import { describeRoute } from "hono-openapi";
 import { resolver, validator } from "hono-openapi/zod";
@@ -57,6 +58,7 @@ export default (app: TypeApplication) =>
       Effect.andThen(service => service.signIn(data)),
       Effect.tap(({ access_token }) =>
         setCookie(c, "access_token", access_token, {
+          domain: GetEnv().DOMAIN,
           httpOnly: true,
           maxAge: TOKEN_ACCESS_TIME,
           sameSite: "Lax",
@@ -64,6 +66,7 @@ export default (app: TypeApplication) =>
       ),
       Effect.tap(({ refresh_token }) =>
         setCookie(c, "refresh_token", refresh_token, {
+          domain: GetEnv().DOMAIN,
           httpOnly: true,
           maxAge: TOKEN_REFRESH_TIME,
           sameSite: "Lax",

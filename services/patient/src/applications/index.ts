@@ -3,7 +3,7 @@ import { setupPatientHandler } from "./patient";
 
 export default () => {
   const app = createApplication();
-  app.route("/patient", setupPatientHandler());
+  app.route("/", setupPatientHandler());
 
   return app;
 };

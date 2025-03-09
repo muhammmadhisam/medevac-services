@@ -11,6 +11,7 @@ import { Effect } from "effect";
 import { describeRoute } from "hono-openapi";
 
 import { resolver, validator } from "hono-openapi/zod";
+import { authorizationMiddleware } from "../middleware";
 
 const ResponseSchema = SuccessResponseSchema(
   PatientSchema.omit({ delete_date: true }).array(),
@@ -40,7 +41,7 @@ const Docs = describeRoute({
 });
 
 export default (app: TypeApplication) =>
-  app.get("/", Docs, RequestQuery, async (c) => {
+  app.get("/", authorizationMiddleware, Docs, RequestQuery, async (c) => {
     const query = c.req.valid("query");
     const program = PatientServiceContext.pipe(
       Effect.andThen(service =>

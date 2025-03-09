@@ -11,7 +11,7 @@ import { GetEnv } from "./core/env/index.js";
 config();
 const env = GetEnv();
 
-const app = createApplication();
+const app = createApplication().basePath("/auth");
 setUpCors(app);
 setupOpenApi(app);
 setupScalarDocs(app);
