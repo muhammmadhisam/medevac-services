@@ -11,6 +11,7 @@ import { Effect } from "effect";
 import { describeRoute } from "hono-openapi";
 
 import { resolver, validator } from "hono-openapi/zod";
+import { authorizationMiddleware } from "../middleware";
 
 const ResponseSchema = SuccessResponseSchema(
   MissionOptionalDefaultsSchema.omit({ delete_date: true }),
@@ -47,7 +48,7 @@ const Docs = describeRoute({
 });
 
 export default (app: TypeApplication) =>
-  app.post("/", Docs, RequestBody, async (c) => {
+  app.post("/", authorizationMiddleware, Docs, RequestBody, async (c) => {
     const data = c.req.valid("json");
     const program = MissionServiceContext.pipe(
       Effect.andThen(service =>

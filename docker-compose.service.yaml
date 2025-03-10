@@ -11,7 +11,7 @@ services:
       - DATABASE_URL=postgresql://medevac-auth-user:medevac-auth-password@database-auth:5432/medevac-auth-database?schema=public
       - SECRET_TOKEN=${SECRET_TOKEN}
       - PORT=3000
-      - DOMAIN=localhost
+      - DOMAIN=*.localhost
       - CORS_ORIGIN=${CORS_ORIGIN}
     networks:
       - medevac-networks
