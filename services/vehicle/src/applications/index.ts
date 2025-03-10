@@ -3,7 +3,7 @@ import { setupVehicleHandler } from "./vehicle";
 
 export default () => {
   const app = createApplication();
-  app.route("/vehicle", setupVehicleHandler());
+  app.route("/", setupVehicleHandler());
 
   return app;
 };

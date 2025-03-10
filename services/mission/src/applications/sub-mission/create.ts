@@ -1,49 +1,48 @@
 import type { TypeApplication } from "@/core/configs/create-application.js";
 import { ServicesRuntime } from "@/core/runtime";
-import { MissionServiceContext } from "@/core/services/mission/mission.service";
+
+import { SubMissionServiceContext } from "@/core/services";
 import {
   FailResponseSchema,
   MissionId,
-  ParamSchema,
   SuccessResponseSchema,
 } from "@/core/types/index.js";
-import { MissionPartialSchema, MissionSchema } from "@schema/index";
+import { SubMissionOptionalDefaultsSchema } from "@schema/index";
 import { Effect } from "effect";
 import { describeRoute } from "hono-openapi";
 
 import { resolver, validator } from "hono-openapi/zod";
+import { z } from "zod";
 import { authorizationMiddleware } from "../middleware";
 
 const ResponseSchema = SuccessResponseSchema(
-  MissionSchema.omit({ delete_date: true }),
+  SubMissionOptionalDefaultsSchema.omit({ delete_date: true }),
 );
 const RequestBody = validator(
   "json",
-  MissionPartialSchema.omit({
+  SubMissionOptionalDefaultsSchema.omit({
     create_date: true,
     delete_date: true,
     id: true,
+    mission_id: true,
     update_date: true,
   }),
 );
-const RequestParam = validator("param", ParamSchema);
+const RequestParam = validator(
+  "param",
+  z.object({
+    mission_id: z.string().transform(v => MissionId(v)),
+  }),
+);
 const Docs = describeRoute({
   responses: {
-    200: {
+    201: {
       content: {
         "application/json": {
           schema: resolver(ResponseSchema),
         },
       },
-      description: "Update Mission",
-    },
-    404: {
-      content: {
-        "application/json": {
-          schema: resolver(FailResponseSchema),
-        },
-      },
-      description: "Get Mission by id fail",
+      description: "Create SubMission",
     },
     500: {
       content: {
@@ -51,28 +50,33 @@ const Docs = describeRoute({
           schema: resolver(FailResponseSchema),
         },
       },
-      description: "Update Mission Error",
+      description: "Create SubMission Error",
     },
   },
-  tags: ["Mission"],
+  tags: ["SubMission"],
 });
 
 export default (app: TypeApplication) =>
-  app.put(
-    "/:id",
+  app.post(
+    "/",
     authorizationMiddleware,
     Docs,
     RequestParam,
     RequestBody,
     async (c) => {
       const data = c.req.valid("json");
-      const q = c.req.valid("param");
-      const program = MissionServiceContext.pipe(
-        Effect.andThen(service => service.update(MissionId(q.id), data)),
-        Effect.andThen(data =>
-          ResponseSchema.parse({ data, message: "updated" }),
+      const param = c.req.valid("param");
+      const program = SubMissionServiceContext.pipe(
+        Effect.andThen(service =>
+          service.create({
+            ...data,
+            Mission: { connect: { id: param.mission_id } },
+          }),
         ),
-        Effect.andThen(data => c.json(data, 200)),
+        Effect.andThen(data =>
+          ResponseSchema.parse({ data, message: "เพิ่มข้อมูลเรียบร้อย" }),
+        ),
+        Effect.andThen(data => c.json(data, 201)),
         Effect.catchAll(error =>
           Effect.succeed(c.json(error, { status: error.status as 500 })),
         ),

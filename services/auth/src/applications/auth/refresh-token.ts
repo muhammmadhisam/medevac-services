@@ -4,7 +4,6 @@ import {
   TOKEN_ACCESS_TIME,
   TOKEN_REFRESH_TIME,
 } from "@/core/constants/token-time";
-import { GetEnv } from "@/core/env";
 import { ServicesRuntime } from "@/core/runtime";
 import { AuthServiceContext } from "@/core/services/auth";
 import {
@@ -64,18 +63,20 @@ export default (app: TypeApplication) =>
       ),
       Effect.tap(({ access_token }) =>
         setCookie(c, COOKIE.ACCESS, access_token, {
-          domain: GetEnv().DOMAIN,
           httpOnly: true,
           maxAge: TOKEN_ACCESS_TIME,
-          sameSite: "Lax",
+          path: "/",
+          sameSite: "None",
+          secure: true,
         }),
       ),
       Effect.tap(({ refresh_token }) =>
         setCookie(c, COOKIE.REFRESH, refresh_token, {
-          domain: GetEnv().DOMAIN,
           httpOnly: true,
           maxAge: TOKEN_REFRESH_TIME,
-          sameSite: "Lax",
+          path: "/",
+          sameSite: "None",
+          secure: true,
         }),
       ),
       Effect.andThen(() =>

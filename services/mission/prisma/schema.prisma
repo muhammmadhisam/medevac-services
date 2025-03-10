@@ -36,15 +36,55 @@ model Mission {
   case_number String?
   description String?
   end_date    DateTime?
-  address     String
-  image       String
-  lat         String
-  long        String
-  utm         String
-  mgrs        String
+  address     String?
+  image       String?
+  lat         String?
+  long        String?
+  utm         String?
+  mgrs        String?
   create_date DateTime?     @default(now())
   update_date DateTime?     @updatedAt
   delete_date DateTime?
+  SubMission  SubMission[]
+
+  @@index([id])
+  @@index([status])
+  @@index([title])
+  @@index([create_date])
+}
+
+model SubMission {
+  id         String  @id @default(uuid())
+  mission_id String
+  Mission    Mission @relation(fields: [mission_id], references: [id])
+  vehicle_id String
+  patient_id String
+
+  create_date  DateTime?      @default(now())
+  update_date  DateTime?      @updatedAt
+  delete_date  DateTime?
+  SubMissioTag SubMissioTag[]
+
+  @@unique([patient_id, mission_id, vehicle_id])
+  @@index([patient_id, mission_id, vehicle_id])
+  @@index([patient_id, mission_id])
+  @@index([patient_id])
+}
+
+model SubMissioTag {
+  id             String     @id @default(uuid())
+  title          String
+  sub_mission_id String
+  SubMission     SubMission @relation(fields: [sub_mission_id], references: [id])
+  date_time      DateTime   @default(now())
+
+  create_date DateTime? @default(now())
+  update_date DateTime? @updatedAt
+  delete_date DateTime?
+
+  @@unique([title, sub_mission_id])
+  @@index([title])
+  @@index([sub_mission_id])
 }
 
 enum MissionStatus {
@@ -54,4 +94,3 @@ enum MissionStatus {
   Close
   Cancel
 }
-

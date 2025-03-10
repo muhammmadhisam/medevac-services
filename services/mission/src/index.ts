@@ -12,7 +12,7 @@ import { GetEnv } from "./core/env/index.js";
 config();
 const env = GetEnv();
 
-const app = createApplication();
+const app = createApplication().basePath("/mission");
 setUpCors(app);
 setupOpenApi(app);
 setupScalarDocs(app);
