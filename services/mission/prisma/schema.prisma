@@ -63,7 +63,7 @@ model SubMission {
   create_date  DateTime?      @default(now())
   update_date  DateTime?      @updatedAt
   delete_date  DateTime?
-  SubMissioTag SubMissioTag[]
+  SubMissioTag SubMissionTag[]
 
   @@unique([patient_id, mission_id, vehicle_id])
   @@index([patient_id, mission_id, vehicle_id])
@@ -71,7 +71,7 @@ model SubMission {
   @@index([patient_id])
 }
 
-model SubMissioTag {
+model SubMissionTag {
   id             String     @id @default(uuid())
   title          String
   sub_mission_id String
