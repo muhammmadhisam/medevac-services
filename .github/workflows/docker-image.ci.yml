@@ -17,10 +17,10 @@ jobs:
       - name: Read version from ./services/mission/package.json
         id: service_mission_version
         run: echo "VERSION_MISSION_SERVICE=$(jq -r .version ./services/mission/package.json)" >> $GITHUB_ENV
-      - name: Read version from ./services/mission/package.json
+      - name: Read version from ./services/patient/package.json
         id: service_patient_version
         run: echo "VERSION_PATIENT_SERVICE=$(jq -r .version ./services/patient/package.json)" >> $GITHUB_ENV
-      - name: Read version from ./services/mission/package.json
+      - name: Read version from ./services/vehicle/package.json
         id: service_vehicle_version
         run: echo "VERSION_VEHICLE_SERVICE=$(jq -r .version ./services/vehicle/package.json)" >> $GITHUB_ENV
 
@@ -111,3 +111,29 @@ jobs:
             ${{ secrets.DOCKER_USERNAME }}/medevac-patient-migration:${{ env.VERSION_PATIENT_SERVICE }}
           cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/medevac-patient-migration:buildcache
           cache-to: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/medevac-patient-migration:buildcache,mode=max
+      - name: Build and push Medevac Vehicle Api
+        uses: docker/build-push-action@v5
+        with:
+          context: ./services/vehicle/
+          file: ./services/vehicle/Dockerfile
+          push: true
+          build-args: |
+            APP=vehicle
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/medevac-vehicle-api:latest
+            ${{ secrets.DOCKER_USERNAME }}/medevac-vehicle-api:${{ env.VERSION_PATIENT_SERVICE }}
+          cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/medevac-vehicle-api:buildcache
+          cache-to: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/medevac-vehicle-api:buildcache,mode=max
+      - name: Build and push Medevac vehicle Migrate Database
+        uses: docker/build-push-action@v5
+        with:
+          context: ./services/vehicle/
+          file: ./services/vehicle/Dockerfile.migration
+          push: true
+          build-args: |
+            APP=vehicle
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/medevac-vehicle-migration:latest
+            ${{ secrets.DOCKER_USERNAME }}/medevac-vehicle-migration:${{ env.VERSION_VEHICLE_SERVICE }}
+          cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/medevac-vehicle-migration:buildcache
+          cache-to: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/medevac-vehicle-migration:buildcache,mode=max

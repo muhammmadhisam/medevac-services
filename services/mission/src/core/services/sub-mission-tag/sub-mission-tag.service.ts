@@ -28,9 +28,7 @@ function init({
       return SubMissionTagRepo.create(data).pipe(
         Effect.catchTags({
           CreateSubMissionTagError: error =>
-            Effect.fail(
-              TypeFailResponseError.new("เพิ่มข้อมุลภารกิจล้มเหลว")(error),
-            ),
+            Effect.fail(TypeFailResponseError.new("เพิ่มข้อมูลล้มเหลว")(error)),
         }),
       );
     },
