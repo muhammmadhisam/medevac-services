@@ -6,7 +6,7 @@ import getById from "./get-by-id.js";
 import remove from "./remove.js";
 import update from "./update.js";
 
-export function setupVehicleHandler() {
+export function setupExamHandler() {
   const app: TypeApplication = createApplication();
   const handlers = [create, getAll, remove, getById, update];
   handlers.forEach(handler => handler(app));

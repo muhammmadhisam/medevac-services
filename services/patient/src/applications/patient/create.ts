@@ -60,7 +60,7 @@ export default (app: TypeApplication) =>
       ),
       Effect.andThen(data => c.json(data, 201)),
       Effect.catchAll(error =>
-        Effect.succeed(c.json(error, { status: error.status as 500 })),
+        Effect.succeed(c.json(error, { status: error.status })),
       ),
     );
     const result = await ServicesRuntime.runPromise(program);

@@ -1,4 +1,10 @@
 
+api.m-mert {
+    reverse_proxy /auth/* auth:3000
+    reverse_proxy /mission/* mission:3001
+    reverse_proxy /vehicle/* vehicle:3002
+    reverse_proxy /patient/* patient:3003       
+}
 api.localhost {
     reverse_proxy /auth/* auth:3000
     reverse_proxy /mission/* mission:3001

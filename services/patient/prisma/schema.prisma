@@ -30,30 +30,105 @@ datasource db {
 }
 
 model Patient {
-  id                String      @id @default(uuid())
-  gender            Gender
-  first_name        String?
-  last_name         String?
-  qr_number         String?
-  age               Int?
-  birthday          String?
-  id_card           String?
-  tel               String?
-  address           String?
-  group_blood       GroupBlood?
-  image             String?
-  image_id_card     String?
-  create_by    String?
-  update_by    String?
-  date_time_died    DateTime? //วันที่เวลาเสียชีวิต
-  date_time_go_home DateTime? //วันที่กลับบ้านห
-  date_time_lost    DateTime? //วันที่สูยหายจากการรักษา
-  date_time_refer   DateTime? //วันที่ี่ส่งไปที่อื่น
+  id                 String      @id @default(uuid())
+  gender             Gender
+  first_name         String?
+  last_name          String?
+  qr_number          String?
+  age                Int?
+  birthday           String?
+  id_card            String?
+  tel                String?
+  address            String?
+  group_blood        GroupBlood?
+  image              String?
+  image_id_card      String?
+  allergy_drug       String?
+  allergy_food       String?
+  congenital_disease String?
+  create_by          String?
+  update_by          String?
+  date_time_died     DateTime? //วันที่เวลาเสียชีวิต
+  date_time_go_home  DateTime? //วันที่กลับบ้านห
+  date_time_lost     DateTime? //วันที่สูยหายจากการรักษา
+  date_time_refer    DateTime? //วันที่ี่ส่งไปที่อื่น
 
   create_date DateTime? @default(now())
   update_date DateTime? @updatedAt
   delete_date DateTime?
 
+  History        History?
+  Exam           Exam[]
+  StationPatient StationPatient[]
+  Teatment       Teatment?
+
+  @@index([id])
+}
+
+model History {
+  id              String    @id @default(uuid())
+  symptom_details String
+  create_date     DateTime? @default(now())
+  update_date     DateTime? @updatedAt
+  patient_id      String    @unique
+  chief_complaint String
+  present_illness String
+  Patient         Patient   @relation(fields: [patient_id], references: [id], onDelete: Cascade)
+  teatment        String
+  create_by       String?
+  update_by       String?
+  physical_status String? // Json.stringfy
+  triage_lavel    String?
+
+  @@index([id, patient_id])
+}
+
+model Exam {
+  id          String    @id @default(uuid())
+  element_id  String
+  text        String
+  image       String?
+  create_date DateTime? @default(now())
+  update_date DateTime? @updatedAt
+  create_by   String?
+  update_by   String?
+  Patient     Patient?  @relation(fields: [patient_id], references: [id])
+  patient_id  String?
+
+  @@index([id, create_by, update_by])
+  @@index([patient_id])
+}
+
+model StationPatient {
+  id          String    @id @default(uuid())
+  station     String
+  description String?
+  patient_id  String
+  in_date     DateTime  @default(now())
+  out_date    DateTime?
+  Patient     Patient   @relation(fields: [patient_id], references: [id], onDelete: Cascade)
+  create_date DateTime? @default(now())
+  update_date DateTime? @updatedAt
+
+  @@index([id, patient_id])
+  @@index([station])
+}
+
+model Teatment {
+  id              String    @id @default(uuid())
+  description     String?
+  chief_complaint String
+  present_illness String
+  physical_status String?
+  triage_lavel    String?
+  patient_id      String    @unique
+  Patient         Patient   @relation(fields: [patient_id], references: [id], onDelete: Cascade)
+  create_by       String?
+  update_by       String?
+  create_date     DateTime? @default(now())
+  update_date     DateTime? @updatedAt
+
+  @@index([id, patient_id])
 }
 
 enum GroupBlood {

@@ -1,22 +1,35 @@
 import type { TypeApplication } from "@/core/configs/create-application.js";
 import { ServicesRuntime } from "@/core/runtime";
-import { MissionServiceContext } from "@/core/services/mission/mission.service";
+import { ExamServiceContext } from "@/core/services";
 import {
+  ExamId,
   FailResponseSchema,
-  ParamSchema,
+  PatientId,
   SuccessResponseSchema,
 } from "@/core/types/index.js";
-import { MissionSchema } from "@schema/index";
+import { ExamPartialSchema, ExamSchema } from "@schema/index";
 import { Effect } from "effect";
 import { describeRoute } from "hono-openapi";
 
 import { resolver, validator } from "hono-openapi/zod";
-import { authorizationMiddleware } from "../middleware";
+import { z } from "zod";
 
-const ResponseSchema = SuccessResponseSchema(
-  MissionSchema.omit({ delete_date: true }),
+const ResponseSchema = SuccessResponseSchema(ExamSchema);
+const RequestBody = validator(
+  "json",
+  ExamPartialSchema.omit({
+    create_date: true,
+    id: true,
+    update_date: true,
+  }),
 );
-const RequestParam = validator("param", ParamSchema);
+const RequestParam = validator(
+  "param",
+  z.object({
+    id: z.string().transform(v => ExamId(v)),
+    patient_id: z.string().transform(v => PatientId(v)),
+  }),
+);
 const Docs = describeRoute({
   responses: {
     200: {
@@ -25,7 +38,7 @@ const Docs = describeRoute({
           schema: resolver(ResponseSchema),
         },
       },
-      description: "Get Mission by id",
+      description: "Update Exam",
     },
     404: {
       content: {
@@ -33,7 +46,7 @@ const Docs = describeRoute({
           schema: resolver(FailResponseSchema),
         },
       },
-      description: "Get Mission by id fail",
+      description: "Get Exam by id fail",
     },
     500: {
       content: {
@@ -41,23 +54,20 @@ const Docs = describeRoute({
           schema: resolver(FailResponseSchema),
         },
       },
-      description: "Get Mission by id fail",
+      description: "Update Exam Error",
     },
   },
-  tags: ["Mission"],
+  tags: ["Exam"],
 });
 
 export default (app: TypeApplication) =>
-  app.get("/:id", authorizationMiddleware, Docs, RequestParam, async (c) => {
-    const query = c.req.valid("param");
-    const program = MissionServiceContext.pipe(
-      Effect.andThen(service =>
-        service.getOne({
-          ...query,
-        }),
-      ),
+  app.put("/:id", Docs, RequestParam, RequestBody, async (c) => {
+    const data = c.req.valid("json");
+    const param = c.req.valid("param");
+    const program = ExamServiceContext.pipe(
+      Effect.andThen(service => service.update(ExamId(param.id), data)),
       Effect.andThen(data =>
-        ResponseSchema.parse({ data, message: "get data by id" }),
+        ResponseSchema.parse({ data, message: "updated" }),
       ),
       Effect.andThen(data => c.json(data, 200)),
       Effect.catchAll(error =>

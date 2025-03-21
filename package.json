@@ -4,7 +4,7 @@
   "scripts": {
     "prepare": "husky",
     "cz": "lint-staged && cz",
-    "commit": "lint-staged && cz"
+    "commit": "bun cz"
   },
   "workspaces": [
     "services/*"

@@ -1,13 +1,13 @@
 import type { TypeApplication } from "@/core/configs/create-application.js";
 import { ServicesRuntime } from "@/core/runtime";
-
-import { SubMissionServiceContext } from "@/core/services";
+import { ExamServiceContext } from "@/core/services";
 import {
   FailResponseSchema,
-  MissionId,
+  PaginationSchema,
+  PatientId,
   SuccessResponseSchema,
 } from "@/core/types/index.js";
-import { SubMissionOptionalDefaultsSchema } from "@schema/index";
+import { ExamSchema } from "@schema/index";
 import { Effect } from "effect";
 import { describeRoute } from "hono-openapi";
 
@@ -15,34 +15,24 @@ import { resolver, validator } from "hono-openapi/zod";
 import { z } from "zod";
 import { authorizationMiddleware } from "../middleware";
 
-const ResponseSchema = SuccessResponseSchema(
-  SubMissionOptionalDefaultsSchema.omit({ delete_date: true }),
-);
-const RequestBody = validator(
-  "json",
-  SubMissionOptionalDefaultsSchema.omit({
-    create_date: true,
-    delete_date: true,
-    id: true,
-    mission_id: true,
-    update_date: true,
-  }),
-);
+const ResponseSchema = SuccessResponseSchema(ExamSchema.array());
+
+const RequestQuery = validator("query", PaginationSchema);
 const RequestParam = validator(
   "param",
   z.object({
-    mission_id: z.string().transform(v => MissionId(v)),
+    patient_id: z.string().transform(v => PatientId(v)),
   }),
 );
 const Docs = describeRoute({
   responses: {
-    201: {
+    200: {
       content: {
         "application/json": {
           schema: resolver(ResponseSchema),
         },
       },
-      description: "Create SubMission",
+      description: "Get all Exam",
     },
     500: {
       content: {
@@ -50,33 +40,38 @@ const Docs = describeRoute({
           schema: resolver(FailResponseSchema),
         },
       },
-      description: "Create SubMission Error",
+      description: "Get all Error",
     },
   },
-  tags: ["SubMission"],
+  tags: ["Exam"],
 });
 
 export default (app: TypeApplication) =>
-  app.post(
+  app.get(
     "/",
     authorizationMiddleware,
     Docs,
+    RequestQuery,
     RequestParam,
-    RequestBody,
     async (c) => {
-      const data = c.req.valid("json");
+      const query = c.req.valid("query");
       const param = c.req.valid("param");
-      const program = SubMissionServiceContext.pipe(
+      const program = ExamServiceContext.pipe(
         Effect.andThen(service =>
-          service.create({
-            ...data,
-            Mission: { connect: { id: param.mission_id } },
+          service.getAll({
+            orderBy: { create_date: "desc" },
+            pagination: { limit: query.limit, page: query.page * query.limit },
+            where: { ...param },
           }),
         ),
-        Effect.andThen(data =>
-          ResponseSchema.parse({ data, message: "เพิ่มข้อมูลเรียบร้อย" }),
+        Effect.andThen(({ data, total }) =>
+          ResponseSchema.parse({
+            data,
+            message: "get data",
+            meta_data: { total, ...query },
+          }),
         ),
-        Effect.andThen(data => c.json(data, 201)),
+        Effect.andThen(data => c.json(data, 200)),
         Effect.catchAll(error =>
           Effect.succeed(c.json(error, { status: error.status })),
         ),

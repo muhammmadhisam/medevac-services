@@ -144,7 +144,6 @@ services:
     command: bunx prisma migrate deploy
     networks:
       - medevac-networks
-
   caddy:
     container_name: caddy
     image: caddy:2.7.6-alpine

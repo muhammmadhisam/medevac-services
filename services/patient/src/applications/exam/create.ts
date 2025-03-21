@@ -1,28 +1,33 @@
 import type { TypeApplication } from "@/core/configs/create-application.js";
 import { ServicesRuntime } from "@/core/runtime";
 
-import { MissionServiceContext } from "@/core/services/mission/mission.service";
+import { ExamServiceContext } from "@/core/services";
 import {
   FailResponseSchema,
+  PatientId,
   SuccessResponseSchema,
 } from "@/core/types/index.js";
-import { MissionOptionalDefaultsSchema } from "@schema/index";
+import { ExamOptionalDefaultsSchema } from "@schema/index";
 import { Effect } from "effect";
 import { describeRoute } from "hono-openapi";
 
 import { resolver, validator } from "hono-openapi/zod";
-import { authorizationMiddleware } from "../middleware";
+import { z } from "zod";
 
-const ResponseSchema = SuccessResponseSchema(
-  MissionOptionalDefaultsSchema.omit({ delete_date: true }),
-);
+const ResponseSchema = SuccessResponseSchema(ExamOptionalDefaultsSchema);
 const RequestBody = validator(
   "json",
-  MissionOptionalDefaultsSchema.omit({
+  ExamOptionalDefaultsSchema.omit({
     create_date: true,
-    delete_date: true,
     id: true,
+    patient_id: true,
     update_date: true,
+  }),
+);
+const RequestParam = validator(
+  "param",
+  z.object({
+    patient_id: z.string().transform(v => PatientId(v)),
   }),
 );
 const Docs = describeRoute({
@@ -33,7 +38,7 @@ const Docs = describeRoute({
           schema: resolver(ResponseSchema),
         },
       },
-      description: "Create Mission",
+      description: "Create Exam",
     },
     500: {
       content: {
@@ -41,19 +46,21 @@ const Docs = describeRoute({
           schema: resolver(FailResponseSchema),
         },
       },
-      description: "Create Mission Error",
+      description: "Create Exam Error",
     },
   },
-  tags: ["Mission"],
+  tags: ["Exam"],
 });
 
 export default (app: TypeApplication) =>
-  app.post("/", authorizationMiddleware, Docs, RequestBody, async (c) => {
+  app.post("/", Docs, RequestParam, RequestBody, async (c) => {
     const data = c.req.valid("json");
-    const program = MissionServiceContext.pipe(
+    const param = c.req.valid("param");
+    const program = ExamServiceContext.pipe(
       Effect.andThen(service =>
         service.create({
           ...data,
+          Patient: { connect: { id: param.patient_id } },
         }),
       ),
       Effect.andThen(data =>
