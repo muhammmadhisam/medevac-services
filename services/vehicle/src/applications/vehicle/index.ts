@@ -8,10 +8,7 @@ import update from "./update.js";
 
 export function setupVehicleHandler() {
   const app: TypeApplication = createApplication();
-  create(app);
-  getAll(app);
-  getById(app);
-  update(app);
-  remove(app);
+  const handlers = [create, getAll, remove, getById, update];
+  handlers.forEach(handler => handler(app));
   return app;
 }

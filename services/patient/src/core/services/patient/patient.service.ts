@@ -20,9 +20,7 @@ function init({ PatientRepo }: { PatientRepo: TypePatientRepository }) {
       return PatientRepo.create(data).pipe(
         Effect.catchTags({
           CreatePatientError: error =>
-            Effect.fail(
-              TypeFailResponseError.new("เพิ่มข้อมุลภารกิจล้มเหลว")(error),
-            ),
+            Effect.fail(TypeFailResponseError.new("เพิ่มข้อมูลล้มเหลว")(error)),
         }),
       );
     },
@@ -35,7 +33,7 @@ function init({ PatientRepo }: { PatientRepo: TypePatientRepository }) {
             Effect.catchTags({
               GetAllPatientError: error =>
                 Effect.fail(
-                  TypeFailResponseError.new("ขอข้อมุล ภารกิจ ล้มเหลว")(error),
+                  TypeFailResponseError.new("ขอข้อมูลล้มเหลว")(error),
                 ),
             }),
           )),
@@ -56,9 +54,7 @@ function init({ PatientRepo }: { PatientRepo: TypePatientRepository }) {
           GetOnePatientError: error =>
             Effect.fail(TypeFailResponseError.new("get data fail")(error)),
           NoSuchElementException: error =>
-            Effect.fail(
-              TypeFailResponseError.new("ไม่พบข้อมุล ภารกิจ")(error, 404),
-            ),
+            Effect.fail(TypeFailResponseError.new("ไม่พบข้อมูล")(error, 404)),
         }),
       );
     },

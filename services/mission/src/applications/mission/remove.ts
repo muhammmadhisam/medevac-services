@@ -12,6 +12,7 @@ import { Effect } from "effect";
 import { describeRoute } from "hono-openapi";
 
 import { resolver, validator } from "hono-openapi/zod";
+import { authorizationMiddleware } from "../middleware";
 
 const ResponseSchema = SuccessResponseSchema(
   MissionSchema.omit({ delete_date: true }),
@@ -48,7 +49,7 @@ const Docs = describeRoute({
 });
 
 export default (app: TypeApplication) =>
-  app.delete("/:id", Docs, RequestParam, async (c) => {
+  app.delete("/:id", authorizationMiddleware, Docs, RequestParam, async (c) => {
     const query = c.req.valid("param");
     const program = MissionServiceContext.pipe(
       Effect.andThen(service => service.remove(MissionId(query.id))),
@@ -57,7 +58,7 @@ export default (app: TypeApplication) =>
       ),
       Effect.andThen(data => c.json(data, 200)),
       Effect.catchAll(error =>
-        Effect.succeed(c.json(error, { status: error.status as 500 })),
+        Effect.succeed(c.json(error, { status: error.status })),
       ),
     );
     const result = await ServicesRuntime.runPromise(program);

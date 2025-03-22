@@ -23,6 +23,10 @@ export function setupOpenApi(app: TypeApplication) {
             description: "Local server",
             url: `http://localhost:${env.PORT}`,
           },
+          {
+            description: "Local Cotainer server",
+            url: "https://api.localhost",
+          },
         ],
       },
     }),
