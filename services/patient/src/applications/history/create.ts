@@ -1,23 +1,23 @@
 import type { TypeApplication } from "@/core/configs/create-application.js";
 import { ServicesRuntime } from "@/core/runtime";
-import { ExamServiceContext } from "@/core/services";
+
+import { HistoryServiceContext } from "@/core/services";
 import {
-  ExamId,
   FailResponseSchema,
   PatientId,
   SuccessResponseSchema,
 } from "@/core/types/index.js";
-import { ExamPartialSchema, ExamSchema } from "@schema/index";
+import { HistoryOptionalDefaultsSchema } from "@schema/index";
 import { Effect } from "effect";
 import { describeRoute } from "hono-openapi";
 
 import { resolver, validator } from "hono-openapi/zod";
 import { z } from "zod";
 
-const ResponseSchema = SuccessResponseSchema(ExamSchema);
+const ResponseSchema = SuccessResponseSchema(HistoryOptionalDefaultsSchema);
 const RequestBody = validator(
   "json",
-  ExamPartialSchema.omit({
+  HistoryOptionalDefaultsSchema.omit({
     create_by: true,
     create_date: true,
     id: true,
@@ -29,27 +29,18 @@ const RequestBody = validator(
 const RequestParam = validator(
   "param",
   z.object({
-    id: z.string().transform(v => ExamId(v)),
     patient_id: z.string().transform(v => PatientId(v)),
   }),
 );
 const Docs = describeRoute({
   responses: {
-    200: {
+    201: {
       content: {
         "application/json": {
           schema: resolver(ResponseSchema),
         },
       },
-      description: "Update Exam",
-    },
-    404: {
-      content: {
-        "application/json": {
-          schema: resolver(FailResponseSchema),
-        },
-      },
-      description: "Get Exam by id fail",
+      description: "Create History",
     },
     500: {
       content: {
@@ -57,22 +48,27 @@ const Docs = describeRoute({
           schema: resolver(FailResponseSchema),
         },
       },
-      description: "Update Exam Error",
+      description: "Create History Error",
     },
   },
-  tags: ["Exam"],
+  tags: ["History"],
 });
 
 export default (app: TypeApplication) =>
-  app.put("/:id", Docs, RequestParam, RequestBody, async (c) => {
+  app.post("/", Docs, RequestParam, RequestBody, async (c) => {
     const data = c.req.valid("json");
     const param = c.req.valid("param");
-    const program = ExamServiceContext.pipe(
-      Effect.andThen(service => service.update(ExamId(param.id), data)),
-      Effect.andThen(data =>
-        ResponseSchema.parse({ data, message: "updated" }),
+    const program = HistoryServiceContext.pipe(
+      Effect.andThen(service =>
+        service.create({
+          ...data,
+          Patient: { connect: { id: param.patient_id } },
+        }),
       ),
-      Effect.andThen(data => c.json(data, 200)),
+      Effect.andThen(data =>
+        ResponseSchema.parse({ data, message: "created" }),
+      ),
+      Effect.andThen(data => c.json(data, 201)),
       Effect.catchAll(error =>
         Effect.succeed(c.json(error, { status: error.status })),
       ),

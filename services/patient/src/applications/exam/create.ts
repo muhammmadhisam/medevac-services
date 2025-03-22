@@ -18,9 +18,11 @@ const ResponseSchema = SuccessResponseSchema(ExamOptionalDefaultsSchema);
 const RequestBody = validator(
   "json",
   ExamOptionalDefaultsSchema.omit({
+    create_by: true,
     create_date: true,
     id: true,
     patient_id: true,
+    update_by: true,
     update_date: true,
   }),
 );
