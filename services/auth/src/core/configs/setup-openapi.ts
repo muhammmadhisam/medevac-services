@@ -27,6 +27,10 @@ export function setupOpenApi(app: TypeApplication) {
             description: "Local Cotainer server",
             url: "https://api.localhost",
           },
+          {
+            description: "Host publics server",
+            url: "https://api.m-mert.com",
+          },
         ],
       },
     }),

@@ -5,11 +5,13 @@ services:
     build:
       context: ./services/auth/
       dockerfile: ./Dockerfile
+    platform: linux/amd64
   migrate-database-auth:
     image: "devpala/medevac-auth-migration-database:latest"
     build:
       context: ./services/auth/
       dockerfile: Dockerfile.migration
+    platform: linux/amd64
   mission:
     image: "devpala/medevac-mission:latest"
     build:
@@ -25,6 +27,7 @@ services:
     build:
       context: ./services/vehicle/
       dockerfile: ./Dockerfile
+    platform: linux/amd64
   migrate-database-vehicle:
     image: "devpala/medevac-vehicle-migration-database:latest"
     build:
@@ -40,3 +43,4 @@ services:
     build:
       context: ./services/patient/
       dockerfile: Dockerfile.migration
+    platform: linux/amd64

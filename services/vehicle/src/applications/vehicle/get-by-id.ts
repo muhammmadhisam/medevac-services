@@ -6,7 +6,7 @@ import {
   ParamSchema,
   SuccessResponseSchema,
 } from "@/core/types/index.js";
-import { VehicleSchema } from "@schema/index";
+import { VehicleSchema } from "@/core/types/schema/prisma";
 import { Effect } from "effect";
 import { describeRoute } from "hono-openapi";
 
@@ -50,16 +50,16 @@ export default (app: TypeApplication) =>
   app.get("/:id", Docs, RequestParam, async (c) => {
     const query = c.req.valid("param");
     const program = VehicleServiceContext.pipe(
-      Effect.andThen(service =>
+      Effect.andThen((service) =>
         service.getOne({
           ...query,
         }),
       ),
-      Effect.andThen(data =>
+      Effect.andThen((data) =>
         ResponseSchema.parse({ data, message: "get data by id" }),
       ),
-      Effect.andThen(data => c.json(data, 200)),
-      Effect.catchAll(error =>
+      Effect.andThen((data) => c.json(data, 200)),
+      Effect.catchAll((error) =>
         Effect.succeed(c.json(error, { status: error.status })),
       ),
     );

@@ -1,6 +1,6 @@
-import { UsersOptionalDefaultsSchema } from "@schema/index";
 import { z } from "zod";
 import { UsersId } from "../private/users";
+import { UsersOptionalDefaultsSchema } from "../schema/prisma";
 
 export const UserJwtSchema = UsersOptionalDefaultsSchema.omit({
   create_date: true,

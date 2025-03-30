@@ -42,3 +42,5 @@ yarn-error.log*
 .caddy/site
 .caddy/caddy_data
 .caddy/caddy_config
+data
+letsencrypt

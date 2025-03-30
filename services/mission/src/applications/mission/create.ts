@@ -6,10 +6,11 @@ import {
   FailResponseSchema,
   SuccessResponseSchema,
 } from "@/core/types/index.js";
-import { MissionOptionalDefaultsSchema } from "@schema/index";
-import { Effect } from "effect";
-import { describeRoute } from "hono-openapi";
 
+import { MissionOptionalDefaultsSchema } from "@/core/types/schema/prisma";
+import { Effect } from "effect";
+
+import { describeRoute } from "hono-openapi";
 import { resolver, validator } from "hono-openapi/zod";
 import { authorizationMiddleware } from "../middleware";
 

@@ -7,7 +7,7 @@ import {
   PatientId,
   SuccessResponseSchema,
 } from "@/core/types/index.js";
-import { HistoryOptionalDefaultsSchema } from "@schema/index";
+import { HistoryOptionalDefaultsSchema } from "@/core/types/schema/prisma";
 import { Effect } from "effect";
 import { describeRoute } from "hono-openapi";
 

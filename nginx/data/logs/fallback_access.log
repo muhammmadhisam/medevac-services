@@ -1,2 +1,0 @@
-[05/Mar/2025:23:26:36 +0000] 200 - GET http localhost "/" [Client 192.168.107.1] [Length 568] [Gzip 1.86] "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36" "-"
-[05/Mar/2025:23:26:37 +0000] 400 - GET http localhost "/favicon.ico" [Client 127.0.0.1] [Length 230] [Gzip -] "-" "-"

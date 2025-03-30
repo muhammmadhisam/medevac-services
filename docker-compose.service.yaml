@@ -15,6 +15,7 @@ services:
       - CORS_ORIGIN=${CORS_ORIGIN}
     networks:
       - medevac-networks
+    platform: linux/amd64
   database-auth:
     image: postgres:16-alpine
     restart: always
@@ -34,7 +35,7 @@ services:
       - database-auth
     environment:
       - DATABASE_URL=postgresql://medevac-auth-user:medevac-auth-password@database-auth:5432/medevac-auth-database?schema=public
-    command: bunx prisma migrate deploy
+    platform: linux/amd64
     networks:
       - medevac-networks
   mission:
@@ -70,7 +71,7 @@ services:
       - database-mission
     environment:
       - DATABASE_URL=postgresql://medevac-mission-user:medevac-mission-password@database-mission:5432/medevac-mission-database?schema=public
-    command: bunx prisma migrate deploy
+    platform: linux/amd64
     networks:
       - medevac-networks
   vehicle:
@@ -105,7 +106,7 @@ services:
       - database-vehicle
     environment:
       - DATABASE_URL=postgresql://medevac-vehicle-user:medevac-vehicle-password@database-vehicle:5432/medevac-vehicle-database?schema=public
-    command: bunx prisma migrate deploy
+    platform: linux/amd64
     networks:
       - medevac-networks
   patient:
@@ -141,25 +142,33 @@ services:
       - database-patient
     environment:
       - DATABASE_URL=postgresql://medevac-patient-user:medevac-patient-password@database-patient:5432/medevac-patient-database?schema=public
-    command: bunx prisma migrate deploy
+    platform: linux/amd64
     networks:
       - medevac-networks
-  caddy:
-    container_name: caddy
-    image: caddy:2.7.6-alpine
+  proxy:
+    image: "jc21/nginx-proxy-manager:latest"
     restart: unless-stopped
     ports:
       - "80:80"
+      - "81:81"
       - "443:443"
-      - "443:443/udp"
     volumes:
-      - ./.caddy/Caddyfile:/etc/caddy/Caddyfile
-      - ./.caddy/site:/srv
-      - ./.caddy/caddy_data:/data
-      - ./.caddy/caddy_config:/config
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
     networks:
       - medevac-networks
-
+  portainer:
+    container_name: portainer
+    image: portainer/portainer-ce:latest
+    ports:
+      - 9443:9443
+      - 9000:9000
+    volumes:
+      - ./portainer/data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+    networks:
+      - medevac-networks
 networks:
   medevac-networks:
     external: true

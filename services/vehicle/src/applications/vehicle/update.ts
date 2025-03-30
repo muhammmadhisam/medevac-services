@@ -7,7 +7,10 @@ import {
   SuccessResponseSchema,
   VehicleId,
 } from "@/core/types/index.js";
-import { VehiclePartialSchema, VehicleSchema } from "@schema/index";
+import {
+  VehiclePartialSchema,
+  VehicleSchema,
+} from "@/core/types/schema/prisma";
 import { Effect } from "effect";
 import { describeRoute } from "hono-openapi";
 
@@ -61,12 +64,12 @@ export default (app: TypeApplication) =>
     const data = c.req.valid("json");
     const q = c.req.valid("param");
     const program = VehicleServiceContext.pipe(
-      Effect.andThen(service => service.update(VehicleId(q.id), data)),
-      Effect.andThen(data =>
+      Effect.andThen((service) => service.update(VehicleId(q.id), data)),
+      Effect.andThen((data) =>
         ResponseSchema.parse({ data, message: "updated" }),
       ),
-      Effect.andThen(data => c.json(data, 200)),
-      Effect.catchAll(error =>
+      Effect.andThen((data) => c.json(data, 200)),
+      Effect.catchAll((error) =>
         Effect.succeed(c.json(error, { status: error.status })),
       ),
     );

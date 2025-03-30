@@ -7,7 +7,7 @@ import {
   ParamSchema,
   SuccessResponseSchema,
 } from "@/core/types/index.js";
-import { MissionSchema } from "@schema/index";
+import { MissionSchema } from "@/core/types/schema/prisma";
 import { Effect } from "effect";
 import { describeRoute } from "hono-openapi";
 

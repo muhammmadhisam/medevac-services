@@ -6,7 +6,7 @@ import {
   FailResponseSchema,
   SuccessResponseSchema,
 } from "@/core/types/index.js";
-import { PatientOptionalDefaultsSchema } from "@schema/index";
+import { PatientOptionalDefaultsSchema } from "@/core/types/schema/prisma";
 import { Effect } from "effect";
 import { describeRoute } from "hono-openapi";
 

@@ -22,9 +22,9 @@ app.route("/v1", setupApplication());
 const port = env.PORT;
 console.table(env);
 console.log(`Server is running on http://localhost:${port}`);
-console.log(`Server is running docs on http://localhost:${port}/docs`);
+console.log(`Server is running docs on http://localhost:${port}/auth/docs`);
 showRoutes(app);
 export default {
   fetch: app.fetch,
-  port: env.PORT,
+  port,
 };

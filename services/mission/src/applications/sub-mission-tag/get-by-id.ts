@@ -7,7 +7,7 @@ import {
   SubMissionTagId,
   SuccessResponseSchema,
 } from "@/core/types/index.js";
-import { SubMissionTagSchema } from "@schema/index";
+import { SubMissionTagSchema } from "@/core/types/schema/prisma";
 import { Effect } from "effect";
 import { describeRoute } from "hono-openapi";
 import { resolver, validator } from "hono-openapi/zod";

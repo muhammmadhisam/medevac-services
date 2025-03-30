@@ -1,13 +1,13 @@
 import { PaginationSchema } from "@/core/types";
 
+import { z } from "zod";
 import {
   VehicleCreateInputSchema,
   VehicleOrderByWithAggregationInputSchema,
   VehicleSchema,
   VehicleUpdateInputSchema,
   VehicleWhereInputSchema,
-} from "@schema/index";
-import { z } from "zod";
+} from "../prisma";
 
 export const VehicleItemSchema = VehicleSchema;
 export const VehicleCreateSchema = VehicleCreateInputSchema;

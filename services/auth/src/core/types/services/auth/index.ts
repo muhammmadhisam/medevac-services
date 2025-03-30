@@ -7,9 +7,9 @@ import type {
   UsersId,
 } from "@/core/types/index.js";
 import type { TypeUserJwt } from "@/core/types/jwt/index.js";
-import type { UsersOptionalDefaults } from "@schema/index";
 
 import type { Effect } from "effect";
+import type { UsersOptionalDefaults } from "../../schema/prisma";
 
 export type TypeAuthService = {
   signIn: (data: TypeSignIn) => Effect.Effect<TypeToken, TypeFailResponse>;

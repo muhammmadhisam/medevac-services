@@ -1,12 +1,12 @@
+import { z } from "zod";
+import { PaginationSchema } from "../../global";
 import {
   HistoryCreateInputSchema,
   HistoryOrderByWithAggregationInputSchema,
   HistorySchema,
   HistoryUpdateInputSchema,
   HistoryWhereInputSchema,
-} from "@schema/index";
-import { z } from "zod";
-import { PaginationSchema } from "../../global";
+} from "../prisma";
 
 export const HistoryItemSchema = HistorySchema;
 export const HistoryCreateSchema = HistoryCreateInputSchema;

@@ -7,7 +7,7 @@ import {
   PatientId,
   SuccessResponseSchema,
 } from "@/core/types/index.js";
-import { ExamPartialSchema, ExamSchema } from "@schema/index";
+import { ExamPartialSchema, ExamSchema } from "@/core/types/schema/prisma";
 import { Effect } from "effect";
 import { describeRoute } from "hono-openapi";
 

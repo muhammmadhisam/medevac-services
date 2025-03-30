@@ -6,7 +6,7 @@ generator client {
 
 generator zod {
   provider                         = "zod-prisma-types"
-  output                           = "../lib/schema" // default is ./generated/zod
+  output                           = "./../src/core/types/schema/prisma" // default is ./generated/zod
   useMultipleFiles                 = false // default is false
   writeBarrelFiles                 = false // default is true
   createInputTypes                 = true // default is true
@@ -23,6 +23,7 @@ generator zod {
   writeNullishInModelTypes         = true // default is false
   prismaClientPath                 = "@prisma/client" // default is client output path
 }
+
 
 datasource db {
   provider = "postgresql"

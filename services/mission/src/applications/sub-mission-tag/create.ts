@@ -7,7 +7,7 @@ import {
   SubMissionId,
   SuccessResponseSchema,
 } from "@/core/types/index.js";
-import { SubMissionTagOptionalDefaultsSchema } from "@schema/index";
+import { SubMissionTagOptionalDefaultsSchema } from "@/core/types/schema/prisma";
 import { Effect } from "effect";
 import { describeRoute } from "hono-openapi";
 

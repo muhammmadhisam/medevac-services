@@ -6,13 +6,13 @@
 
 generator client {
   provider      = "prisma-client-js"
-  engineType    = "library"
-  binaryTargets = ["native"]
+  engineType    = "binary"
+  binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x"]
 }
 
 generator zod {
   provider                         = "zod-prisma-types"
-  output                           = "./../lib/schema" // default is ./generated/zod
+  output                           = "./../src/core/types/schema/prisma" // default is ./generated/zod
   useMultipleFiles                 = false // default is false
   writeBarrelFiles                 = false // default is true
   createInputTypes                 = true // default is true
@@ -36,19 +36,19 @@ datasource db {
 }
 
 model Users {
-  id                 String     @id @default(uuid())
-  username           String     @unique()
-  password           String
-  first_name         String
-  last_name          String
-  status             StatusUser @default(Pending)
-  role               RoleUsers  @default(User)
-  email              String?
-  address            String?
-  phone_number       String?
-  career             String?
-  id_card            String?
-  image              String?
+  id                String             @id @default(uuid())
+  username          String             @unique()
+  password          String
+  first_name        String
+  last_name         String
+  status            StatusUser         @default(Pending)
+  role              RoleUsers          @default(User)
+  email             String?
+  address           String?
+  phone_number      String?
+  career            String?
+  id_card           String?
+  image             String?
   create_date       DateTime?          @default(now())
   update_date       DateTime?          @updatedAt
   delete_date       DateTime?

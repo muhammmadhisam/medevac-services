@@ -1,12 +1,12 @@
+import { z } from "zod";
+import { PaginationSchema } from "../../global";
 import {
   ExamCreateInputSchema,
   ExamOrderByWithAggregationInputSchema,
   ExamSchema,
   ExamUpdateInputSchema,
   ExamWhereInputSchema,
-} from "@schema/index";
-import { z } from "zod";
-import { PaginationSchema } from "../../global";
+} from "../prisma";
 
 export const ExamItemSchema = ExamSchema;
 export const ExamCreateSchema = ExamCreateInputSchema;

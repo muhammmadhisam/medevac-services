@@ -1,13 +1,13 @@
 import { PaginationSchema } from "@/core/types";
 
+import { z } from "zod";
 import {
   SubMissionCreateInputSchema,
   SubMissionOrderByWithAggregationInputSchema,
   SubMissionSchema,
   SubMissionUpdateInputSchema,
   SubMissionWhereInputSchema,
-} from "@schema/index";
-import { z } from "zod";
+} from "../prisma";
 
 export const SubMissionItemSchema = SubMissionSchema;
 export const SubMissionCreateSchema = SubMissionCreateInputSchema;
