@@ -3,7 +3,7 @@ import type {
   TypeFailResponse,
   TypeMetaDataResponse,
 } from "@/core/types";
-import type { ResponseCode } from "../types/global/application-statust-cose";
+import type { ContentfulStatusCode } from "hono/utils/http-status";
 
 export function createErrorFactory<T>(Self: new (payload: ErrorMsg) => T) {
   return (message?: string) => (error?: unknown) => {
@@ -18,10 +18,10 @@ export function createErrorFactoryResponseError<T>(
   return (message: string) =>
     (
       error?: unknown | null,
-      status?: ResponseCode,
+      status: ContentfulStatusCode = 500,
       meta_data?: TypeMetaDataResponse,
     ) => {
       console.log({ error, message });
-      return new Self({ error, message, meta_data, status: status || 500 });
+      return new Self({ error, message, meta_data, status });
     };
 }

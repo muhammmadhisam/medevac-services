@@ -7,11 +7,15 @@ import {
   ParamSchema,
   SuccessResponseSchema,
 } from "@/core/types/index.js";
-import { MissionPartialSchema, MissionSchema } from "@schema/index";
+import {
+  MissionPartialSchema,
+  MissionSchema,
+} from "@/core/types/schema/prisma";
 import { Effect } from "effect";
 import { describeRoute } from "hono-openapi";
 
 import { resolver, validator } from "hono-openapi/zod";
+import { authorizationMiddleware } from "../middleware";
 
 const ResponseSchema = SuccessResponseSchema(
   MissionSchema.omit({ delete_date: true }),
@@ -57,19 +61,26 @@ const Docs = describeRoute({
 });
 
 export default (app: TypeApplication) =>
-  app.put("/:id", Docs, RequestParam, RequestBody, async (c) => {
-    const data = c.req.valid("json");
-    const q = c.req.valid("param");
-    const program = MissionServiceContext.pipe(
-      Effect.andThen(service => service.update(MissionId(q.id), data)),
-      Effect.andThen(data =>
-        ResponseSchema.parse({ data, message: "updated" }),
-      ),
-      Effect.andThen(data => c.json(data, 200)),
-      Effect.catchAll(error =>
-        Effect.succeed(c.json(error, { status: error.status as 500 })),
-      ),
-    );
-    const result = await ServicesRuntime.runPromise(program);
-    return result;
-  });
+  app.put(
+    "/:id",
+    authorizationMiddleware,
+    Docs,
+    RequestParam,
+    RequestBody,
+    async (c) => {
+      const data = c.req.valid("json");
+      const q = c.req.valid("param");
+      const program = MissionServiceContext.pipe(
+        Effect.andThen(service => service.update(MissionId(q.id), data)),
+        Effect.andThen(data =>
+          ResponseSchema.parse({ data, message: "updated" }),
+        ),
+        Effect.andThen(data => c.json(data, 200)),
+        Effect.catchAll(error =>
+          Effect.succeed(c.json(error, { status: error.status })),
+        ),
+      );
+      const result = await ServicesRuntime.runPromise(program);
+      return result;
+    },
+  );

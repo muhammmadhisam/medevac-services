@@ -30,9 +30,7 @@ function init({
       return StoreRefreshTokenRepo.create(data).pipe(
         Effect.catchTags({
           CreateStoreRefreshTokenError: error =>
-            Effect.fail(
-              TypeFailResponseError.new("เพิ่มข้อมุลภารกิจล้มเหลว")(error),
-            ),
+            Effect.fail(TypeFailResponseError.new("เพิ่มข้อมูลล้มเหลว")(error)),
         }),
       );
     },
@@ -45,7 +43,7 @@ function init({
             Effect.catchTags({
               GetAllStoreRefreshTokenError: error =>
                 Effect.fail(
-                  TypeFailResponseError.new("ขอข้อมุล ภารกิจ ล้มเหลว")(error),
+                  TypeFailResponseError.new("ขอข้อมูลล้มเหลว")(error),
                 ),
             }),
           )),
@@ -66,9 +64,7 @@ function init({
           GetOneStoreRefreshTokenError: error =>
             Effect.fail(TypeFailResponseError.new("get data fail")(error)),
           NoSuchElementException: error =>
-            Effect.fail(
-              TypeFailResponseError.new("ไม่พบข้อมุล ภารกิจ")(error, 404),
-            ),
+            Effect.fail(TypeFailResponseError.new("ไม่พบข้อมูล")(error, 404)),
         }),
       );
     },

@@ -6,11 +6,12 @@ import {
   PaginationSchema,
   SuccessResponseSchema,
 } from "@/core/types/index.js";
-import { MissionSchema } from "@schema/index";
+import { MissionSchema } from "@/core/types/schema/prisma";
 import { Effect } from "effect";
 import { describeRoute } from "hono-openapi";
 
 import { resolver, validator } from "hono-openapi/zod";
+import { authorizationMiddleware } from "../middleware";
 
 const ResponseSchema = SuccessResponseSchema(
   MissionSchema.omit({ delete_date: true }).array(),
@@ -40,7 +41,7 @@ const Docs = describeRoute({
 });
 
 export default (app: TypeApplication) =>
-  app.get("/", Docs, RequestQuery, async (c) => {
+  app.get("/", authorizationMiddleware, Docs, RequestQuery, async (c) => {
     const query = c.req.valid("query");
     const program = MissionServiceContext.pipe(
       Effect.andThen(service =>
@@ -58,7 +59,7 @@ export default (app: TypeApplication) =>
       ),
       Effect.andThen(data => c.json(data, 200)),
       Effect.catchAll(error =>
-        Effect.succeed(c.json(error, { status: error.status as 500 })),
+        Effect.succeed(c.json(error, { status: error.status })),
       ),
     );
     const result = await ServicesRuntime.runPromise(program);

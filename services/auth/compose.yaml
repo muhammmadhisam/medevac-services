@@ -2,6 +2,7 @@ version: "3.8"
 services:
   migrate-database:
     image: "devpala/medevac-auth-migration-database:latest"
+    platform: linux/amd64
     build:
       context: .
       dockerfile: Dockerfile.migration
@@ -9,7 +10,6 @@ services:
       - database-auth
     environment:
       - DATABASE_URL=postgresql://medevac-auth-user:medevac-auth-password@database-auth:5432/medevac-auth-database?schema=public
-    command: bunx prisma migrate deploy
     networks:
       - medevac-networks
   database-auth:

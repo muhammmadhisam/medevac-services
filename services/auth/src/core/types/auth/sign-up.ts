@@ -1,5 +1,5 @@
-import { RoleUsersSchema } from "@schema/index";
 import { z } from "zod";
+import { RoleUsersSchema } from "../schema/prisma";
 
 export const SignUpSchema = z.object({
   first_name: z.string(),

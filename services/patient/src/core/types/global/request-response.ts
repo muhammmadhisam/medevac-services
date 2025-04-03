@@ -1,3 +1,4 @@
+import type { ContentfulStatusCode } from "hono/utils/http-status.js";
 import { createErrorFactoryResponseError } from "@/core/helpers/index.js";
 import { Data } from "effect";
 import { z } from "zod";
@@ -47,7 +48,7 @@ export const FailResponseSchema = z.object({
     data: true,
     message: true,
   }).optional(),
-  status: z.number().default(500),
+  status: z.custom<ContentfulStatusCode>().default(500),
 });
 
 export type TypeFailResponse = z.infer<typeof FailResponseSchema>;

@@ -66,9 +66,7 @@ function init({ VehicleRepo }: { VehicleRepo: TypeVehicleRepository }) {
           GetOneVehicleError: error =>
             Effect.fail(TypeFailResponseError.new("get data fail")(error)),
           NoSuchElementException: error =>
-            Effect.fail(
-              TypeFailResponseError.new("ไม่พบข้อมุล ภารกิจ")(error, 404),
-            ),
+            Effect.fail(TypeFailResponseError.new("ไม่พบข้อมูล")(error, 404)),
         }),
       );
     },

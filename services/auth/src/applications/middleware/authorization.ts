@@ -24,7 +24,7 @@ export const authorizationMiddleware = createMiddleware<TypeAppBindings>(
       Effect.tap(data => c.set("user", data)),
       Effect.flatMap(() => Effect.succeed(true)),
       Effect.catchAll(error =>
-        Effect.succeed(c.json(error, { status: error.status as 500 })),
+        Effect.succeed(c.json(error, { status: error.status })),
       ),
     );
     const result = await ServicesRuntime.runPromise(program);

@@ -13,6 +13,7 @@
     "prisma:reset": "prisma migrate reset"
   },
   "dependencies": {
+    "@hono/node-server": "^1.14.0",
     "@node-rs/argon2": "^2.0.2",
     "@prisma/client": "^6.4.1",
     "argon": "^2.0.21",
@@ -23,6 +24,7 @@
     "@hono/zod-validator": "^0.4.3",
     "@scalar/hono-api-reference": "^0.5.179",
     "@types/bun": "latest",
+    "@types/node": "^22.13.14",
     "dotenv": "^16.4.7",
     "hono-openapi": "^0.4.6",
     "lint-staged": "^15.4.3",

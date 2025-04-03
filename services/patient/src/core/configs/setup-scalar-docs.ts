@@ -8,7 +8,7 @@ export function setupScalarDocs(app: TypeApplication) {
       darkMode: true,
       favicon: "https://cdn-icons-png.flaticon.com/512/2164/2164832.png",
       layout: "modern", // "classic" | "modern" (default)
-      pageTitle: "Medevac Mission",
+      pageTitle: "Medevac Patient",
       spec: {
         url: "/patient/openapi.json",
       },

@@ -6,11 +6,13 @@ import {
   FailResponseSchema,
   SuccessResponseSchema,
 } from "@/core/types/index.js";
-import { MissionOptionalDefaultsSchema } from "@schema/index";
-import { Effect } from "effect";
-import { describeRoute } from "hono-openapi";
 
+import { MissionOptionalDefaultsSchema } from "@/core/types/schema/prisma";
+import { Effect } from "effect";
+
+import { describeRoute } from "hono-openapi";
 import { resolver, validator } from "hono-openapi/zod";
+import { authorizationMiddleware } from "../middleware";
 
 const ResponseSchema = SuccessResponseSchema(
   MissionOptionalDefaultsSchema.omit({ delete_date: true }),
@@ -47,7 +49,7 @@ const Docs = describeRoute({
 });
 
 export default (app: TypeApplication) =>
-  app.post("/", Docs, RequestBody, async (c) => {
+  app.post("/", authorizationMiddleware, Docs, RequestBody, async (c) => {
     const data = c.req.valid("json");
     const program = MissionServiceContext.pipe(
       Effect.andThen(service =>
@@ -60,7 +62,7 @@ export default (app: TypeApplication) =>
       ),
       Effect.andThen(data => c.json(data, 201)),
       Effect.catchAll(error =>
-        Effect.succeed(c.json(error, { status: error.status as 500 })),
+        Effect.succeed(c.json(error, { status: error.status })),
       ),
     );
     const result = await ServicesRuntime.runPromise(program);

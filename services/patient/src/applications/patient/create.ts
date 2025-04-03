@@ -6,7 +6,7 @@ import {
   FailResponseSchema,
   SuccessResponseSchema,
 } from "@/core/types/index.js";
-import { PatientOptionalDefaultsSchema } from "@schema/index";
+import { PatientOptionalDefaultsSchema } from "@/core/types/schema/prisma";
 import { Effect } from "effect";
 import { describeRoute } from "hono-openapi";
 
@@ -60,7 +60,7 @@ export default (app: TypeApplication) =>
       ),
       Effect.andThen(data => c.json(data, 201)),
       Effect.catchAll(error =>
-        Effect.succeed(c.json(error, { status: error.status as 500 })),
+        Effect.succeed(c.json(error, { status: error.status })),
       ),
     );
     const result = await ServicesRuntime.runPromise(program);

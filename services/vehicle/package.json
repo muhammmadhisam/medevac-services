@@ -23,13 +23,14 @@
     "@hono/zod-validator": "^0.4.3",
     "@scalar/hono-api-reference": "^0.5.179",
     "@types/bun": "latest",
+    "@types/node": "^22.13.14",
     "dotenv": "^16.4.7",
     "hono-openapi": "^0.4.6",
     "lint-staged": "^15.4.3",
     "prisma": "^6.4.1",
     "tsup": "^8.4.0",
-    "zod": "^3.24.2",
     "typescript": "^5.8.2",
+    "zod": "^3.24.2",
     "zod-openapi": "^4.2.3",
     "zod-prisma-types": "^3.2.4"
   }

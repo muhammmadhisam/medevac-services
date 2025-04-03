@@ -7,7 +7,10 @@ import {
   PatientId,
   SuccessResponseSchema,
 } from "@/core/types/index.js";
-import { PatientPartialSchema, PatientSchema } from "@schema/index";
+import {
+  PatientPartialSchema,
+  PatientSchema,
+} from "@/core/types/schema/prisma";
 import { Effect } from "effect";
 import { describeRoute } from "hono-openapi";
 
@@ -67,7 +70,7 @@ export default (app: TypeApplication) =>
       ),
       Effect.andThen(data => c.json(data, 200)),
       Effect.catchAll(error =>
-        Effect.succeed(c.json(error, { status: error.status as 500 })),
+        Effect.succeed(c.json(error, { status: error.status })),
       ),
     );
     const result = await ServicesRuntime.runPromise(program);

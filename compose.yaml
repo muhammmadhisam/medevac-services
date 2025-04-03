@@ -1,0 +1,165 @@
+version: "3.8"
+services:
+  auth:
+    image: "devpala/medevac-auth:latest"
+    restart: always
+    depends_on:
+      - database-auth
+    environment:
+      - DATABASE_URL=postgresql://medevac-auth-user:medevac-auth-password@database-auth:5432/medevac-auth-database?schema=public
+      - SECRET_TOKEN=${SECRET_TOKEN}
+      - PORT=3000
+      - DOMAIN=*.localhost
+      - CORS_ORIGIN=${CORS_ORIGIN}
+    networks:
+      - medevac-networks
+  database-auth:
+    image: postgres:16-alpine
+    restart: always
+    ports:
+      - 5432
+    volumes:
+      - ./.database/auth:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=medevac-auth-password
+      - POSTGRES_USER=medevac-auth-user
+      - POSTGRES_DB=medevac-auth-database
+    networks:
+      - medevac-networks
+  migrate-database-auth:
+    image: "devpala/medevac-auth-migration-database:latest"
+    depends_on:
+      - database-auth
+    environment:
+      - DATABASE_URL=postgresql://medevac-auth-user:medevac-auth-password@database-auth:5432/medevac-auth-database?schema=public
+
+    networks:
+      - medevac-networks
+  mission:
+    image: "devpala/medevac-mission:latest"
+    restart: always
+    depends_on:
+      - database-mission
+    environment:
+      - DATABASE_URL=postgresql://medevac-mission-user:medevac-mission-password@database-mission:5432/medevac-mission-database?schema=public
+      - SECRET_TOKEN=${SECRET_TOKEN}
+      - PORT=3000
+      - CORS_ORIGIN=${CORS_ORIGIN}
+    networks:
+      - medevac-networks
+  database-mission:
+    image: postgres:16-alpine
+    restart: always
+    ports:
+      - 5432
+    volumes:
+      - ./.database/mission:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=medevac-mission-password
+      - POSTGRES_USER=medevac-mission-user
+      - POSTGRES_DB=medevac-mission-database
+    networks:
+      - medevac-networks
+  migrate-database-mission:
+    image: "devpala/medevac-mission-migration-database:latest"
+    depends_on:
+      - database-mission
+    environment:
+      - DATABASE_URL=postgresql://medevac-mission-user:medevac-mission-password@database-mission:5432/medevac-mission-database?schema=public
+
+    networks:
+      - medevac-networks
+  vehicle:
+    image: "devpala/medevac-vehicle:latest"
+    restart: always
+    depends_on:
+      - database-vehicle
+    environment:
+      - DATABASE_URL=postgresql://medevac-vehicle-user:medevac-vehicle-password@database-vehicle:5432/medevac-vehicle-database?schema=public
+      - SECRET_TOKEN=${SECRET_TOKEN}
+      - PORT=3000
+      - CORS_ORIGIN=${CORS_ORIGIN}
+    networks:
+      - medevac-networks
+  database-vehicle:
+    image: postgres:16-alpine
+    ports:
+      - 5432
+    volumes:
+      - ./.database/vehicle:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=medevac-vehicle-password
+      - POSTGRES_USER=medevac-vehicle-user
+      - POSTGRES_DB=medevac-vehicle-database
+    networks:
+      - medevac-networks
+  migrate-database-vehicle:
+    image: "devpala/medevac-vehicle-migration-database:latest"
+    depends_on:
+      - database-vehicle
+    environment:
+      - DATABASE_URL=postgresql://medevac-vehicle-user:medevac-vehicle-password@database-vehicle:5432/medevac-vehicle-database?schema=public
+
+    networks:
+      - medevac-networks
+  patient:
+    image: "devpala/medevac-patient:latest"
+    restart: always
+    depends_on:
+      - database-patient
+    environment:
+      - DATABASE_URL=postgresql://medevac-patient-user:medevac-patient-password@database-patient:5432/medevac-patient-database?schema=public
+      - SECRET_TOKEN=${SECRET_TOKEN}
+      - PORT=3000
+      - CORS_ORIGIN=${CORS_ORIGIN}
+    networks:
+      - medevac-networks
+  database-patient:
+    image: postgres:16-alpine
+    restart: always
+    ports:
+      - 5432
+    volumes:
+      - ./.database/patient:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=medevac-patient-password
+      - POSTGRES_USER=medevac-patient-user
+      - POSTGRES_DB=medevac-patient-database
+    networks:
+      - medevac-networks
+  migrate-database-patient:
+    image: "devpala/medevac-patient-migration-database:latest"
+    depends_on:
+      - database-patient
+    environment:
+      - DATABASE_URL=postgresql://medevac-patient-user:medevac-patient-password@database-patient:5432/medevac-patient-database?schema=public
+
+    networks:
+      - medevac-networks
+  proxy:
+    image: "jc21/nginx-proxy-manager:latest"
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "81:81"
+      - "443:443"
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+    networks:
+      - medevac-networks
+  portainer:
+    container_name: portainer
+    image: portainer/portainer-ce:latest
+    ports:
+      - 9443:9443
+      - 9000:9000
+    volumes:
+      - ./portainer/data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+    networks:
+      - medevac-networks
+networks:
+  medevac-networks:
+    external: true

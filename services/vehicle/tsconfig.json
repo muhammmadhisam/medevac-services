@@ -13,7 +13,6 @@
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx",
     "paths": {
-      "@schema/*": ["./lib/schema/*"],
       "@/*": ["./src/*"]
     }
   }

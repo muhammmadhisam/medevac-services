@@ -10,7 +10,7 @@ export function setupScalarDocs(app: TypeApplication) {
       layout: "modern", // "classic" | "modern" (default)
       pageTitle: "Medevac Mission",
       spec: {
-        url: "/openapi.json",
+        url: "/mission/openapi.json",
       },
       theme: "deepSpace",
     }),

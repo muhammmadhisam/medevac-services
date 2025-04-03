@@ -1,13 +1,13 @@
 import { PaginationSchema } from "@/core/types";
 
+import { z } from "zod";
 import {
   StoreRefreshTokenCreateInputSchema,
   StoreRefreshTokenOrderByWithAggregationInputSchema,
   StoreRefreshTokenSchema,
   StoreRefreshTokenUpdateInputSchema,
   StoreRefreshTokenWhereInputSchema,
-} from "@schema/index";
-import { z } from "zod";
+} from "../prisma";
 
 export const StoreRefreshTokenItemSchema = StoreRefreshTokenSchema;
 export const StoreRefreshTokenCreateSchema = StoreRefreshTokenCreateInputSchema;

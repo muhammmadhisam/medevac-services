@@ -1,12 +1,12 @@
+import { z } from "zod";
+import { PaginationSchema } from "../../global";
 import {
   PatientCreateInputSchema,
   PatientOrderByWithAggregationInputSchema,
   PatientSchema,
   PatientUpdateInputSchema,
   PatientWhereInputSchema,
-} from "@schema/index";
-import { z } from "zod";
-import { PaginationSchema } from "../../global";
+} from "../prisma";
 
 export const PatientItemSchema = PatientSchema;
 export const PatientCreateSchema = PatientCreateInputSchema;

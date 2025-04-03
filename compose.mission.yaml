@@ -1,0 +1,39 @@
+version: "3.8"
+services:
+  mission:
+    image: "devpala/medevac-mission:latest"
+    restart: always
+    depends_on:
+      - database-mission
+    environment:
+      - DATABASE_URL=postgresql://medevac-mission-user:medevac-mission-password@database-mission:5432/medevac-mission-database?schema=public
+      - SECRET_TOKEN=${SECRET_TOKEN}
+      - PORT=3000
+      - CORS_ORIGIN=${CORS_ORIGIN}
+    networks:
+      - medevac-networks
+  database-mission:
+    image: postgres:16-alpine
+    restart: always
+    ports:
+      - 5432
+    volumes:
+      - ./.database/mission:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=medevac-mission-password
+      - POSTGRES_USER=medevac-mission-user
+      - POSTGRES_DB=medevac-mission-database
+    networks:
+      - medevac-networks
+  migrate-database-mission:
+    image: "devpala/medevac-mission-migration-database:latest"
+    depends_on:
+      - database-mission
+    environment:
+      - DATABASE_URL=postgresql://medevac-mission-user:medevac-mission-password@database-mission:5432/medevac-mission-database?schema=public
+
+    networks:
+      - medevac-networks
+networks:
+  medevac-networks:
+    external: true
