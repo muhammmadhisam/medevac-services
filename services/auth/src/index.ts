@@ -1,3 +1,4 @@
+import { serve } from "@hono/node-server";
 import { config } from "dotenv";
 import { showRoutes } from "hono/dev";
 import { logger } from "hono/logger";
@@ -16,15 +17,23 @@ setUpCors(app);
 setupOpenApi(app);
 setupScalarDocs(app);
 app.use(logger());
-
+app.get("healtz", c => c.json("ok"));
 app.route("/v1", setupApplication());
 
 const port = env.PORT;
 console.table(env);
-console.log(`Server is running on http://localhost:${port}`);
-console.log(`Server is running docs on http://localhost:${port}/auth/docs`);
+
 showRoutes(app);
-export default {
-  fetch: app.fetch,
-  port,
-};
+serve(
+  {
+    fetch: app.fetch,
+    port,
+  },
+  (i) => {
+    console.log(`Server is running on http://localhost:${i.port}`);
+    console.log(
+      `Server is running docs on http://localhost:${i.port}/auth/docs`,
+    );
+    console.log();
+  },
+);

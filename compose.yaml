@@ -5,8 +5,6 @@ services:
     restart: always
     depends_on:
       - database-auth
-    ports:
-      - 3000:3000
     environment:
       - DATABASE_URL=postgresql://medevac-auth-user:medevac-auth-password@database-auth:5432/medevac-auth-database?schema=public
       - SECRET_TOKEN=${SECRET_TOKEN}
@@ -15,7 +13,6 @@ services:
       - CORS_ORIGIN=${CORS_ORIGIN}
     networks:
       - medevac-networks
-    platform: linux/amd64
   database-auth:
     image: postgres:16-alpine
     restart: always
@@ -35,7 +32,7 @@ services:
       - database-auth
     environment:
       - DATABASE_URL=postgresql://medevac-auth-user:medevac-auth-password@database-auth:5432/medevac-auth-database?schema=public
-    platform: linux/amd64
+
     networks:
       - medevac-networks
   mission:
@@ -43,12 +40,10 @@ services:
     restart: always
     depends_on:
       - database-mission
-    ports:
-      - 3001:3001
     environment:
       - DATABASE_URL=postgresql://medevac-mission-user:medevac-mission-password@database-mission:5432/medevac-mission-database?schema=public
       - SECRET_TOKEN=${SECRET_TOKEN}
-      - PORT=3001
+      - PORT=3000
       - CORS_ORIGIN=${CORS_ORIGIN}
     networks:
       - medevac-networks
@@ -71,7 +66,7 @@ services:
       - database-mission
     environment:
       - DATABASE_URL=postgresql://medevac-mission-user:medevac-mission-password@database-mission:5432/medevac-mission-database?schema=public
-    platform: linux/amd64
+
     networks:
       - medevac-networks
   vehicle:
@@ -79,12 +74,10 @@ services:
     restart: always
     depends_on:
       - database-vehicle
-    ports:
-      - 3002:3002
     environment:
       - DATABASE_URL=postgresql://medevac-vehicle-user:medevac-vehicle-password@database-vehicle:5432/medevac-vehicle-database?schema=public
       - SECRET_TOKEN=${SECRET_TOKEN}
-      - PORT=3002
+      - PORT=3000
       - CORS_ORIGIN=${CORS_ORIGIN}
     networks:
       - medevac-networks
@@ -106,7 +99,7 @@ services:
       - database-vehicle
     environment:
       - DATABASE_URL=postgresql://medevac-vehicle-user:medevac-vehicle-password@database-vehicle:5432/medevac-vehicle-database?schema=public
-    platform: linux/amd64
+
     networks:
       - medevac-networks
   patient:
@@ -114,12 +107,10 @@ services:
     restart: always
     depends_on:
       - database-patient
-    ports:
-      - 3003:3003
     environment:
       - DATABASE_URL=postgresql://medevac-patient-user:medevac-patient-password@database-patient:5432/medevac-patient-database?schema=public
       - SECRET_TOKEN=${SECRET_TOKEN}
-      - PORT=3003
+      - PORT=3000
       - CORS_ORIGIN=${CORS_ORIGIN}
     networks:
       - medevac-networks
@@ -142,7 +133,7 @@ services:
       - database-patient
     environment:
       - DATABASE_URL=postgresql://medevac-patient-user:medevac-patient-password@database-patient:5432/medevac-patient-database?schema=public
-    platform: linux/amd64
+
     networks:
       - medevac-networks
   proxy:

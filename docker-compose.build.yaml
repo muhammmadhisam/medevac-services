@@ -17,11 +17,13 @@ services:
     build:
       context: ./services/mission/
       dockerfile: ./Dockerfile
+    platform: linux/amd64
   migrate-database-mission:
     image: "devpala/medevac-mission-migration-database:latest"
     build:
       context: ./services/mission/
       dockerfile: Dockerfile.migration
+    platform: linux/amd64
   vehicle:
     image: "devpala/medevac-vehicle:latest"
     build:
@@ -33,11 +35,13 @@ services:
     build:
       context: ./services/vehicle/
       dockerfile: Dockerfile.migration
+    platform: linux/amd64
   patient:
     image: "devpala/medevac-patient:latest"
     build:
       context: ./services/patient/
       dockerfile: ./Dockerfile
+    platform: linux/amd64
   migrate-database-patient:
     image: "devpala/medevac-patient-migration-database:latest"
     build:

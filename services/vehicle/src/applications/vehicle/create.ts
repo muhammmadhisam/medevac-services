@@ -51,16 +51,16 @@ export default (app: TypeApplication) =>
   app.post("/", Docs, RequestBody, async (c) => {
     const data = c.req.valid("json");
     const program = VehicleServiceContext.pipe(
-      Effect.andThen((service) =>
+      Effect.andThen(service =>
         service.create({
           ...data,
         }),
       ),
-      Effect.andThen((data) =>
+      Effect.andThen(data =>
         ResponseSchema.parse({ data, message: "created" }),
       ),
-      Effect.andThen((data) => c.json(data, 201)),
-      Effect.catchAll((error) =>
+      Effect.andThen(data => c.json(data, 201)),
+      Effect.catchAll(error =>
         Effect.succeed(c.json(error, { status: error.status })),
       ),
     );

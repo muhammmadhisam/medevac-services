@@ -184,8 +184,8 @@ export type PatientRelations = {
 export type PatientWithRelations = z.infer<typeof PatientSchema> &
   PatientRelations;
 
-export const PatientWithRelationsSchema: z.ZodType<PatientWithRelations> =
-  PatientSchema.merge(
+export const PatientWithRelationsSchema: z.ZodType<PatientWithRelations>
+  = PatientSchema.merge(
     z.object({
       Exam: z.lazy(() => ExamWithRelationsSchema).array(),
       History: z.lazy(() => HistoryWithRelationsSchema).nullish(),
@@ -207,10 +207,10 @@ export type PatientOptionalDefaultsRelations = {
 export type PatientOptionalDefaultsWithRelations = z.infer<
   typeof PatientOptionalDefaultsSchema
 > &
-  PatientOptionalDefaultsRelations;
+PatientOptionalDefaultsRelations;
 
-export const PatientOptionalDefaultsWithRelationsSchema: z.ZodType<PatientOptionalDefaultsWithRelations> =
-  PatientOptionalDefaultsSchema.merge(
+export const PatientOptionalDefaultsWithRelationsSchema: z.ZodType<PatientOptionalDefaultsWithRelations>
+  = PatientOptionalDefaultsSchema.merge(
     z.object({
       Exam: z.lazy(() => ExamOptionalDefaultsWithRelationsSchema).array(),
       History: z
@@ -238,8 +238,8 @@ export type PatientPartialRelations = {
 export type PatientPartialWithRelations = z.infer<typeof PatientPartialSchema> &
   PatientPartialRelations;
 
-export const PatientPartialWithRelationsSchema: z.ZodType<PatientPartialWithRelations> =
-  PatientPartialSchema.merge(
+export const PatientPartialWithRelationsSchema: z.ZodType<PatientPartialWithRelations>
+  = PatientPartialSchema.merge(
     z.object({
       Exam: z.lazy(() => ExamPartialWithRelationsSchema).array(),
       History: z.lazy(() => HistoryPartialWithRelationsSchema).nullish(),
@@ -253,10 +253,10 @@ export const PatientPartialWithRelationsSchema: z.ZodType<PatientPartialWithRela
 export type PatientOptionalDefaultsWithPartialRelations = z.infer<
   typeof PatientOptionalDefaultsSchema
 > &
-  PatientPartialRelations;
+PatientPartialRelations;
 
-export const PatientOptionalDefaultsWithPartialRelationsSchema: z.ZodType<PatientOptionalDefaultsWithPartialRelations> =
-  PatientOptionalDefaultsSchema.merge(
+export const PatientOptionalDefaultsWithPartialRelationsSchema: z.ZodType<PatientOptionalDefaultsWithPartialRelations>
+  = PatientOptionalDefaultsSchema.merge(
     z
       .object({
         Exam: z.lazy(() => ExamPartialWithRelationsSchema).array(),
@@ -272,8 +272,8 @@ export const PatientOptionalDefaultsWithPartialRelationsSchema: z.ZodType<Patien
 export type PatientWithPartialRelations = z.infer<typeof PatientSchema> &
   PatientPartialRelations;
 
-export const PatientWithPartialRelationsSchema: z.ZodType<PatientWithPartialRelations> =
-  PatientSchema.merge(
+export const PatientWithPartialRelationsSchema: z.ZodType<PatientWithPartialRelations>
+  = PatientSchema.merge(
     z
       .object({
         Exam: z.lazy(() => ExamPartialWithRelationsSchema).array(),
@@ -340,8 +340,8 @@ export type HistoryRelations = {
 export type HistoryWithRelations = z.infer<typeof HistorySchema> &
   HistoryRelations;
 
-export const HistoryWithRelationsSchema: z.ZodType<HistoryWithRelations> =
-  HistorySchema.merge(
+export const HistoryWithRelationsSchema: z.ZodType<HistoryWithRelations>
+  = HistorySchema.merge(
     z.object({
       Patient: z.lazy(() => PatientWithRelationsSchema),
     }),
@@ -357,10 +357,10 @@ export type HistoryOptionalDefaultsRelations = {
 export type HistoryOptionalDefaultsWithRelations = z.infer<
   typeof HistoryOptionalDefaultsSchema
 > &
-  HistoryOptionalDefaultsRelations;
+HistoryOptionalDefaultsRelations;
 
-export const HistoryOptionalDefaultsWithRelationsSchema: z.ZodType<HistoryOptionalDefaultsWithRelations> =
-  HistoryOptionalDefaultsSchema.merge(
+export const HistoryOptionalDefaultsWithRelationsSchema: z.ZodType<HistoryOptionalDefaultsWithRelations>
+  = HistoryOptionalDefaultsSchema.merge(
     z.object({
       Patient: z.lazy(() => PatientOptionalDefaultsWithRelationsSchema),
     }),
@@ -376,8 +376,8 @@ export type HistoryPartialRelations = {
 export type HistoryPartialWithRelations = z.infer<typeof HistoryPartialSchema> &
   HistoryPartialRelations;
 
-export const HistoryPartialWithRelationsSchema: z.ZodType<HistoryPartialWithRelations> =
-  HistoryPartialSchema.merge(
+export const HistoryPartialWithRelationsSchema: z.ZodType<HistoryPartialWithRelations>
+  = HistoryPartialSchema.merge(
     z.object({
       Patient: z.lazy(() => PatientPartialWithRelationsSchema),
     }),
@@ -386,10 +386,10 @@ export const HistoryPartialWithRelationsSchema: z.ZodType<HistoryPartialWithRela
 export type HistoryOptionalDefaultsWithPartialRelations = z.infer<
   typeof HistoryOptionalDefaultsSchema
 > &
-  HistoryPartialRelations;
+HistoryPartialRelations;
 
-export const HistoryOptionalDefaultsWithPartialRelationsSchema: z.ZodType<HistoryOptionalDefaultsWithPartialRelations> =
-  HistoryOptionalDefaultsSchema.merge(
+export const HistoryOptionalDefaultsWithPartialRelationsSchema: z.ZodType<HistoryOptionalDefaultsWithPartialRelations>
+  = HistoryOptionalDefaultsSchema.merge(
     z
       .object({
         Patient: z.lazy(() => PatientPartialWithRelationsSchema),
@@ -400,8 +400,8 @@ export const HistoryOptionalDefaultsWithPartialRelationsSchema: z.ZodType<Histor
 export type HistoryWithPartialRelations = z.infer<typeof HistorySchema> &
   HistoryPartialRelations;
 
-export const HistoryWithPartialRelationsSchema: z.ZodType<HistoryWithPartialRelations> =
-  HistorySchema.merge(
+export const HistoryWithPartialRelationsSchema: z.ZodType<HistoryWithPartialRelations>
+  = HistorySchema.merge(
     z
       .object({
         Patient: z.lazy(() => PatientPartialWithRelationsSchema),
@@ -457,8 +457,8 @@ export type ExamRelations = {
 
 export type ExamWithRelations = z.infer<typeof ExamSchema> & ExamRelations;
 
-export const ExamWithRelationsSchema: z.ZodType<ExamWithRelations> =
-  ExamSchema.merge(
+export const ExamWithRelationsSchema: z.ZodType<ExamWithRelations>
+  = ExamSchema.merge(
     z.object({
       Patient: z.lazy(() => PatientWithRelationsSchema).nullish(),
     }),
@@ -474,10 +474,10 @@ export type ExamOptionalDefaultsRelations = {
 export type ExamOptionalDefaultsWithRelations = z.infer<
   typeof ExamOptionalDefaultsSchema
 > &
-  ExamOptionalDefaultsRelations;
+ExamOptionalDefaultsRelations;
 
-export const ExamOptionalDefaultsWithRelationsSchema: z.ZodType<ExamOptionalDefaultsWithRelations> =
-  ExamOptionalDefaultsSchema.merge(
+export const ExamOptionalDefaultsWithRelationsSchema: z.ZodType<ExamOptionalDefaultsWithRelations>
+  = ExamOptionalDefaultsSchema.merge(
     z.object({
       Patient: z
         .lazy(() => PatientOptionalDefaultsWithRelationsSchema)
@@ -495,8 +495,8 @@ export type ExamPartialRelations = {
 export type ExamPartialWithRelations = z.infer<typeof ExamPartialSchema> &
   ExamPartialRelations;
 
-export const ExamPartialWithRelationsSchema: z.ZodType<ExamPartialWithRelations> =
-  ExamPartialSchema.merge(
+export const ExamPartialWithRelationsSchema: z.ZodType<ExamPartialWithRelations>
+  = ExamPartialSchema.merge(
     z.object({
       Patient: z.lazy(() => PatientPartialWithRelationsSchema).nullish(),
     }),
@@ -505,10 +505,10 @@ export const ExamPartialWithRelationsSchema: z.ZodType<ExamPartialWithRelations>
 export type ExamOptionalDefaultsWithPartialRelations = z.infer<
   typeof ExamOptionalDefaultsSchema
 > &
-  ExamPartialRelations;
+ExamPartialRelations;
 
-export const ExamOptionalDefaultsWithPartialRelationsSchema: z.ZodType<ExamOptionalDefaultsWithPartialRelations> =
-  ExamOptionalDefaultsSchema.merge(
+export const ExamOptionalDefaultsWithPartialRelationsSchema: z.ZodType<ExamOptionalDefaultsWithPartialRelations>
+  = ExamOptionalDefaultsSchema.merge(
     z
       .object({
         Patient: z.lazy(() => PatientPartialWithRelationsSchema).nullish(),
@@ -519,8 +519,8 @@ export const ExamOptionalDefaultsWithPartialRelationsSchema: z.ZodType<ExamOptio
 export type ExamWithPartialRelations = z.infer<typeof ExamSchema> &
   ExamPartialRelations;
 
-export const ExamWithPartialRelationsSchema: z.ZodType<ExamWithPartialRelations> =
-  ExamSchema.merge(
+export const ExamWithPartialRelationsSchema: z.ZodType<ExamWithPartialRelations>
+  = ExamSchema.merge(
     z
       .object({
         Patient: z.lazy(() => PatientPartialWithRelationsSchema).nullish(),
@@ -579,8 +579,8 @@ export type StationPatientRelations = {
 export type StationPatientWithRelations = z.infer<typeof StationPatientSchema> &
   StationPatientRelations;
 
-export const StationPatientWithRelationsSchema: z.ZodType<StationPatientWithRelations> =
-  StationPatientSchema.merge(
+export const StationPatientWithRelationsSchema: z.ZodType<StationPatientWithRelations>
+  = StationPatientSchema.merge(
     z.object({
       Patient: z.lazy(() => PatientWithRelationsSchema),
     }),
@@ -596,10 +596,10 @@ export type StationPatientOptionalDefaultsRelations = {
 export type StationPatientOptionalDefaultsWithRelations = z.infer<
   typeof StationPatientOptionalDefaultsSchema
 > &
-  StationPatientOptionalDefaultsRelations;
+StationPatientOptionalDefaultsRelations;
 
-export const StationPatientOptionalDefaultsWithRelationsSchema: z.ZodType<StationPatientOptionalDefaultsWithRelations> =
-  StationPatientOptionalDefaultsSchema.merge(
+export const StationPatientOptionalDefaultsWithRelationsSchema: z.ZodType<StationPatientOptionalDefaultsWithRelations>
+  = StationPatientOptionalDefaultsSchema.merge(
     z.object({
       Patient: z.lazy(() => PatientOptionalDefaultsWithRelationsSchema),
     }),
@@ -615,10 +615,10 @@ export type StationPatientPartialRelations = {
 export type StationPatientPartialWithRelations = z.infer<
   typeof StationPatientPartialSchema
 > &
-  StationPatientPartialRelations;
+StationPatientPartialRelations;
 
-export const StationPatientPartialWithRelationsSchema: z.ZodType<StationPatientPartialWithRelations> =
-  StationPatientPartialSchema.merge(
+export const StationPatientPartialWithRelationsSchema: z.ZodType<StationPatientPartialWithRelations>
+  = StationPatientPartialSchema.merge(
     z.object({
       Patient: z.lazy(() => PatientPartialWithRelationsSchema),
     }),
@@ -627,10 +627,10 @@ export const StationPatientPartialWithRelationsSchema: z.ZodType<StationPatientP
 export type StationPatientOptionalDefaultsWithPartialRelations = z.infer<
   typeof StationPatientOptionalDefaultsSchema
 > &
-  StationPatientPartialRelations;
+StationPatientPartialRelations;
 
-export const StationPatientOptionalDefaultsWithPartialRelationsSchema: z.ZodType<StationPatientOptionalDefaultsWithPartialRelations> =
-  StationPatientOptionalDefaultsSchema.merge(
+export const StationPatientOptionalDefaultsWithPartialRelationsSchema: z.ZodType<StationPatientOptionalDefaultsWithPartialRelations>
+  = StationPatientOptionalDefaultsSchema.merge(
     z
       .object({
         Patient: z.lazy(() => PatientPartialWithRelationsSchema),
@@ -641,10 +641,10 @@ export const StationPatientOptionalDefaultsWithPartialRelationsSchema: z.ZodType
 export type StationPatientWithPartialRelations = z.infer<
   typeof StationPatientSchema
 > &
-  StationPatientPartialRelations;
+StationPatientPartialRelations;
 
-export const StationPatientWithPartialRelationsSchema: z.ZodType<StationPatientWithPartialRelations> =
-  StationPatientSchema.merge(
+export const StationPatientWithPartialRelationsSchema: z.ZodType<StationPatientWithPartialRelations>
+  = StationPatientSchema.merge(
     z
       .object({
         Patient: z.lazy(() => PatientPartialWithRelationsSchema),
@@ -705,8 +705,8 @@ export type TeatmentRelations = {
 export type TeatmentWithRelations = z.infer<typeof TeatmentSchema> &
   TeatmentRelations;
 
-export const TeatmentWithRelationsSchema: z.ZodType<TeatmentWithRelations> =
-  TeatmentSchema.merge(
+export const TeatmentWithRelationsSchema: z.ZodType<TeatmentWithRelations>
+  = TeatmentSchema.merge(
     z.object({
       Patient: z.lazy(() => PatientWithRelationsSchema),
     }),
@@ -722,10 +722,10 @@ export type TeatmentOptionalDefaultsRelations = {
 export type TeatmentOptionalDefaultsWithRelations = z.infer<
   typeof TeatmentOptionalDefaultsSchema
 > &
-  TeatmentOptionalDefaultsRelations;
+TeatmentOptionalDefaultsRelations;
 
-export const TeatmentOptionalDefaultsWithRelationsSchema: z.ZodType<TeatmentOptionalDefaultsWithRelations> =
-  TeatmentOptionalDefaultsSchema.merge(
+export const TeatmentOptionalDefaultsWithRelationsSchema: z.ZodType<TeatmentOptionalDefaultsWithRelations>
+  = TeatmentOptionalDefaultsSchema.merge(
     z.object({
       Patient: z.lazy(() => PatientOptionalDefaultsWithRelationsSchema),
     }),
@@ -741,10 +741,10 @@ export type TeatmentPartialRelations = {
 export type TeatmentPartialWithRelations = z.infer<
   typeof TeatmentPartialSchema
 > &
-  TeatmentPartialRelations;
+TeatmentPartialRelations;
 
-export const TeatmentPartialWithRelationsSchema: z.ZodType<TeatmentPartialWithRelations> =
-  TeatmentPartialSchema.merge(
+export const TeatmentPartialWithRelationsSchema: z.ZodType<TeatmentPartialWithRelations>
+  = TeatmentPartialSchema.merge(
     z.object({
       Patient: z.lazy(() => PatientPartialWithRelationsSchema),
     }),
@@ -753,10 +753,10 @@ export const TeatmentPartialWithRelationsSchema: z.ZodType<TeatmentPartialWithRe
 export type TeatmentOptionalDefaultsWithPartialRelations = z.infer<
   typeof TeatmentOptionalDefaultsSchema
 > &
-  TeatmentPartialRelations;
+TeatmentPartialRelations;
 
-export const TeatmentOptionalDefaultsWithPartialRelationsSchema: z.ZodType<TeatmentOptionalDefaultsWithPartialRelations> =
-  TeatmentOptionalDefaultsSchema.merge(
+export const TeatmentOptionalDefaultsWithPartialRelationsSchema: z.ZodType<TeatmentOptionalDefaultsWithPartialRelations>
+  = TeatmentOptionalDefaultsSchema.merge(
     z
       .object({
         Patient: z.lazy(() => PatientPartialWithRelationsSchema),
@@ -767,8 +767,8 @@ export const TeatmentOptionalDefaultsWithPartialRelationsSchema: z.ZodType<Teatm
 export type TeatmentWithPartialRelations = z.infer<typeof TeatmentSchema> &
   TeatmentPartialRelations;
 
-export const TeatmentWithPartialRelationsSchema: z.ZodType<TeatmentWithPartialRelations> =
-  TeatmentSchema.merge(
+export const TeatmentWithPartialRelationsSchema: z.ZodType<TeatmentWithPartialRelations>
+  = TeatmentSchema.merge(
     z
       .object({
         Patient: z.lazy(() => PatientPartialWithRelationsSchema),
@@ -808,15 +808,15 @@ export const PatientArgsSchema: z.ZodType<Prisma.PatientDefaultArgs> = z
   })
   .strict();
 
-export const PatientCountOutputTypeArgsSchema: z.ZodType<Prisma.PatientCountOutputTypeDefaultArgs> =
-  z
+export const PatientCountOutputTypeArgsSchema: z.ZodType<Prisma.PatientCountOutputTypeDefaultArgs>
+  = z
     .object({
       select: z.lazy(() => PatientCountOutputTypeSelectSchema).nullish(),
     })
     .strict();
 
-export const PatientCountOutputTypeSelectSchema: z.ZodType<Prisma.PatientCountOutputTypeSelect> =
-  z
+export const PatientCountOutputTypeSelectSchema: z.ZodType<Prisma.PatientCountOutputTypeSelect>
+  = z
     .object({
       Exam: z.boolean().optional(),
       StationPatient: z.boolean().optional(),
@@ -934,8 +934,8 @@ export const ExamSelectSchema: z.ZodType<Prisma.ExamSelect> = z
 // STATION PATIENT
 // ------------------------------------------------------
 
-export const StationPatientIncludeSchema: z.ZodType<Prisma.StationPatientInclude> =
-  z
+export const StationPatientIncludeSchema: z.ZodType<Prisma.StationPatientInclude>
+  = z
     .object({
       Patient: z
         .union([z.boolean(), z.lazy(() => PatientArgsSchema)])
@@ -943,16 +943,16 @@ export const StationPatientIncludeSchema: z.ZodType<Prisma.StationPatientInclude
     })
     .strict();
 
-export const StationPatientArgsSchema: z.ZodType<Prisma.StationPatientDefaultArgs> =
-  z
+export const StationPatientArgsSchema: z.ZodType<Prisma.StationPatientDefaultArgs>
+  = z
     .object({
       include: z.lazy(() => StationPatientIncludeSchema).optional(),
       select: z.lazy(() => StationPatientSelectSchema).optional(),
     })
     .strict();
 
-export const StationPatientSelectSchema: z.ZodType<Prisma.StationPatientSelect> =
-  z
+export const StationPatientSelectSchema: z.ZodType<Prisma.StationPatientSelect>
+  = z
     .object({
       create_date: z.boolean().optional(),
       description: z.boolean().optional(),
@@ -1143,8 +1143,8 @@ export const PatientWhereInputSchema: z.ZodType<Prisma.PatientWhereInput> = z
   })
   .strict();
 
-export const PatientOrderByWithRelationInputSchema: z.ZodType<Prisma.PatientOrderByWithRelationInput> =
-  z
+export const PatientOrderByWithRelationInputSchema: z.ZodType<Prisma.PatientOrderByWithRelationInput>
+  = z
     .object({
       address: z
         .union([
@@ -1295,8 +1295,8 @@ export const PatientOrderByWithRelationInputSchema: z.ZodType<Prisma.PatientOrde
     })
     .strict();
 
-export const PatientWhereUniqueInputSchema: z.ZodType<Prisma.PatientWhereUniqueInput> =
-  z
+export const PatientWhereUniqueInputSchema: z.ZodType<Prisma.PatientWhereUniqueInput>
+  = z
     .object({
       id: z.string().uuid(),
     })
@@ -1464,8 +1464,8 @@ export const PatientWhereUniqueInputSchema: z.ZodType<Prisma.PatientWhereUniqueI
         .strict(),
     );
 
-export const PatientOrderByWithAggregationInputSchema: z.ZodType<Prisma.PatientOrderByWithAggregationInput> =
-  z
+export const PatientOrderByWithAggregationInputSchema: z.ZodType<Prisma.PatientOrderByWithAggregationInput>
+  = z
     .object({
       _avg: z.lazy(() => PatientAvgOrderByAggregateInputSchema).optional(),
       _count: z.lazy(() => PatientCountOrderByAggregateInputSchema).optional(),
@@ -1615,8 +1615,8 @@ export const PatientOrderByWithAggregationInputSchema: z.ZodType<Prisma.PatientO
     })
     .strict();
 
-export const PatientScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.PatientScalarWhereWithAggregatesInput> =
-  z
+export const PatientScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.PatientScalarWhereWithAggregatesInput>
+  = z
     .object({
       address: z
         .union([
@@ -1874,8 +1874,8 @@ export const HistoryWhereInputSchema: z.ZodType<Prisma.HistoryWhereInput> = z
   })
   .strict();
 
-export const HistoryOrderByWithRelationInputSchema: z.ZodType<Prisma.HistoryOrderByWithRelationInput> =
-  z
+export const HistoryOrderByWithRelationInputSchema: z.ZodType<Prisma.HistoryOrderByWithRelationInput>
+  = z
     .object({
       chief_complaint: z.lazy(() => SortOrderSchema).optional(),
       create_by: z
@@ -1923,8 +1923,8 @@ export const HistoryOrderByWithRelationInputSchema: z.ZodType<Prisma.HistoryOrde
     })
     .strict();
 
-export const HistoryWhereUniqueInputSchema: z.ZodType<Prisma.HistoryWhereUniqueInput> =
-  z
+export const HistoryWhereUniqueInputSchema: z.ZodType<Prisma.HistoryWhereUniqueInput>
+  = z
     .union([
       z.object({
         id: z.string().uuid(),
@@ -2010,8 +2010,8 @@ export const HistoryWhereUniqueInputSchema: z.ZodType<Prisma.HistoryWhereUniqueI
         .strict(),
     );
 
-export const HistoryOrderByWithAggregationInputSchema: z.ZodType<Prisma.HistoryOrderByWithAggregationInput> =
-  z
+export const HistoryOrderByWithAggregationInputSchema: z.ZodType<Prisma.HistoryOrderByWithAggregationInput>
+  = z
     .object({
       _count: z.lazy(() => HistoryCountOrderByAggregateInputSchema).optional(),
       _max: z.lazy(() => HistoryMaxOrderByAggregateInputSchema).optional(),
@@ -2061,8 +2061,8 @@ export const HistoryOrderByWithAggregationInputSchema: z.ZodType<Prisma.HistoryO
     })
     .strict();
 
-export const HistoryScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.HistoryScalarWhereWithAggregatesInput> =
-  z
+export const HistoryScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.HistoryScalarWhereWithAggregatesInput>
+  = z
     .object({
       AND: z
         .union([
@@ -2200,8 +2200,8 @@ export const ExamWhereInputSchema: z.ZodType<Prisma.ExamWhereInput> = z
   })
   .strict();
 
-export const ExamOrderByWithRelationInputSchema: z.ZodType<Prisma.ExamOrderByWithRelationInput> =
-  z
+export const ExamOrderByWithRelationInputSchema: z.ZodType<Prisma.ExamOrderByWithRelationInput>
+  = z
     .object({
       create_by: z
         .union([
@@ -2246,8 +2246,8 @@ export const ExamOrderByWithRelationInputSchema: z.ZodType<Prisma.ExamOrderByWit
     })
     .strict();
 
-export const ExamWhereUniqueInputSchema: z.ZodType<Prisma.ExamWhereUniqueInput> =
-  z
+export const ExamWhereUniqueInputSchema: z.ZodType<Prisma.ExamWhereUniqueInput>
+  = z
     .object({
       id: z.string().uuid(),
     })
@@ -2318,8 +2318,8 @@ export const ExamWhereUniqueInputSchema: z.ZodType<Prisma.ExamWhereUniqueInput> 
         .strict(),
     );
 
-export const ExamOrderByWithAggregationInputSchema: z.ZodType<Prisma.ExamOrderByWithAggregationInput> =
-  z
+export const ExamOrderByWithAggregationInputSchema: z.ZodType<Prisma.ExamOrderByWithAggregationInput>
+  = z
     .object({
       _count: z.lazy(() => ExamCountOrderByAggregateInputSchema).optional(),
       _max: z.lazy(() => ExamMaxOrderByAggregateInputSchema).optional(),
@@ -2366,8 +2366,8 @@ export const ExamOrderByWithAggregationInputSchema: z.ZodType<Prisma.ExamOrderBy
     })
     .strict();
 
-export const ExamScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.ExamScalarWhereWithAggregatesInput> =
-  z
+export const ExamScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.ExamScalarWhereWithAggregatesInput>
+  = z
     .object({
       AND: z
         .union([
@@ -2439,8 +2439,8 @@ export const ExamScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.ExamScal
     })
     .strict();
 
-export const StationPatientWhereInputSchema: z.ZodType<Prisma.StationPatientWhereInput> =
-  z
+export const StationPatientWhereInputSchema: z.ZodType<Prisma.StationPatientWhereInput>
+  = z
     .object({
       AND: z
         .union([
@@ -2493,8 +2493,8 @@ export const StationPatientWhereInputSchema: z.ZodType<Prisma.StationPatientWher
     })
     .strict();
 
-export const StationPatientOrderByWithRelationInputSchema: z.ZodType<Prisma.StationPatientOrderByWithRelationInput> =
-  z
+export const StationPatientOrderByWithRelationInputSchema: z.ZodType<Prisma.StationPatientOrderByWithRelationInput>
+  = z
     .object({
       create_date: z
         .union([
@@ -2528,8 +2528,8 @@ export const StationPatientOrderByWithRelationInputSchema: z.ZodType<Prisma.Stat
     })
     .strict();
 
-export const StationPatientWhereUniqueInputSchema: z.ZodType<Prisma.StationPatientWhereUniqueInput> =
-  z
+export const StationPatientWhereUniqueInputSchema: z.ZodType<Prisma.StationPatientWhereUniqueInput>
+  = z
     .object({
       id: z.string().uuid(),
     })
@@ -2597,8 +2597,8 @@ export const StationPatientWhereUniqueInputSchema: z.ZodType<Prisma.StationPatie
         .strict(),
     );
 
-export const StationPatientOrderByWithAggregationInputSchema: z.ZodType<Prisma.StationPatientOrderByWithAggregationInput> =
-  z
+export const StationPatientOrderByWithAggregationInputSchema: z.ZodType<Prisma.StationPatientOrderByWithAggregationInput>
+  = z
     .object({
       _count: z
         .lazy(() => StationPatientCountOrderByAggregateInputSchema)
@@ -2640,8 +2640,8 @@ export const StationPatientOrderByWithAggregationInputSchema: z.ZodType<Prisma.S
     })
     .strict();
 
-export const StationPatientScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.StationPatientScalarWhereWithAggregatesInput> =
-  z
+export const StationPatientScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.StationPatientScalarWhereWithAggregatesInput>
+  = z
     .object({
       AND: z
         .union([
@@ -2774,8 +2774,8 @@ export const TeatmentWhereInputSchema: z.ZodType<Prisma.TeatmentWhereInput> = z
   })
   .strict();
 
-export const TeatmentOrderByWithRelationInputSchema: z.ZodType<Prisma.TeatmentOrderByWithRelationInput> =
-  z
+export const TeatmentOrderByWithRelationInputSchema: z.ZodType<Prisma.TeatmentOrderByWithRelationInput>
+  = z
     .object({
       chief_complaint: z.lazy(() => SortOrderSchema).optional(),
       create_by: z
@@ -2827,8 +2827,8 @@ export const TeatmentOrderByWithRelationInputSchema: z.ZodType<Prisma.TeatmentOr
     })
     .strict();
 
-export const TeatmentWhereUniqueInputSchema: z.ZodType<Prisma.TeatmentWhereUniqueInput> =
-  z
+export const TeatmentWhereUniqueInputSchema: z.ZodType<Prisma.TeatmentWhereUniqueInput>
+  = z
     .union([
       z.object({
         id: z.string().uuid(),
@@ -2912,8 +2912,8 @@ export const TeatmentWhereUniqueInputSchema: z.ZodType<Prisma.TeatmentWhereUniqu
         .strict(),
     );
 
-export const TeatmentOrderByWithAggregationInputSchema: z.ZodType<Prisma.TeatmentOrderByWithAggregationInput> =
-  z
+export const TeatmentOrderByWithAggregationInputSchema: z.ZodType<Prisma.TeatmentOrderByWithAggregationInput>
+  = z
     .object({
       _count: z.lazy(() => TeatmentCountOrderByAggregateInputSchema).optional(),
       _max: z.lazy(() => TeatmentMaxOrderByAggregateInputSchema).optional(),
@@ -2967,8 +2967,8 @@ export const TeatmentOrderByWithAggregationInputSchema: z.ZodType<Prisma.Teatmen
     })
     .strict();
 
-export const TeatmentScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.TeatmentScalarWhereWithAggregatesInput> =
-  z
+export const TeatmentScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.TeatmentScalarWhereWithAggregatesInput>
+  = z
     .object({
       AND: z
         .union([
@@ -3095,8 +3095,8 @@ export const PatientCreateInputSchema: z.ZodType<Prisma.PatientCreateInput> = z
   })
   .strict();
 
-export const PatientUncheckedCreateInputSchema: z.ZodType<Prisma.PatientUncheckedCreateInput> =
-  z
+export const PatientUncheckedCreateInputSchema: z.ZodType<Prisma.PatientUncheckedCreateInput>
+  = z
     .object({
       address: z.string().optional().nullable(),
       age: z.number().int().optional().nullable(),
@@ -3334,8 +3334,8 @@ export const PatientUpdateInputSchema: z.ZodType<Prisma.PatientUpdateInput> = z
   })
   .strict();
 
-export const PatientUncheckedUpdateInputSchema: z.ZodType<Prisma.PatientUncheckedUpdateInput> =
-  z
+export const PatientUncheckedUpdateInputSchema: z.ZodType<Prisma.PatientUncheckedUpdateInput>
+  = z
     .object({
       address: z
         .union([
@@ -3528,8 +3528,8 @@ export const PatientUncheckedUpdateInputSchema: z.ZodType<Prisma.PatientUnchecke
     })
     .strict();
 
-export const PatientCreateManyInputSchema: z.ZodType<Prisma.PatientCreateManyInput> =
-  z
+export const PatientCreateManyInputSchema: z.ZodType<Prisma.PatientCreateManyInput>
+  = z
     .object({
       address: z.string().optional().nullable(),
       age: z.number().int().optional().nullable(),
@@ -3562,8 +3562,8 @@ export const PatientCreateManyInputSchema: z.ZodType<Prisma.PatientCreateManyInp
     })
     .strict();
 
-export const PatientUpdateManyMutationInputSchema: z.ZodType<Prisma.PatientUpdateManyMutationInput> =
-  z
+export const PatientUpdateManyMutationInputSchema: z.ZodType<Prisma.PatientUpdateManyMutationInput>
+  = z
     .object({
       address: z
         .union([
@@ -3741,8 +3741,8 @@ export const PatientUpdateManyMutationInputSchema: z.ZodType<Prisma.PatientUpdat
     })
     .strict();
 
-export const PatientUncheckedUpdateManyInputSchema: z.ZodType<Prisma.PatientUncheckedUpdateManyInput> =
-  z
+export const PatientUncheckedUpdateManyInputSchema: z.ZodType<Prisma.PatientUncheckedUpdateManyInput>
+  = z
     .object({
       address: z
         .union([
@@ -3937,8 +3937,8 @@ export const HistoryCreateInputSchema: z.ZodType<Prisma.HistoryCreateInput> = z
   })
   .strict();
 
-export const HistoryUncheckedCreateInputSchema: z.ZodType<Prisma.HistoryUncheckedCreateInput> =
-  z
+export const HistoryUncheckedCreateInputSchema: z.ZodType<Prisma.HistoryUncheckedCreateInput>
+  = z
     .object({
       chief_complaint: z.string(),
       create_by: z.string().optional().nullable(),
@@ -4023,8 +4023,8 @@ export const HistoryUpdateInputSchema: z.ZodType<Prisma.HistoryUpdateInput> = z
   })
   .strict();
 
-export const HistoryUncheckedUpdateInputSchema: z.ZodType<Prisma.HistoryUncheckedUpdateInput> =
-  z
+export const HistoryUncheckedUpdateInputSchema: z.ZodType<Prisma.HistoryUncheckedUpdateInput>
+  = z
     .object({
       chief_complaint: z
         .union([
@@ -4107,8 +4107,8 @@ export const HistoryUncheckedUpdateInputSchema: z.ZodType<Prisma.HistoryUnchecke
     })
     .strict();
 
-export const HistoryCreateManyInputSchema: z.ZodType<Prisma.HistoryCreateManyInput> =
-  z
+export const HistoryCreateManyInputSchema: z.ZodType<Prisma.HistoryCreateManyInput>
+  = z
     .object({
       chief_complaint: z.string(),
       create_by: z.string().optional().nullable(),
@@ -4125,8 +4125,8 @@ export const HistoryCreateManyInputSchema: z.ZodType<Prisma.HistoryCreateManyInp
     })
     .strict();
 
-export const HistoryUpdateManyMutationInputSchema: z.ZodType<Prisma.HistoryUpdateManyMutationInput> =
-  z
+export const HistoryUpdateManyMutationInputSchema: z.ZodType<Prisma.HistoryUpdateManyMutationInput>
+  = z
     .object({
       chief_complaint: z
         .union([
@@ -4203,8 +4203,8 @@ export const HistoryUpdateManyMutationInputSchema: z.ZodType<Prisma.HistoryUpdat
     })
     .strict();
 
-export const HistoryUncheckedUpdateManyInputSchema: z.ZodType<Prisma.HistoryUncheckedUpdateManyInput> =
-  z
+export const HistoryUncheckedUpdateManyInputSchema: z.ZodType<Prisma.HistoryUncheckedUpdateManyInput>
+  = z
     .object({
       chief_complaint: z
         .union([
@@ -4303,8 +4303,8 @@ export const ExamCreateInputSchema: z.ZodType<Prisma.ExamCreateInput> = z
   })
   .strict();
 
-export const ExamUncheckedCreateInputSchema: z.ZodType<Prisma.ExamUncheckedCreateInput> =
-  z
+export const ExamUncheckedCreateInputSchema: z.ZodType<Prisma.ExamUncheckedCreateInput>
+  = z
     .object({
       create_by: z.string().optional().nullable(),
       create_date: z.coerce.date().optional().nullable(),
@@ -4373,8 +4373,8 @@ export const ExamUpdateInputSchema: z.ZodType<Prisma.ExamUpdateInput> = z
   })
   .strict();
 
-export const ExamUncheckedUpdateInputSchema: z.ZodType<Prisma.ExamUncheckedUpdateInput> =
-  z
+export const ExamUncheckedUpdateInputSchema: z.ZodType<Prisma.ExamUncheckedUpdateInput>
+  = z
     .object({
       create_by: z
         .union([
@@ -4439,8 +4439,8 @@ export const ExamUncheckedUpdateInputSchema: z.ZodType<Prisma.ExamUncheckedUpdat
     })
     .strict();
 
-export const ExamCreateManyInputSchema: z.ZodType<Prisma.ExamCreateManyInput> =
-  z
+export const ExamCreateManyInputSchema: z.ZodType<Prisma.ExamCreateManyInput>
+  = z
     .object({
       create_by: z.string().optional().nullable(),
       create_date: z.coerce.date().optional().nullable(),
@@ -4454,8 +4454,8 @@ export const ExamCreateManyInputSchema: z.ZodType<Prisma.ExamCreateManyInput> =
     })
     .strict();
 
-export const ExamUpdateManyMutationInputSchema: z.ZodType<Prisma.ExamUpdateManyMutationInput> =
-  z
+export const ExamUpdateManyMutationInputSchema: z.ZodType<Prisma.ExamUpdateManyMutationInput>
+  = z
     .object({
       create_by: z
         .union([
@@ -4513,8 +4513,8 @@ export const ExamUpdateManyMutationInputSchema: z.ZodType<Prisma.ExamUpdateManyM
     })
     .strict();
 
-export const ExamUncheckedUpdateManyInputSchema: z.ZodType<Prisma.ExamUncheckedUpdateManyInput> =
-  z
+export const ExamUncheckedUpdateManyInputSchema: z.ZodType<Prisma.ExamUncheckedUpdateManyInput>
+  = z
     .object({
       create_by: z
         .union([
@@ -4579,8 +4579,8 @@ export const ExamUncheckedUpdateManyInputSchema: z.ZodType<Prisma.ExamUncheckedU
     })
     .strict();
 
-export const StationPatientCreateInputSchema: z.ZodType<Prisma.StationPatientCreateInput> =
-  z
+export const StationPatientCreateInputSchema: z.ZodType<Prisma.StationPatientCreateInput>
+  = z
     .object({
       create_date: z.coerce.date().optional().nullable(),
       description: z.string().optional().nullable(),
@@ -4595,8 +4595,8 @@ export const StationPatientCreateInputSchema: z.ZodType<Prisma.StationPatientCre
     })
     .strict();
 
-export const StationPatientUncheckedCreateInputSchema: z.ZodType<Prisma.StationPatientUncheckedCreateInput> =
-  z
+export const StationPatientUncheckedCreateInputSchema: z.ZodType<Prisma.StationPatientUncheckedCreateInput>
+  = z
     .object({
       create_date: z.coerce.date().optional().nullable(),
       description: z.string().optional().nullable(),
@@ -4609,8 +4609,8 @@ export const StationPatientUncheckedCreateInputSchema: z.ZodType<Prisma.StationP
     })
     .strict();
 
-export const StationPatientUpdateInputSchema: z.ZodType<Prisma.StationPatientUpdateInput> =
-  z
+export const StationPatientUpdateInputSchema: z.ZodType<Prisma.StationPatientUpdateInput>
+  = z
     .object({
       create_date: z
         .union([
@@ -4666,8 +4666,8 @@ export const StationPatientUpdateInputSchema: z.ZodType<Prisma.StationPatientUpd
     })
     .strict();
 
-export const StationPatientUncheckedUpdateInputSchema: z.ZodType<Prisma.StationPatientUncheckedUpdateInput> =
-  z
+export const StationPatientUncheckedUpdateInputSchema: z.ZodType<Prisma.StationPatientUncheckedUpdateInput>
+  = z
     .object({
       create_date: z
         .union([
@@ -4724,8 +4724,8 @@ export const StationPatientUncheckedUpdateInputSchema: z.ZodType<Prisma.StationP
     })
     .strict();
 
-export const StationPatientCreateManyInputSchema: z.ZodType<Prisma.StationPatientCreateManyInput> =
-  z
+export const StationPatientCreateManyInputSchema: z.ZodType<Prisma.StationPatientCreateManyInput>
+  = z
     .object({
       create_date: z.coerce.date().optional().nullable(),
       description: z.string().optional().nullable(),
@@ -4738,8 +4738,8 @@ export const StationPatientCreateManyInputSchema: z.ZodType<Prisma.StationPatien
     })
     .strict();
 
-export const StationPatientUpdateManyMutationInputSchema: z.ZodType<Prisma.StationPatientUpdateManyMutationInput> =
-  z
+export const StationPatientUpdateManyMutationInputSchema: z.ZodType<Prisma.StationPatientUpdateManyMutationInput>
+  = z
     .object({
       create_date: z
         .union([
@@ -4790,8 +4790,8 @@ export const StationPatientUpdateManyMutationInputSchema: z.ZodType<Prisma.Stati
     })
     .strict();
 
-export const StationPatientUncheckedUpdateManyInputSchema: z.ZodType<Prisma.StationPatientUncheckedUpdateManyInput> =
-  z
+export const StationPatientUncheckedUpdateManyInputSchema: z.ZodType<Prisma.StationPatientUncheckedUpdateManyInput>
+  = z
     .object({
       create_date: z
         .union([
@@ -4848,8 +4848,8 @@ export const StationPatientUncheckedUpdateManyInputSchema: z.ZodType<Prisma.Stat
     })
     .strict();
 
-export const TeatmentCreateInputSchema: z.ZodType<Prisma.TeatmentCreateInput> =
-  z
+export const TeatmentCreateInputSchema: z.ZodType<Prisma.TeatmentCreateInput>
+  = z
     .object({
       chief_complaint: z.string(),
       create_by: z.string().optional().nullable(),
@@ -4865,8 +4865,8 @@ export const TeatmentCreateInputSchema: z.ZodType<Prisma.TeatmentCreateInput> =
     })
     .strict();
 
-export const TeatmentUncheckedCreateInputSchema: z.ZodType<Prisma.TeatmentUncheckedCreateInput> =
-  z
+export const TeatmentUncheckedCreateInputSchema: z.ZodType<Prisma.TeatmentUncheckedCreateInput>
+  = z
     .object({
       chief_complaint: z.string(),
       create_by: z.string().optional().nullable(),
@@ -4882,8 +4882,8 @@ export const TeatmentUncheckedCreateInputSchema: z.ZodType<Prisma.TeatmentUnchec
     })
     .strict();
 
-export const TeatmentUpdateInputSchema: z.ZodType<Prisma.TeatmentUpdateInput> =
-  z
+export const TeatmentUpdateInputSchema: z.ZodType<Prisma.TeatmentUpdateInput>
+  = z
     .object({
       chief_complaint: z
         .union([
@@ -4958,8 +4958,8 @@ export const TeatmentUpdateInputSchema: z.ZodType<Prisma.TeatmentUpdateInput> =
     })
     .strict();
 
-export const TeatmentUncheckedUpdateInputSchema: z.ZodType<Prisma.TeatmentUncheckedUpdateInput> =
-  z
+export const TeatmentUncheckedUpdateInputSchema: z.ZodType<Prisma.TeatmentUncheckedUpdateInput>
+  = z
     .object({
       chief_complaint: z
         .union([
@@ -5037,8 +5037,8 @@ export const TeatmentUncheckedUpdateInputSchema: z.ZodType<Prisma.TeatmentUnchec
     })
     .strict();
 
-export const TeatmentCreateManyInputSchema: z.ZodType<Prisma.TeatmentCreateManyInput> =
-  z
+export const TeatmentCreateManyInputSchema: z.ZodType<Prisma.TeatmentCreateManyInput>
+  = z
     .object({
       chief_complaint: z.string(),
       create_by: z.string().optional().nullable(),
@@ -5054,8 +5054,8 @@ export const TeatmentCreateManyInputSchema: z.ZodType<Prisma.TeatmentCreateManyI
     })
     .strict();
 
-export const TeatmentUpdateManyMutationInputSchema: z.ZodType<Prisma.TeatmentUpdateManyMutationInput> =
-  z
+export const TeatmentUpdateManyMutationInputSchema: z.ZodType<Prisma.TeatmentUpdateManyMutationInput>
+  = z
     .object({
       chief_complaint: z
         .union([
@@ -5127,8 +5127,8 @@ export const TeatmentUpdateManyMutationInputSchema: z.ZodType<Prisma.TeatmentUpd
     })
     .strict();
 
-export const TeatmentUncheckedUpdateManyInputSchema: z.ZodType<Prisma.TeatmentUncheckedUpdateManyInput> =
-  z
+export const TeatmentUncheckedUpdateManyInputSchema: z.ZodType<Prisma.TeatmentUncheckedUpdateManyInput>
+  = z
     .object({
       chief_complaint: z
         .union([
@@ -5245,8 +5245,8 @@ export const EnumGenderFilterSchema: z.ZodType<Prisma.EnumGenderFilter> = z
   })
   .strict();
 
-export const StringNullableFilterSchema: z.ZodType<Prisma.StringNullableFilter> =
-  z
+export const StringNullableFilterSchema: z.ZodType<Prisma.StringNullableFilter>
+  = z
     .object({
       contains: z.string().optional(),
       endsWith: z.string().optional(),
@@ -5282,8 +5282,8 @@ export const IntNullableFilterSchema: z.ZodType<Prisma.IntNullableFilter> = z
   })
   .strict();
 
-export const EnumGroupBloodNullableFilterSchema: z.ZodType<Prisma.EnumGroupBloodNullableFilter> =
-  z
+export const EnumGroupBloodNullableFilterSchema: z.ZodType<Prisma.EnumGroupBloodNullableFilter>
+  = z
     .object({
       equals: z
         .lazy(() => GroupBloodSchema)
@@ -5309,8 +5309,8 @@ export const EnumGroupBloodNullableFilterSchema: z.ZodType<Prisma.EnumGroupBlood
     })
     .strict();
 
-export const DateTimeNullableFilterSchema: z.ZodType<Prisma.DateTimeNullableFilter> =
-  z
+export const DateTimeNullableFilterSchema: z.ZodType<Prisma.DateTimeNullableFilter>
+  = z
     .object({
       equals: z.coerce.date().optional().nullable(),
       gt: z.coerce.date().optional(),
@@ -5329,8 +5329,8 @@ export const DateTimeNullableFilterSchema: z.ZodType<Prisma.DateTimeNullableFilt
     })
     .strict();
 
-export const HistoryNullableScalarRelationFilterSchema: z.ZodType<Prisma.HistoryNullableScalarRelationFilter> =
-  z
+export const HistoryNullableScalarRelationFilterSchema: z.ZodType<Prisma.HistoryNullableScalarRelationFilter>
+  = z
     .object({
       is: z
         .lazy(() => HistoryWhereInputSchema)
@@ -5343,8 +5343,8 @@ export const HistoryNullableScalarRelationFilterSchema: z.ZodType<Prisma.History
     })
     .strict();
 
-export const ExamListRelationFilterSchema: z.ZodType<Prisma.ExamListRelationFilter> =
-  z
+export const ExamListRelationFilterSchema: z.ZodType<Prisma.ExamListRelationFilter>
+  = z
     .object({
       every: z.lazy(() => ExamWhereInputSchema).optional(),
       none: z.lazy(() => ExamWhereInputSchema).optional(),
@@ -5352,8 +5352,8 @@ export const ExamListRelationFilterSchema: z.ZodType<Prisma.ExamListRelationFilt
     })
     .strict();
 
-export const StationPatientListRelationFilterSchema: z.ZodType<Prisma.StationPatientListRelationFilter> =
-  z
+export const StationPatientListRelationFilterSchema: z.ZodType<Prisma.StationPatientListRelationFilter>
+  = z
     .object({
       every: z.lazy(() => StationPatientWhereInputSchema).optional(),
       none: z.lazy(() => StationPatientWhereInputSchema).optional(),
@@ -5361,8 +5361,8 @@ export const StationPatientListRelationFilterSchema: z.ZodType<Prisma.StationPat
     })
     .strict();
 
-export const TeatmentNullableScalarRelationFilterSchema: z.ZodType<Prisma.TeatmentNullableScalarRelationFilter> =
-  z
+export const TeatmentNullableScalarRelationFilterSchema: z.ZodType<Prisma.TeatmentNullableScalarRelationFilter>
+  = z
     .object({
       is: z
         .lazy(() => TeatmentWhereInputSchema)
@@ -5382,22 +5382,22 @@ export const SortOrderInputSchema: z.ZodType<Prisma.SortOrderInput> = z
   })
   .strict();
 
-export const ExamOrderByRelationAggregateInputSchema: z.ZodType<Prisma.ExamOrderByRelationAggregateInput> =
-  z
+export const ExamOrderByRelationAggregateInputSchema: z.ZodType<Prisma.ExamOrderByRelationAggregateInput>
+  = z
     .object({
       _count: z.lazy(() => SortOrderSchema).optional(),
     })
     .strict();
 
-export const StationPatientOrderByRelationAggregateInputSchema: z.ZodType<Prisma.StationPatientOrderByRelationAggregateInput> =
-  z
+export const StationPatientOrderByRelationAggregateInputSchema: z.ZodType<Prisma.StationPatientOrderByRelationAggregateInput>
+  = z
     .object({
       _count: z.lazy(() => SortOrderSchema).optional(),
     })
     .strict();
 
-export const PatientCountOrderByAggregateInputSchema: z.ZodType<Prisma.PatientCountOrderByAggregateInput> =
-  z
+export const PatientCountOrderByAggregateInputSchema: z.ZodType<Prisma.PatientCountOrderByAggregateInput>
+  = z
     .object({
       address: z.lazy(() => SortOrderSchema).optional(),
       age: z.lazy(() => SortOrderSchema).optional(),
@@ -5427,46 +5427,15 @@ export const PatientCountOrderByAggregateInputSchema: z.ZodType<Prisma.PatientCo
     })
     .strict();
 
-export const PatientAvgOrderByAggregateInputSchema: z.ZodType<Prisma.PatientAvgOrderByAggregateInput> =
-  z
+export const PatientAvgOrderByAggregateInputSchema: z.ZodType<Prisma.PatientAvgOrderByAggregateInput>
+  = z
     .object({
       age: z.lazy(() => SortOrderSchema).optional(),
     })
     .strict();
 
-export const PatientMaxOrderByAggregateInputSchema: z.ZodType<Prisma.PatientMaxOrderByAggregateInput> =
-  z
-    .object({
-      address: z.lazy(() => SortOrderSchema).optional(),
-      age: z.lazy(() => SortOrderSchema).optional(),
-      allergy_drug: z.lazy(() => SortOrderSchema).optional(),
-      allergy_food: z.lazy(() => SortOrderSchema).optional(),
-      birthday: z.lazy(() => SortOrderSchema).optional(),
-      congenital_disease: z.lazy(() => SortOrderSchema).optional(),
-      create_by: z.lazy(() => SortOrderSchema).optional(),
-      create_date: z.lazy(() => SortOrderSchema).optional(),
-      date_time_died: z.lazy(() => SortOrderSchema).optional(),
-      date_time_go_home: z.lazy(() => SortOrderSchema).optional(),
-      date_time_lost: z.lazy(() => SortOrderSchema).optional(),
-      date_time_refer: z.lazy(() => SortOrderSchema).optional(),
-      delete_date: z.lazy(() => SortOrderSchema).optional(),
-      first_name: z.lazy(() => SortOrderSchema).optional(),
-      gender: z.lazy(() => SortOrderSchema).optional(),
-      group_blood: z.lazy(() => SortOrderSchema).optional(),
-      id: z.lazy(() => SortOrderSchema).optional(),
-      id_card: z.lazy(() => SortOrderSchema).optional(),
-      image: z.lazy(() => SortOrderSchema).optional(),
-      image_id_card: z.lazy(() => SortOrderSchema).optional(),
-      last_name: z.lazy(() => SortOrderSchema).optional(),
-      qr_number: z.lazy(() => SortOrderSchema).optional(),
-      tel: z.lazy(() => SortOrderSchema).optional(),
-      update_by: z.lazy(() => SortOrderSchema).optional(),
-      update_date: z.lazy(() => SortOrderSchema).optional(),
-    })
-    .strict();
-
-export const PatientMinOrderByAggregateInputSchema: z.ZodType<Prisma.PatientMinOrderByAggregateInput> =
-  z
+export const PatientMaxOrderByAggregateInputSchema: z.ZodType<Prisma.PatientMaxOrderByAggregateInput>
+  = z
     .object({
       address: z.lazy(() => SortOrderSchema).optional(),
       age: z.lazy(() => SortOrderSchema).optional(),
@@ -5496,15 +5465,46 @@ export const PatientMinOrderByAggregateInputSchema: z.ZodType<Prisma.PatientMinO
     })
     .strict();
 
-export const PatientSumOrderByAggregateInputSchema: z.ZodType<Prisma.PatientSumOrderByAggregateInput> =
-  z
+export const PatientMinOrderByAggregateInputSchema: z.ZodType<Prisma.PatientMinOrderByAggregateInput>
+  = z
+    .object({
+      address: z.lazy(() => SortOrderSchema).optional(),
+      age: z.lazy(() => SortOrderSchema).optional(),
+      allergy_drug: z.lazy(() => SortOrderSchema).optional(),
+      allergy_food: z.lazy(() => SortOrderSchema).optional(),
+      birthday: z.lazy(() => SortOrderSchema).optional(),
+      congenital_disease: z.lazy(() => SortOrderSchema).optional(),
+      create_by: z.lazy(() => SortOrderSchema).optional(),
+      create_date: z.lazy(() => SortOrderSchema).optional(),
+      date_time_died: z.lazy(() => SortOrderSchema).optional(),
+      date_time_go_home: z.lazy(() => SortOrderSchema).optional(),
+      date_time_lost: z.lazy(() => SortOrderSchema).optional(),
+      date_time_refer: z.lazy(() => SortOrderSchema).optional(),
+      delete_date: z.lazy(() => SortOrderSchema).optional(),
+      first_name: z.lazy(() => SortOrderSchema).optional(),
+      gender: z.lazy(() => SortOrderSchema).optional(),
+      group_blood: z.lazy(() => SortOrderSchema).optional(),
+      id: z.lazy(() => SortOrderSchema).optional(),
+      id_card: z.lazy(() => SortOrderSchema).optional(),
+      image: z.lazy(() => SortOrderSchema).optional(),
+      image_id_card: z.lazy(() => SortOrderSchema).optional(),
+      last_name: z.lazy(() => SortOrderSchema).optional(),
+      qr_number: z.lazy(() => SortOrderSchema).optional(),
+      tel: z.lazy(() => SortOrderSchema).optional(),
+      update_by: z.lazy(() => SortOrderSchema).optional(),
+      update_date: z.lazy(() => SortOrderSchema).optional(),
+    })
+    .strict();
+
+export const PatientSumOrderByAggregateInputSchema: z.ZodType<Prisma.PatientSumOrderByAggregateInput>
+  = z
     .object({
       age: z.lazy(() => SortOrderSchema).optional(),
     })
     .strict();
 
-export const StringWithAggregatesFilterSchema: z.ZodType<Prisma.StringWithAggregatesFilter> =
-  z
+export const StringWithAggregatesFilterSchema: z.ZodType<Prisma.StringWithAggregatesFilter>
+  = z
     .object({
       _count: z.lazy(() => NestedIntFilterSchema).optional(),
       _max: z.lazy(() => NestedStringFilterSchema).optional(),
@@ -5529,8 +5529,8 @@ export const StringWithAggregatesFilterSchema: z.ZodType<Prisma.StringWithAggreg
     })
     .strict();
 
-export const EnumGenderWithAggregatesFilterSchema: z.ZodType<Prisma.EnumGenderWithAggregatesFilter> =
-  z
+export const EnumGenderWithAggregatesFilterSchema: z.ZodType<Prisma.EnumGenderWithAggregatesFilter>
+  = z
     .object({
       _count: z.lazy(() => NestedIntFilterSchema).optional(),
       _max: z.lazy(() => NestedEnumGenderFilterSchema).optional(),
@@ -5553,8 +5553,8 @@ export const EnumGenderWithAggregatesFilterSchema: z.ZodType<Prisma.EnumGenderWi
     })
     .strict();
 
-export const StringNullableWithAggregatesFilterSchema: z.ZodType<Prisma.StringNullableWithAggregatesFilter> =
-  z
+export const StringNullableWithAggregatesFilterSchema: z.ZodType<Prisma.StringNullableWithAggregatesFilter>
+  = z
     .object({
       _count: z.lazy(() => NestedIntNullableFilterSchema).optional(),
       _max: z.lazy(() => NestedStringNullableFilterSchema).optional(),
@@ -5580,8 +5580,8 @@ export const StringNullableWithAggregatesFilterSchema: z.ZodType<Prisma.StringNu
     })
     .strict();
 
-export const IntNullableWithAggregatesFilterSchema: z.ZodType<Prisma.IntNullableWithAggregatesFilter> =
-  z
+export const IntNullableWithAggregatesFilterSchema: z.ZodType<Prisma.IntNullableWithAggregatesFilter>
+  = z
     .object({
       _avg: z.lazy(() => NestedFloatNullableFilterSchema).optional(),
       _count: z.lazy(() => NestedIntNullableFilterSchema).optional(),
@@ -5605,8 +5605,8 @@ export const IntNullableWithAggregatesFilterSchema: z.ZodType<Prisma.IntNullable
     })
     .strict();
 
-export const EnumGroupBloodNullableWithAggregatesFilterSchema: z.ZodType<Prisma.EnumGroupBloodNullableWithAggregatesFilter> =
-  z
+export const EnumGroupBloodNullableWithAggregatesFilterSchema: z.ZodType<Prisma.EnumGroupBloodNullableWithAggregatesFilter>
+  = z
     .object({
       _count: z.lazy(() => NestedIntNullableFilterSchema).optional(),
       _max: z.lazy(() => NestedEnumGroupBloodNullableFilterSchema).optional(),
@@ -5635,8 +5635,8 @@ export const EnumGroupBloodNullableWithAggregatesFilterSchema: z.ZodType<Prisma.
     })
     .strict();
 
-export const DateTimeNullableWithAggregatesFilterSchema: z.ZodType<Prisma.DateTimeNullableWithAggregatesFilter> =
-  z
+export const DateTimeNullableWithAggregatesFilterSchema: z.ZodType<Prisma.DateTimeNullableWithAggregatesFilter>
+  = z
     .object({
       _count: z.lazy(() => NestedIntNullableFilterSchema).optional(),
       _max: z.lazy(() => NestedDateTimeNullableFilterSchema).optional(),
@@ -5658,16 +5658,16 @@ export const DateTimeNullableWithAggregatesFilterSchema: z.ZodType<Prisma.DateTi
     })
     .strict();
 
-export const PatientScalarRelationFilterSchema: z.ZodType<Prisma.PatientScalarRelationFilter> =
-  z
+export const PatientScalarRelationFilterSchema: z.ZodType<Prisma.PatientScalarRelationFilter>
+  = z
     .object({
       is: z.lazy(() => PatientWhereInputSchema).optional(),
       isNot: z.lazy(() => PatientWhereInputSchema).optional(),
     })
     .strict();
 
-export const HistoryCountOrderByAggregateInputSchema: z.ZodType<Prisma.HistoryCountOrderByAggregateInput> =
-  z
+export const HistoryCountOrderByAggregateInputSchema: z.ZodType<Prisma.HistoryCountOrderByAggregateInput>
+  = z
     .object({
       chief_complaint: z.lazy(() => SortOrderSchema).optional(),
       create_by: z.lazy(() => SortOrderSchema).optional(),
@@ -5684,8 +5684,8 @@ export const HistoryCountOrderByAggregateInputSchema: z.ZodType<Prisma.HistoryCo
     })
     .strict();
 
-export const HistoryMaxOrderByAggregateInputSchema: z.ZodType<Prisma.HistoryMaxOrderByAggregateInput> =
-  z
+export const HistoryMaxOrderByAggregateInputSchema: z.ZodType<Prisma.HistoryMaxOrderByAggregateInput>
+  = z
     .object({
       chief_complaint: z.lazy(() => SortOrderSchema).optional(),
       create_by: z.lazy(() => SortOrderSchema).optional(),
@@ -5702,8 +5702,8 @@ export const HistoryMaxOrderByAggregateInputSchema: z.ZodType<Prisma.HistoryMaxO
     })
     .strict();
 
-export const HistoryMinOrderByAggregateInputSchema: z.ZodType<Prisma.HistoryMinOrderByAggregateInput> =
-  z
+export const HistoryMinOrderByAggregateInputSchema: z.ZodType<Prisma.HistoryMinOrderByAggregateInput>
+  = z
     .object({
       chief_complaint: z.lazy(() => SortOrderSchema).optional(),
       create_by: z.lazy(() => SortOrderSchema).optional(),
@@ -5720,8 +5720,8 @@ export const HistoryMinOrderByAggregateInputSchema: z.ZodType<Prisma.HistoryMinO
     })
     .strict();
 
-export const PatientNullableScalarRelationFilterSchema: z.ZodType<Prisma.PatientNullableScalarRelationFilter> =
-  z
+export const PatientNullableScalarRelationFilterSchema: z.ZodType<Prisma.PatientNullableScalarRelationFilter>
+  = z
     .object({
       is: z
         .lazy(() => PatientWhereInputSchema)
@@ -5734,8 +5734,8 @@ export const PatientNullableScalarRelationFilterSchema: z.ZodType<Prisma.Patient
     })
     .strict();
 
-export const ExamCountOrderByAggregateInputSchema: z.ZodType<Prisma.ExamCountOrderByAggregateInput> =
-  z
+export const ExamCountOrderByAggregateInputSchema: z.ZodType<Prisma.ExamCountOrderByAggregateInput>
+  = z
     .object({
       create_by: z.lazy(() => SortOrderSchema).optional(),
       create_date: z.lazy(() => SortOrderSchema).optional(),
@@ -5749,8 +5749,8 @@ export const ExamCountOrderByAggregateInputSchema: z.ZodType<Prisma.ExamCountOrd
     })
     .strict();
 
-export const ExamMaxOrderByAggregateInputSchema: z.ZodType<Prisma.ExamMaxOrderByAggregateInput> =
-  z
+export const ExamMaxOrderByAggregateInputSchema: z.ZodType<Prisma.ExamMaxOrderByAggregateInput>
+  = z
     .object({
       create_by: z.lazy(() => SortOrderSchema).optional(),
       create_date: z.lazy(() => SortOrderSchema).optional(),
@@ -5764,8 +5764,8 @@ export const ExamMaxOrderByAggregateInputSchema: z.ZodType<Prisma.ExamMaxOrderBy
     })
     .strict();
 
-export const ExamMinOrderByAggregateInputSchema: z.ZodType<Prisma.ExamMinOrderByAggregateInput> =
-  z
+export const ExamMinOrderByAggregateInputSchema: z.ZodType<Prisma.ExamMinOrderByAggregateInput>
+  = z
     .object({
       create_by: z.lazy(() => SortOrderSchema).optional(),
       create_date: z.lazy(() => SortOrderSchema).optional(),
@@ -5794,8 +5794,8 @@ export const DateTimeFilterSchema: z.ZodType<Prisma.DateTimeFilter> = z
   })
   .strict();
 
-export const StationPatientCountOrderByAggregateInputSchema: z.ZodType<Prisma.StationPatientCountOrderByAggregateInput> =
-  z
+export const StationPatientCountOrderByAggregateInputSchema: z.ZodType<Prisma.StationPatientCountOrderByAggregateInput>
+  = z
     .object({
       create_date: z.lazy(() => SortOrderSchema).optional(),
       description: z.lazy(() => SortOrderSchema).optional(),
@@ -5808,8 +5808,8 @@ export const StationPatientCountOrderByAggregateInputSchema: z.ZodType<Prisma.St
     })
     .strict();
 
-export const StationPatientMaxOrderByAggregateInputSchema: z.ZodType<Prisma.StationPatientMaxOrderByAggregateInput> =
-  z
+export const StationPatientMaxOrderByAggregateInputSchema: z.ZodType<Prisma.StationPatientMaxOrderByAggregateInput>
+  = z
     .object({
       create_date: z.lazy(() => SortOrderSchema).optional(),
       description: z.lazy(() => SortOrderSchema).optional(),
@@ -5822,8 +5822,8 @@ export const StationPatientMaxOrderByAggregateInputSchema: z.ZodType<Prisma.Stat
     })
     .strict();
 
-export const StationPatientMinOrderByAggregateInputSchema: z.ZodType<Prisma.StationPatientMinOrderByAggregateInput> =
-  z
+export const StationPatientMinOrderByAggregateInputSchema: z.ZodType<Prisma.StationPatientMinOrderByAggregateInput>
+  = z
     .object({
       create_date: z.lazy(() => SortOrderSchema).optional(),
       description: z.lazy(() => SortOrderSchema).optional(),
@@ -5836,8 +5836,8 @@ export const StationPatientMinOrderByAggregateInputSchema: z.ZodType<Prisma.Stat
     })
     .strict();
 
-export const DateTimeWithAggregatesFilterSchema: z.ZodType<Prisma.DateTimeWithAggregatesFilter> =
-  z
+export const DateTimeWithAggregatesFilterSchema: z.ZodType<Prisma.DateTimeWithAggregatesFilter>
+  = z
     .object({
       _count: z.lazy(() => NestedIntFilterSchema).optional(),
       _max: z.lazy(() => NestedDateTimeFilterSchema).optional(),
@@ -5858,8 +5858,8 @@ export const DateTimeWithAggregatesFilterSchema: z.ZodType<Prisma.DateTimeWithAg
     })
     .strict();
 
-export const TeatmentCountOrderByAggregateInputSchema: z.ZodType<Prisma.TeatmentCountOrderByAggregateInput> =
-  z
+export const TeatmentCountOrderByAggregateInputSchema: z.ZodType<Prisma.TeatmentCountOrderByAggregateInput>
+  = z
     .object({
       chief_complaint: z.lazy(() => SortOrderSchema).optional(),
       create_by: z.lazy(() => SortOrderSchema).optional(),
@@ -5875,8 +5875,8 @@ export const TeatmentCountOrderByAggregateInputSchema: z.ZodType<Prisma.Teatment
     })
     .strict();
 
-export const TeatmentMaxOrderByAggregateInputSchema: z.ZodType<Prisma.TeatmentMaxOrderByAggregateInput> =
-  z
+export const TeatmentMaxOrderByAggregateInputSchema: z.ZodType<Prisma.TeatmentMaxOrderByAggregateInput>
+  = z
     .object({
       chief_complaint: z.lazy(() => SortOrderSchema).optional(),
       create_by: z.lazy(() => SortOrderSchema).optional(),
@@ -5892,8 +5892,8 @@ export const TeatmentMaxOrderByAggregateInputSchema: z.ZodType<Prisma.TeatmentMa
     })
     .strict();
 
-export const TeatmentMinOrderByAggregateInputSchema: z.ZodType<Prisma.TeatmentMinOrderByAggregateInput> =
-  z
+export const TeatmentMinOrderByAggregateInputSchema: z.ZodType<Prisma.TeatmentMinOrderByAggregateInput>
+  = z
     .object({
       chief_complaint: z.lazy(() => SortOrderSchema).optional(),
       create_by: z.lazy(() => SortOrderSchema).optional(),
@@ -5909,8 +5909,8 @@ export const TeatmentMinOrderByAggregateInputSchema: z.ZodType<Prisma.TeatmentMi
     })
     .strict();
 
-export const HistoryCreateNestedOneWithoutPatientInputSchema: z.ZodType<Prisma.HistoryCreateNestedOneWithoutPatientInput> =
-  z
+export const HistoryCreateNestedOneWithoutPatientInputSchema: z.ZodType<Prisma.HistoryCreateNestedOneWithoutPatientInput>
+  = z
     .object({
       connect: z.lazy(() => HistoryWhereUniqueInputSchema).optional(),
       connectOrCreate: z
@@ -5925,8 +5925,8 @@ export const HistoryCreateNestedOneWithoutPatientInputSchema: z.ZodType<Prisma.H
     })
     .strict();
 
-export const ExamCreateNestedManyWithoutPatientInputSchema: z.ZodType<Prisma.ExamCreateNestedManyWithoutPatientInput> =
-  z
+export const ExamCreateNestedManyWithoutPatientInputSchema: z.ZodType<Prisma.ExamCreateNestedManyWithoutPatientInput>
+  = z
     .object({
       connect: z
         .union([
@@ -5954,8 +5954,8 @@ export const ExamCreateNestedManyWithoutPatientInputSchema: z.ZodType<Prisma.Exa
     })
     .strict();
 
-export const StationPatientCreateNestedManyWithoutPatientInputSchema: z.ZodType<Prisma.StationPatientCreateNestedManyWithoutPatientInput> =
-  z
+export const StationPatientCreateNestedManyWithoutPatientInputSchema: z.ZodType<Prisma.StationPatientCreateNestedManyWithoutPatientInput>
+  = z
     .object({
       connect: z
         .union([
@@ -5987,8 +5987,8 @@ export const StationPatientCreateNestedManyWithoutPatientInputSchema: z.ZodType<
     })
     .strict();
 
-export const TeatmentCreateNestedOneWithoutPatientInputSchema: z.ZodType<Prisma.TeatmentCreateNestedOneWithoutPatientInput> =
-  z
+export const TeatmentCreateNestedOneWithoutPatientInputSchema: z.ZodType<Prisma.TeatmentCreateNestedOneWithoutPatientInput>
+  = z
     .object({
       connect: z.lazy(() => TeatmentWhereUniqueInputSchema).optional(),
       connectOrCreate: z
@@ -6003,8 +6003,8 @@ export const TeatmentCreateNestedOneWithoutPatientInputSchema: z.ZodType<Prisma.
     })
     .strict();
 
-export const HistoryUncheckedCreateNestedOneWithoutPatientInputSchema: z.ZodType<Prisma.HistoryUncheckedCreateNestedOneWithoutPatientInput> =
-  z
+export const HistoryUncheckedCreateNestedOneWithoutPatientInputSchema: z.ZodType<Prisma.HistoryUncheckedCreateNestedOneWithoutPatientInput>
+  = z
     .object({
       connect: z.lazy(() => HistoryWhereUniqueInputSchema).optional(),
       connectOrCreate: z
@@ -6019,8 +6019,8 @@ export const HistoryUncheckedCreateNestedOneWithoutPatientInputSchema: z.ZodType
     })
     .strict();
 
-export const ExamUncheckedCreateNestedManyWithoutPatientInputSchema: z.ZodType<Prisma.ExamUncheckedCreateNestedManyWithoutPatientInput> =
-  z
+export const ExamUncheckedCreateNestedManyWithoutPatientInputSchema: z.ZodType<Prisma.ExamUncheckedCreateNestedManyWithoutPatientInput>
+  = z
     .object({
       connect: z
         .union([
@@ -6048,8 +6048,8 @@ export const ExamUncheckedCreateNestedManyWithoutPatientInputSchema: z.ZodType<P
     })
     .strict();
 
-export const StationPatientUncheckedCreateNestedManyWithoutPatientInputSchema: z.ZodType<Prisma.StationPatientUncheckedCreateNestedManyWithoutPatientInput> =
-  z
+export const StationPatientUncheckedCreateNestedManyWithoutPatientInputSchema: z.ZodType<Prisma.StationPatientUncheckedCreateNestedManyWithoutPatientInput>
+  = z
     .object({
       connect: z
         .union([
@@ -6081,8 +6081,8 @@ export const StationPatientUncheckedCreateNestedManyWithoutPatientInputSchema: z
     })
     .strict();
 
-export const TeatmentUncheckedCreateNestedOneWithoutPatientInputSchema: z.ZodType<Prisma.TeatmentUncheckedCreateNestedOneWithoutPatientInput> =
-  z
+export const TeatmentUncheckedCreateNestedOneWithoutPatientInputSchema: z.ZodType<Prisma.TeatmentUncheckedCreateNestedOneWithoutPatientInput>
+  = z
     .object({
       connect: z.lazy(() => TeatmentWhereUniqueInputSchema).optional(),
       connectOrCreate: z
@@ -6097,29 +6097,29 @@ export const TeatmentUncheckedCreateNestedOneWithoutPatientInputSchema: z.ZodTyp
     })
     .strict();
 
-export const StringFieldUpdateOperationsInputSchema: z.ZodType<Prisma.StringFieldUpdateOperationsInput> =
-  z
+export const StringFieldUpdateOperationsInputSchema: z.ZodType<Prisma.StringFieldUpdateOperationsInput>
+  = z
     .object({
       set: z.string().optional(),
     })
     .strict();
 
-export const EnumGenderFieldUpdateOperationsInputSchema: z.ZodType<Prisma.EnumGenderFieldUpdateOperationsInput> =
-  z
+export const EnumGenderFieldUpdateOperationsInputSchema: z.ZodType<Prisma.EnumGenderFieldUpdateOperationsInput>
+  = z
     .object({
       set: z.lazy(() => GenderSchema).optional(),
     })
     .strict();
 
-export const NullableStringFieldUpdateOperationsInputSchema: z.ZodType<Prisma.NullableStringFieldUpdateOperationsInput> =
-  z
+export const NullableStringFieldUpdateOperationsInputSchema: z.ZodType<Prisma.NullableStringFieldUpdateOperationsInput>
+  = z
     .object({
       set: z.string().optional().nullable(),
     })
     .strict();
 
-export const NullableIntFieldUpdateOperationsInputSchema: z.ZodType<Prisma.NullableIntFieldUpdateOperationsInput> =
-  z
+export const NullableIntFieldUpdateOperationsInputSchema: z.ZodType<Prisma.NullableIntFieldUpdateOperationsInput>
+  = z
     .object({
       decrement: z.number().optional(),
       divide: z.number().optional(),
@@ -6129,8 +6129,8 @@ export const NullableIntFieldUpdateOperationsInputSchema: z.ZodType<Prisma.Nulla
     })
     .strict();
 
-export const NullableEnumGroupBloodFieldUpdateOperationsInputSchema: z.ZodType<Prisma.NullableEnumGroupBloodFieldUpdateOperationsInput> =
-  z
+export const NullableEnumGroupBloodFieldUpdateOperationsInputSchema: z.ZodType<Prisma.NullableEnumGroupBloodFieldUpdateOperationsInput>
+  = z
     .object({
       set: z
         .lazy(() => GroupBloodSchema)
@@ -6139,15 +6139,15 @@ export const NullableEnumGroupBloodFieldUpdateOperationsInputSchema: z.ZodType<P
     })
     .strict();
 
-export const NullableDateTimeFieldUpdateOperationsInputSchema: z.ZodType<Prisma.NullableDateTimeFieldUpdateOperationsInput> =
-  z
+export const NullableDateTimeFieldUpdateOperationsInputSchema: z.ZodType<Prisma.NullableDateTimeFieldUpdateOperationsInput>
+  = z
     .object({
       set: z.coerce.date().optional().nullable(),
     })
     .strict();
 
-export const HistoryUpdateOneWithoutPatientNestedInputSchema: z.ZodType<Prisma.HistoryUpdateOneWithoutPatientNestedInput> =
-  z
+export const HistoryUpdateOneWithoutPatientNestedInputSchema: z.ZodType<Prisma.HistoryUpdateOneWithoutPatientNestedInput>
+  = z
     .object({
       connect: z.lazy(() => HistoryWhereUniqueInputSchema).optional(),
       connectOrCreate: z
@@ -6176,8 +6176,8 @@ export const HistoryUpdateOneWithoutPatientNestedInputSchema: z.ZodType<Prisma.H
     })
     .strict();
 
-export const ExamUpdateManyWithoutPatientNestedInputSchema: z.ZodType<Prisma.ExamUpdateManyWithoutPatientNestedInput> =
-  z
+export const ExamUpdateManyWithoutPatientNestedInputSchema: z.ZodType<Prisma.ExamUpdateManyWithoutPatientNestedInput>
+  = z
     .object({
       connect: z
         .union([
@@ -6253,8 +6253,8 @@ export const ExamUpdateManyWithoutPatientNestedInputSchema: z.ZodType<Prisma.Exa
     })
     .strict();
 
-export const StationPatientUpdateManyWithoutPatientNestedInputSchema: z.ZodType<Prisma.StationPatientUpdateManyWithoutPatientNestedInput> =
-  z
+export const StationPatientUpdateManyWithoutPatientNestedInputSchema: z.ZodType<Prisma.StationPatientUpdateManyWithoutPatientNestedInput>
+  = z
     .object({
       connect: z
         .union([
@@ -6348,8 +6348,8 @@ export const StationPatientUpdateManyWithoutPatientNestedInputSchema: z.ZodType<
     })
     .strict();
 
-export const TeatmentUpdateOneWithoutPatientNestedInputSchema: z.ZodType<Prisma.TeatmentUpdateOneWithoutPatientNestedInput> =
-  z
+export const TeatmentUpdateOneWithoutPatientNestedInputSchema: z.ZodType<Prisma.TeatmentUpdateOneWithoutPatientNestedInput>
+  = z
     .object({
       connect: z.lazy(() => TeatmentWhereUniqueInputSchema).optional(),
       connectOrCreate: z
@@ -6378,8 +6378,8 @@ export const TeatmentUpdateOneWithoutPatientNestedInputSchema: z.ZodType<Prisma.
     })
     .strict();
 
-export const HistoryUncheckedUpdateOneWithoutPatientNestedInputSchema: z.ZodType<Prisma.HistoryUncheckedUpdateOneWithoutPatientNestedInput> =
-  z
+export const HistoryUncheckedUpdateOneWithoutPatientNestedInputSchema: z.ZodType<Prisma.HistoryUncheckedUpdateOneWithoutPatientNestedInput>
+  = z
     .object({
       connect: z.lazy(() => HistoryWhereUniqueInputSchema).optional(),
       connectOrCreate: z
@@ -6408,8 +6408,8 @@ export const HistoryUncheckedUpdateOneWithoutPatientNestedInputSchema: z.ZodType
     })
     .strict();
 
-export const ExamUncheckedUpdateManyWithoutPatientNestedInputSchema: z.ZodType<Prisma.ExamUncheckedUpdateManyWithoutPatientNestedInput> =
-  z
+export const ExamUncheckedUpdateManyWithoutPatientNestedInputSchema: z.ZodType<Prisma.ExamUncheckedUpdateManyWithoutPatientNestedInput>
+  = z
     .object({
       connect: z
         .union([
@@ -6485,8 +6485,8 @@ export const ExamUncheckedUpdateManyWithoutPatientNestedInputSchema: z.ZodType<P
     })
     .strict();
 
-export const StationPatientUncheckedUpdateManyWithoutPatientNestedInputSchema: z.ZodType<Prisma.StationPatientUncheckedUpdateManyWithoutPatientNestedInput> =
-  z
+export const StationPatientUncheckedUpdateManyWithoutPatientNestedInputSchema: z.ZodType<Prisma.StationPatientUncheckedUpdateManyWithoutPatientNestedInput>
+  = z
     .object({
       connect: z
         .union([
@@ -6580,8 +6580,8 @@ export const StationPatientUncheckedUpdateManyWithoutPatientNestedInputSchema: z
     })
     .strict();
 
-export const TeatmentUncheckedUpdateOneWithoutPatientNestedInputSchema: z.ZodType<Prisma.TeatmentUncheckedUpdateOneWithoutPatientNestedInput> =
-  z
+export const TeatmentUncheckedUpdateOneWithoutPatientNestedInputSchema: z.ZodType<Prisma.TeatmentUncheckedUpdateOneWithoutPatientNestedInput>
+  = z
     .object({
       connect: z.lazy(() => TeatmentWhereUniqueInputSchema).optional(),
       connectOrCreate: z
@@ -6610,8 +6610,8 @@ export const TeatmentUncheckedUpdateOneWithoutPatientNestedInputSchema: z.ZodTyp
     })
     .strict();
 
-export const PatientCreateNestedOneWithoutHistoryInputSchema: z.ZodType<Prisma.PatientCreateNestedOneWithoutHistoryInput> =
-  z
+export const PatientCreateNestedOneWithoutHistoryInputSchema: z.ZodType<Prisma.PatientCreateNestedOneWithoutHistoryInput>
+  = z
     .object({
       connect: z.lazy(() => PatientWhereUniqueInputSchema).optional(),
       connectOrCreate: z
@@ -6626,8 +6626,8 @@ export const PatientCreateNestedOneWithoutHistoryInputSchema: z.ZodType<Prisma.P
     })
     .strict();
 
-export const PatientUpdateOneRequiredWithoutHistoryNestedInputSchema: z.ZodType<Prisma.PatientUpdateOneRequiredWithoutHistoryNestedInput> =
-  z
+export const PatientUpdateOneRequiredWithoutHistoryNestedInputSchema: z.ZodType<Prisma.PatientUpdateOneRequiredWithoutHistoryNestedInput>
+  = z
     .object({
       connect: z.lazy(() => PatientWhereUniqueInputSchema).optional(),
       connectOrCreate: z
@@ -6650,8 +6650,8 @@ export const PatientUpdateOneRequiredWithoutHistoryNestedInputSchema: z.ZodType<
     })
     .strict();
 
-export const PatientCreateNestedOneWithoutExamInputSchema: z.ZodType<Prisma.PatientCreateNestedOneWithoutExamInput> =
-  z
+export const PatientCreateNestedOneWithoutExamInputSchema: z.ZodType<Prisma.PatientCreateNestedOneWithoutExamInput>
+  = z
     .object({
       connect: z.lazy(() => PatientWhereUniqueInputSchema).optional(),
       connectOrCreate: z
@@ -6666,8 +6666,8 @@ export const PatientCreateNestedOneWithoutExamInputSchema: z.ZodType<Prisma.Pati
     })
     .strict();
 
-export const PatientUpdateOneWithoutExamNestedInputSchema: z.ZodType<Prisma.PatientUpdateOneWithoutExamNestedInput> =
-  z
+export const PatientUpdateOneWithoutExamNestedInputSchema: z.ZodType<Prisma.PatientUpdateOneWithoutExamNestedInput>
+  = z
     .object({
       connect: z.lazy(() => PatientWhereUniqueInputSchema).optional(),
       connectOrCreate: z
@@ -6696,8 +6696,8 @@ export const PatientUpdateOneWithoutExamNestedInputSchema: z.ZodType<Prisma.Pati
     })
     .strict();
 
-export const PatientCreateNestedOneWithoutStationPatientInputSchema: z.ZodType<Prisma.PatientCreateNestedOneWithoutStationPatientInput> =
-  z
+export const PatientCreateNestedOneWithoutStationPatientInputSchema: z.ZodType<Prisma.PatientCreateNestedOneWithoutStationPatientInput>
+  = z
     .object({
       connect: z.lazy(() => PatientWhereUniqueInputSchema).optional(),
       connectOrCreate: z
@@ -6712,15 +6712,15 @@ export const PatientCreateNestedOneWithoutStationPatientInputSchema: z.ZodType<P
     })
     .strict();
 
-export const DateTimeFieldUpdateOperationsInputSchema: z.ZodType<Prisma.DateTimeFieldUpdateOperationsInput> =
-  z
+export const DateTimeFieldUpdateOperationsInputSchema: z.ZodType<Prisma.DateTimeFieldUpdateOperationsInput>
+  = z
     .object({
       set: z.coerce.date().optional(),
     })
     .strict();
 
-export const PatientUpdateOneRequiredWithoutStationPatientNestedInputSchema: z.ZodType<Prisma.PatientUpdateOneRequiredWithoutStationPatientNestedInput> =
-  z
+export const PatientUpdateOneRequiredWithoutStationPatientNestedInputSchema: z.ZodType<Prisma.PatientUpdateOneRequiredWithoutStationPatientNestedInput>
+  = z
     .object({
       connect: z.lazy(() => PatientWhereUniqueInputSchema).optional(),
       connectOrCreate: z
@@ -6747,8 +6747,8 @@ export const PatientUpdateOneRequiredWithoutStationPatientNestedInputSchema: z.Z
     })
     .strict();
 
-export const PatientCreateNestedOneWithoutTeatmentInputSchema: z.ZodType<Prisma.PatientCreateNestedOneWithoutTeatmentInput> =
-  z
+export const PatientCreateNestedOneWithoutTeatmentInputSchema: z.ZodType<Prisma.PatientCreateNestedOneWithoutTeatmentInput>
+  = z
     .object({
       connect: z.lazy(() => PatientWhereUniqueInputSchema).optional(),
       connectOrCreate: z
@@ -6763,8 +6763,8 @@ export const PatientCreateNestedOneWithoutTeatmentInputSchema: z.ZodType<Prisma.
     })
     .strict();
 
-export const PatientUpdateOneRequiredWithoutTeatmentNestedInputSchema: z.ZodType<Prisma.PatientUpdateOneRequiredWithoutTeatmentNestedInput> =
-  z
+export const PatientUpdateOneRequiredWithoutTeatmentNestedInputSchema: z.ZodType<Prisma.PatientUpdateOneRequiredWithoutTeatmentNestedInput>
+  = z
     .object({
       connect: z.lazy(() => PatientWhereUniqueInputSchema).optional(),
       connectOrCreate: z
@@ -6805,8 +6805,8 @@ export const NestedStringFilterSchema: z.ZodType<Prisma.NestedStringFilter> = z
   })
   .strict();
 
-export const NestedEnumGenderFilterSchema: z.ZodType<Prisma.NestedEnumGenderFilter> =
-  z
+export const NestedEnumGenderFilterSchema: z.ZodType<Prisma.NestedEnumGenderFilter>
+  = z
     .object({
       equals: z.lazy(() => GenderSchema).optional(),
       in: z
@@ -6826,8 +6826,8 @@ export const NestedEnumGenderFilterSchema: z.ZodType<Prisma.NestedEnumGenderFilt
     })
     .strict();
 
-export const NestedStringNullableFilterSchema: z.ZodType<Prisma.NestedStringNullableFilter> =
-  z
+export const NestedStringNullableFilterSchema: z.ZodType<Prisma.NestedStringNullableFilter>
+  = z
     .object({
       contains: z.string().optional(),
       endsWith: z.string().optional(),
@@ -6846,8 +6846,8 @@ export const NestedStringNullableFilterSchema: z.ZodType<Prisma.NestedStringNull
     })
     .strict();
 
-export const NestedIntNullableFilterSchema: z.ZodType<Prisma.NestedIntNullableFilter> =
-  z
+export const NestedIntNullableFilterSchema: z.ZodType<Prisma.NestedIntNullableFilter>
+  = z
     .object({
       equals: z.number().optional().nullable(),
       gt: z.number().optional(),
@@ -6863,8 +6863,8 @@ export const NestedIntNullableFilterSchema: z.ZodType<Prisma.NestedIntNullableFi
     })
     .strict();
 
-export const NestedEnumGroupBloodNullableFilterSchema: z.ZodType<Prisma.NestedEnumGroupBloodNullableFilter> =
-  z
+export const NestedEnumGroupBloodNullableFilterSchema: z.ZodType<Prisma.NestedEnumGroupBloodNullableFilter>
+  = z
     .object({
       equals: z
         .lazy(() => GroupBloodSchema)
@@ -6890,8 +6890,8 @@ export const NestedEnumGroupBloodNullableFilterSchema: z.ZodType<Prisma.NestedEn
     })
     .strict();
 
-export const NestedDateTimeNullableFilterSchema: z.ZodType<Prisma.NestedDateTimeNullableFilter> =
-  z
+export const NestedDateTimeNullableFilterSchema: z.ZodType<Prisma.NestedDateTimeNullableFilter>
+  = z
     .object({
       equals: z.coerce.date().optional().nullable(),
       gt: z.coerce.date().optional(),
@@ -6910,8 +6910,8 @@ export const NestedDateTimeNullableFilterSchema: z.ZodType<Prisma.NestedDateTime
     })
     .strict();
 
-export const NestedStringWithAggregatesFilterSchema: z.ZodType<Prisma.NestedStringWithAggregatesFilter> =
-  z
+export const NestedStringWithAggregatesFilterSchema: z.ZodType<Prisma.NestedStringWithAggregatesFilter>
+  = z
     .object({
       _count: z.lazy(() => NestedIntFilterSchema).optional(),
       _max: z.lazy(() => NestedStringFilterSchema).optional(),
@@ -6948,8 +6948,8 @@ export const NestedIntFilterSchema: z.ZodType<Prisma.NestedIntFilter> = z
   })
   .strict();
 
-export const NestedEnumGenderWithAggregatesFilterSchema: z.ZodType<Prisma.NestedEnumGenderWithAggregatesFilter> =
-  z
+export const NestedEnumGenderWithAggregatesFilterSchema: z.ZodType<Prisma.NestedEnumGenderWithAggregatesFilter>
+  = z
     .object({
       _count: z.lazy(() => NestedIntFilterSchema).optional(),
       _max: z.lazy(() => NestedEnumGenderFilterSchema).optional(),
@@ -6972,8 +6972,8 @@ export const NestedEnumGenderWithAggregatesFilterSchema: z.ZodType<Prisma.Nested
     })
     .strict();
 
-export const NestedStringNullableWithAggregatesFilterSchema: z.ZodType<Prisma.NestedStringNullableWithAggregatesFilter> =
-  z
+export const NestedStringNullableWithAggregatesFilterSchema: z.ZodType<Prisma.NestedStringNullableWithAggregatesFilter>
+  = z
     .object({
       _count: z.lazy(() => NestedIntNullableFilterSchema).optional(),
       _max: z.lazy(() => NestedStringNullableFilterSchema).optional(),
@@ -6998,8 +6998,8 @@ export const NestedStringNullableWithAggregatesFilterSchema: z.ZodType<Prisma.Ne
     })
     .strict();
 
-export const NestedIntNullableWithAggregatesFilterSchema: z.ZodType<Prisma.NestedIntNullableWithAggregatesFilter> =
-  z
+export const NestedIntNullableWithAggregatesFilterSchema: z.ZodType<Prisma.NestedIntNullableWithAggregatesFilter>
+  = z
     .object({
       _avg: z.lazy(() => NestedFloatNullableFilterSchema).optional(),
       _count: z.lazy(() => NestedIntNullableFilterSchema).optional(),
@@ -7023,8 +7023,8 @@ export const NestedIntNullableWithAggregatesFilterSchema: z.ZodType<Prisma.Neste
     })
     .strict();
 
-export const NestedFloatNullableFilterSchema: z.ZodType<Prisma.NestedFloatNullableFilter> =
-  z
+export const NestedFloatNullableFilterSchema: z.ZodType<Prisma.NestedFloatNullableFilter>
+  = z
     .object({
       equals: z.number().optional().nullable(),
       gt: z.number().optional(),
@@ -7040,8 +7040,8 @@ export const NestedFloatNullableFilterSchema: z.ZodType<Prisma.NestedFloatNullab
     })
     .strict();
 
-export const NestedEnumGroupBloodNullableWithAggregatesFilterSchema: z.ZodType<Prisma.NestedEnumGroupBloodNullableWithAggregatesFilter> =
-  z
+export const NestedEnumGroupBloodNullableWithAggregatesFilterSchema: z.ZodType<Prisma.NestedEnumGroupBloodNullableWithAggregatesFilter>
+  = z
     .object({
       _count: z.lazy(() => NestedIntNullableFilterSchema).optional(),
       _max: z.lazy(() => NestedEnumGroupBloodNullableFilterSchema).optional(),
@@ -7070,8 +7070,8 @@ export const NestedEnumGroupBloodNullableWithAggregatesFilterSchema: z.ZodType<P
     })
     .strict();
 
-export const NestedDateTimeNullableWithAggregatesFilterSchema: z.ZodType<Prisma.NestedDateTimeNullableWithAggregatesFilter> =
-  z
+export const NestedDateTimeNullableWithAggregatesFilterSchema: z.ZodType<Prisma.NestedDateTimeNullableWithAggregatesFilter>
+  = z
     .object({
       _count: z.lazy(() => NestedIntNullableFilterSchema).optional(),
       _max: z.lazy(() => NestedDateTimeNullableFilterSchema).optional(),
@@ -7093,8 +7093,8 @@ export const NestedDateTimeNullableWithAggregatesFilterSchema: z.ZodType<Prisma.
     })
     .strict();
 
-export const NestedDateTimeFilterSchema: z.ZodType<Prisma.NestedDateTimeFilter> =
-  z
+export const NestedDateTimeFilterSchema: z.ZodType<Prisma.NestedDateTimeFilter>
+  = z
     .object({
       equals: z.coerce.date().optional(),
       gt: z.coerce.date().optional(),
@@ -7109,8 +7109,8 @@ export const NestedDateTimeFilterSchema: z.ZodType<Prisma.NestedDateTimeFilter> 
     })
     .strict();
 
-export const NestedDateTimeWithAggregatesFilterSchema: z.ZodType<Prisma.NestedDateTimeWithAggregatesFilter> =
-  z
+export const NestedDateTimeWithAggregatesFilterSchema: z.ZodType<Prisma.NestedDateTimeWithAggregatesFilter>
+  = z
     .object({
       _count: z.lazy(() => NestedIntFilterSchema).optional(),
       _max: z.lazy(() => NestedDateTimeFilterSchema).optional(),
@@ -7131,8 +7131,8 @@ export const NestedDateTimeWithAggregatesFilterSchema: z.ZodType<Prisma.NestedDa
     })
     .strict();
 
-export const HistoryCreateWithoutPatientInputSchema: z.ZodType<Prisma.HistoryCreateWithoutPatientInput> =
-  z
+export const HistoryCreateWithoutPatientInputSchema: z.ZodType<Prisma.HistoryCreateWithoutPatientInput>
+  = z
     .object({
       chief_complaint: z.string(),
       create_by: z.string().optional().nullable(),
@@ -7148,8 +7148,8 @@ export const HistoryCreateWithoutPatientInputSchema: z.ZodType<Prisma.HistoryCre
     })
     .strict();
 
-export const HistoryUncheckedCreateWithoutPatientInputSchema: z.ZodType<Prisma.HistoryUncheckedCreateWithoutPatientInput> =
-  z
+export const HistoryUncheckedCreateWithoutPatientInputSchema: z.ZodType<Prisma.HistoryUncheckedCreateWithoutPatientInput>
+  = z
     .object({
       chief_complaint: z.string(),
       create_by: z.string().optional().nullable(),
@@ -7165,8 +7165,8 @@ export const HistoryUncheckedCreateWithoutPatientInputSchema: z.ZodType<Prisma.H
     })
     .strict();
 
-export const HistoryCreateOrConnectWithoutPatientInputSchema: z.ZodType<Prisma.HistoryCreateOrConnectWithoutPatientInput> =
-  z
+export const HistoryCreateOrConnectWithoutPatientInputSchema: z.ZodType<Prisma.HistoryCreateOrConnectWithoutPatientInput>
+  = z
     .object({
       create: z.union([
         z.lazy(() => HistoryCreateWithoutPatientInputSchema),
@@ -7176,8 +7176,8 @@ export const HistoryCreateOrConnectWithoutPatientInputSchema: z.ZodType<Prisma.H
     })
     .strict();
 
-export const ExamCreateWithoutPatientInputSchema: z.ZodType<Prisma.ExamCreateWithoutPatientInput> =
-  z
+export const ExamCreateWithoutPatientInputSchema: z.ZodType<Prisma.ExamCreateWithoutPatientInput>
+  = z
     .object({
       create_by: z.string().optional().nullable(),
       create_date: z.coerce.date().optional().nullable(),
@@ -7190,8 +7190,8 @@ export const ExamCreateWithoutPatientInputSchema: z.ZodType<Prisma.ExamCreateWit
     })
     .strict();
 
-export const ExamUncheckedCreateWithoutPatientInputSchema: z.ZodType<Prisma.ExamUncheckedCreateWithoutPatientInput> =
-  z
+export const ExamUncheckedCreateWithoutPatientInputSchema: z.ZodType<Prisma.ExamUncheckedCreateWithoutPatientInput>
+  = z
     .object({
       create_by: z.string().optional().nullable(),
       create_date: z.coerce.date().optional().nullable(),
@@ -7204,8 +7204,8 @@ export const ExamUncheckedCreateWithoutPatientInputSchema: z.ZodType<Prisma.Exam
     })
     .strict();
 
-export const ExamCreateOrConnectWithoutPatientInputSchema: z.ZodType<Prisma.ExamCreateOrConnectWithoutPatientInput> =
-  z
+export const ExamCreateOrConnectWithoutPatientInputSchema: z.ZodType<Prisma.ExamCreateOrConnectWithoutPatientInput>
+  = z
     .object({
       create: z.union([
         z.lazy(() => ExamCreateWithoutPatientInputSchema),
@@ -7215,8 +7215,8 @@ export const ExamCreateOrConnectWithoutPatientInputSchema: z.ZodType<Prisma.Exam
     })
     .strict();
 
-export const ExamCreateManyPatientInputEnvelopeSchema: z.ZodType<Prisma.ExamCreateManyPatientInputEnvelope> =
-  z
+export const ExamCreateManyPatientInputEnvelopeSchema: z.ZodType<Prisma.ExamCreateManyPatientInputEnvelope>
+  = z
     .object({
       data: z.union([
         z.lazy(() => ExamCreateManyPatientInputSchema),
@@ -7226,8 +7226,8 @@ export const ExamCreateManyPatientInputEnvelopeSchema: z.ZodType<Prisma.ExamCrea
     })
     .strict();
 
-export const StationPatientCreateWithoutPatientInputSchema: z.ZodType<Prisma.StationPatientCreateWithoutPatientInput> =
-  z
+export const StationPatientCreateWithoutPatientInputSchema: z.ZodType<Prisma.StationPatientCreateWithoutPatientInput>
+  = z
     .object({
       create_date: z.coerce.date().optional().nullable(),
       description: z.string().optional().nullable(),
@@ -7239,8 +7239,8 @@ export const StationPatientCreateWithoutPatientInputSchema: z.ZodType<Prisma.Sta
     })
     .strict();
 
-export const StationPatientUncheckedCreateWithoutPatientInputSchema: z.ZodType<Prisma.StationPatientUncheckedCreateWithoutPatientInput> =
-  z
+export const StationPatientUncheckedCreateWithoutPatientInputSchema: z.ZodType<Prisma.StationPatientUncheckedCreateWithoutPatientInput>
+  = z
     .object({
       create_date: z.coerce.date().optional().nullable(),
       description: z.string().optional().nullable(),
@@ -7252,8 +7252,8 @@ export const StationPatientUncheckedCreateWithoutPatientInputSchema: z.ZodType<P
     })
     .strict();
 
-export const StationPatientCreateOrConnectWithoutPatientInputSchema: z.ZodType<Prisma.StationPatientCreateOrConnectWithoutPatientInput> =
-  z
+export const StationPatientCreateOrConnectWithoutPatientInputSchema: z.ZodType<Prisma.StationPatientCreateOrConnectWithoutPatientInput>
+  = z
     .object({
       create: z.union([
         z.lazy(() => StationPatientCreateWithoutPatientInputSchema),
@@ -7263,8 +7263,8 @@ export const StationPatientCreateOrConnectWithoutPatientInputSchema: z.ZodType<P
     })
     .strict();
 
-export const StationPatientCreateManyPatientInputEnvelopeSchema: z.ZodType<Prisma.StationPatientCreateManyPatientInputEnvelope> =
-  z
+export const StationPatientCreateManyPatientInputEnvelopeSchema: z.ZodType<Prisma.StationPatientCreateManyPatientInputEnvelope>
+  = z
     .object({
       data: z.union([
         z.lazy(() => StationPatientCreateManyPatientInputSchema),
@@ -7274,8 +7274,8 @@ export const StationPatientCreateManyPatientInputEnvelopeSchema: z.ZodType<Prism
     })
     .strict();
 
-export const TeatmentCreateWithoutPatientInputSchema: z.ZodType<Prisma.TeatmentCreateWithoutPatientInput> =
-  z
+export const TeatmentCreateWithoutPatientInputSchema: z.ZodType<Prisma.TeatmentCreateWithoutPatientInput>
+  = z
     .object({
       chief_complaint: z.string(),
       create_by: z.string().optional().nullable(),
@@ -7290,8 +7290,8 @@ export const TeatmentCreateWithoutPatientInputSchema: z.ZodType<Prisma.TeatmentC
     })
     .strict();
 
-export const TeatmentUncheckedCreateWithoutPatientInputSchema: z.ZodType<Prisma.TeatmentUncheckedCreateWithoutPatientInput> =
-  z
+export const TeatmentUncheckedCreateWithoutPatientInputSchema: z.ZodType<Prisma.TeatmentUncheckedCreateWithoutPatientInput>
+  = z
     .object({
       chief_complaint: z.string(),
       create_by: z.string().optional().nullable(),
@@ -7306,8 +7306,8 @@ export const TeatmentUncheckedCreateWithoutPatientInputSchema: z.ZodType<Prisma.
     })
     .strict();
 
-export const TeatmentCreateOrConnectWithoutPatientInputSchema: z.ZodType<Prisma.TeatmentCreateOrConnectWithoutPatientInput> =
-  z
+export const TeatmentCreateOrConnectWithoutPatientInputSchema: z.ZodType<Prisma.TeatmentCreateOrConnectWithoutPatientInput>
+  = z
     .object({
       create: z.union([
         z.lazy(() => TeatmentCreateWithoutPatientInputSchema),
@@ -7317,8 +7317,8 @@ export const TeatmentCreateOrConnectWithoutPatientInputSchema: z.ZodType<Prisma.
     })
     .strict();
 
-export const HistoryUpsertWithoutPatientInputSchema: z.ZodType<Prisma.HistoryUpsertWithoutPatientInput> =
-  z
+export const HistoryUpsertWithoutPatientInputSchema: z.ZodType<Prisma.HistoryUpsertWithoutPatientInput>
+  = z
     .object({
       create: z.union([
         z.lazy(() => HistoryCreateWithoutPatientInputSchema),
@@ -7332,8 +7332,8 @@ export const HistoryUpsertWithoutPatientInputSchema: z.ZodType<Prisma.HistoryUps
     })
     .strict();
 
-export const HistoryUpdateToOneWithWhereWithoutPatientInputSchema: z.ZodType<Prisma.HistoryUpdateToOneWithWhereWithoutPatientInput> =
-  z
+export const HistoryUpdateToOneWithWhereWithoutPatientInputSchema: z.ZodType<Prisma.HistoryUpdateToOneWithWhereWithoutPatientInput>
+  = z
     .object({
       data: z.union([
         z.lazy(() => HistoryUpdateWithoutPatientInputSchema),
@@ -7343,8 +7343,8 @@ export const HistoryUpdateToOneWithWhereWithoutPatientInputSchema: z.ZodType<Pri
     })
     .strict();
 
-export const HistoryUpdateWithoutPatientInputSchema: z.ZodType<Prisma.HistoryUpdateWithoutPatientInput> =
-  z
+export const HistoryUpdateWithoutPatientInputSchema: z.ZodType<Prisma.HistoryUpdateWithoutPatientInput>
+  = z
     .object({
       chief_complaint: z
         .union([
@@ -7421,8 +7421,8 @@ export const HistoryUpdateWithoutPatientInputSchema: z.ZodType<Prisma.HistoryUpd
     })
     .strict();
 
-export const HistoryUncheckedUpdateWithoutPatientInputSchema: z.ZodType<Prisma.HistoryUncheckedUpdateWithoutPatientInput> =
-  z
+export const HistoryUncheckedUpdateWithoutPatientInputSchema: z.ZodType<Prisma.HistoryUncheckedUpdateWithoutPatientInput>
+  = z
     .object({
       chief_complaint: z
         .union([
@@ -7499,8 +7499,8 @@ export const HistoryUncheckedUpdateWithoutPatientInputSchema: z.ZodType<Prisma.H
     })
     .strict();
 
-export const ExamUpsertWithWhereUniqueWithoutPatientInputSchema: z.ZodType<Prisma.ExamUpsertWithWhereUniqueWithoutPatientInput> =
-  z
+export const ExamUpsertWithWhereUniqueWithoutPatientInputSchema: z.ZodType<Prisma.ExamUpsertWithWhereUniqueWithoutPatientInput>
+  = z
     .object({
       create: z.union([
         z.lazy(() => ExamCreateWithoutPatientInputSchema),
@@ -7514,8 +7514,8 @@ export const ExamUpsertWithWhereUniqueWithoutPatientInputSchema: z.ZodType<Prism
     })
     .strict();
 
-export const ExamUpdateWithWhereUniqueWithoutPatientInputSchema: z.ZodType<Prisma.ExamUpdateWithWhereUniqueWithoutPatientInput> =
-  z
+export const ExamUpdateWithWhereUniqueWithoutPatientInputSchema: z.ZodType<Prisma.ExamUpdateWithWhereUniqueWithoutPatientInput>
+  = z
     .object({
       data: z.union([
         z.lazy(() => ExamUpdateWithoutPatientInputSchema),
@@ -7525,8 +7525,8 @@ export const ExamUpdateWithWhereUniqueWithoutPatientInputSchema: z.ZodType<Prism
     })
     .strict();
 
-export const ExamUpdateManyWithWhereWithoutPatientInputSchema: z.ZodType<Prisma.ExamUpdateManyWithWhereWithoutPatientInput> =
-  z
+export const ExamUpdateManyWithWhereWithoutPatientInputSchema: z.ZodType<Prisma.ExamUpdateManyWithWhereWithoutPatientInput>
+  = z
     .object({
       data: z.union([
         z.lazy(() => ExamUpdateManyMutationInputSchema),
@@ -7536,8 +7536,8 @@ export const ExamUpdateManyWithWhereWithoutPatientInputSchema: z.ZodType<Prisma.
     })
     .strict();
 
-export const ExamScalarWhereInputSchema: z.ZodType<Prisma.ExamScalarWhereInput> =
-  z
+export const ExamScalarWhereInputSchema: z.ZodType<Prisma.ExamScalarWhereInput>
+  = z
     .object({
       AND: z
         .union([
@@ -7587,8 +7587,8 @@ export const ExamScalarWhereInputSchema: z.ZodType<Prisma.ExamScalarWhereInput> 
     })
     .strict();
 
-export const StationPatientUpsertWithWhereUniqueWithoutPatientInputSchema: z.ZodType<Prisma.StationPatientUpsertWithWhereUniqueWithoutPatientInput> =
-  z
+export const StationPatientUpsertWithWhereUniqueWithoutPatientInputSchema: z.ZodType<Prisma.StationPatientUpsertWithWhereUniqueWithoutPatientInput>
+  = z
     .object({
       create: z.union([
         z.lazy(() => StationPatientCreateWithoutPatientInputSchema),
@@ -7602,8 +7602,8 @@ export const StationPatientUpsertWithWhereUniqueWithoutPatientInputSchema: z.Zod
     })
     .strict();
 
-export const StationPatientUpdateWithWhereUniqueWithoutPatientInputSchema: z.ZodType<Prisma.StationPatientUpdateWithWhereUniqueWithoutPatientInput> =
-  z
+export const StationPatientUpdateWithWhereUniqueWithoutPatientInputSchema: z.ZodType<Prisma.StationPatientUpdateWithWhereUniqueWithoutPatientInput>
+  = z
     .object({
       data: z.union([
         z.lazy(() => StationPatientUpdateWithoutPatientInputSchema),
@@ -7613,8 +7613,8 @@ export const StationPatientUpdateWithWhereUniqueWithoutPatientInputSchema: z.Zod
     })
     .strict();
 
-export const StationPatientUpdateManyWithWhereWithoutPatientInputSchema: z.ZodType<Prisma.StationPatientUpdateManyWithWhereWithoutPatientInput> =
-  z
+export const StationPatientUpdateManyWithWhereWithoutPatientInputSchema: z.ZodType<Prisma.StationPatientUpdateManyWithWhereWithoutPatientInput>
+  = z
     .object({
       data: z.union([
         z.lazy(() => StationPatientUpdateManyMutationInputSchema),
@@ -7626,8 +7626,8 @@ export const StationPatientUpdateManyWithWhereWithoutPatientInputSchema: z.ZodTy
     })
     .strict();
 
-export const StationPatientScalarWhereInputSchema: z.ZodType<Prisma.StationPatientScalarWhereInput> =
-  z
+export const StationPatientScalarWhereInputSchema: z.ZodType<Prisma.StationPatientScalarWhereInput>
+  = z
     .object({
       AND: z
         .union([
@@ -7674,8 +7674,8 @@ export const StationPatientScalarWhereInputSchema: z.ZodType<Prisma.StationPatie
     })
     .strict();
 
-export const TeatmentUpsertWithoutPatientInputSchema: z.ZodType<Prisma.TeatmentUpsertWithoutPatientInput> =
-  z
+export const TeatmentUpsertWithoutPatientInputSchema: z.ZodType<Prisma.TeatmentUpsertWithoutPatientInput>
+  = z
     .object({
       create: z.union([
         z.lazy(() => TeatmentCreateWithoutPatientInputSchema),
@@ -7689,8 +7689,8 @@ export const TeatmentUpsertWithoutPatientInputSchema: z.ZodType<Prisma.TeatmentU
     })
     .strict();
 
-export const TeatmentUpdateToOneWithWhereWithoutPatientInputSchema: z.ZodType<Prisma.TeatmentUpdateToOneWithWhereWithoutPatientInput> =
-  z
+export const TeatmentUpdateToOneWithWhereWithoutPatientInputSchema: z.ZodType<Prisma.TeatmentUpdateToOneWithWhereWithoutPatientInput>
+  = z
     .object({
       data: z.union([
         z.lazy(() => TeatmentUpdateWithoutPatientInputSchema),
@@ -7700,8 +7700,8 @@ export const TeatmentUpdateToOneWithWhereWithoutPatientInputSchema: z.ZodType<Pr
     })
     .strict();
 
-export const TeatmentUpdateWithoutPatientInputSchema: z.ZodType<Prisma.TeatmentUpdateWithoutPatientInput> =
-  z
+export const TeatmentUpdateWithoutPatientInputSchema: z.ZodType<Prisma.TeatmentUpdateWithoutPatientInput>
+  = z
     .object({
       chief_complaint: z
         .union([
@@ -7773,8 +7773,8 @@ export const TeatmentUpdateWithoutPatientInputSchema: z.ZodType<Prisma.TeatmentU
     })
     .strict();
 
-export const TeatmentUncheckedUpdateWithoutPatientInputSchema: z.ZodType<Prisma.TeatmentUncheckedUpdateWithoutPatientInput> =
-  z
+export const TeatmentUncheckedUpdateWithoutPatientInputSchema: z.ZodType<Prisma.TeatmentUncheckedUpdateWithoutPatientInput>
+  = z
     .object({
       chief_complaint: z
         .union([
@@ -7846,8 +7846,8 @@ export const TeatmentUncheckedUpdateWithoutPatientInputSchema: z.ZodType<Prisma.
     })
     .strict();
 
-export const PatientCreateWithoutHistoryInputSchema: z.ZodType<Prisma.PatientCreateWithoutHistoryInput> =
-  z
+export const PatientCreateWithoutHistoryInputSchema: z.ZodType<Prisma.PatientCreateWithoutHistoryInput>
+  = z
     .object({
       address: z.string().optional().nullable(),
       age: z.number().int().optional().nullable(),
@@ -7889,8 +7889,8 @@ export const PatientCreateWithoutHistoryInputSchema: z.ZodType<Prisma.PatientCre
     })
     .strict();
 
-export const PatientUncheckedCreateWithoutHistoryInputSchema: z.ZodType<Prisma.PatientUncheckedCreateWithoutHistoryInput> =
-  z
+export const PatientUncheckedCreateWithoutHistoryInputSchema: z.ZodType<Prisma.PatientUncheckedCreateWithoutHistoryInput>
+  = z
     .object({
       address: z.string().optional().nullable(),
       age: z.number().int().optional().nullable(),
@@ -7935,8 +7935,8 @@ export const PatientUncheckedCreateWithoutHistoryInputSchema: z.ZodType<Prisma.P
     })
     .strict();
 
-export const PatientCreateOrConnectWithoutHistoryInputSchema: z.ZodType<Prisma.PatientCreateOrConnectWithoutHistoryInput> =
-  z
+export const PatientCreateOrConnectWithoutHistoryInputSchema: z.ZodType<Prisma.PatientCreateOrConnectWithoutHistoryInput>
+  = z
     .object({
       create: z.union([
         z.lazy(() => PatientCreateWithoutHistoryInputSchema),
@@ -7946,8 +7946,8 @@ export const PatientCreateOrConnectWithoutHistoryInputSchema: z.ZodType<Prisma.P
     })
     .strict();
 
-export const PatientUpsertWithoutHistoryInputSchema: z.ZodType<Prisma.PatientUpsertWithoutHistoryInput> =
-  z
+export const PatientUpsertWithoutHistoryInputSchema: z.ZodType<Prisma.PatientUpsertWithoutHistoryInput>
+  = z
     .object({
       create: z.union([
         z.lazy(() => PatientCreateWithoutHistoryInputSchema),
@@ -7961,8 +7961,8 @@ export const PatientUpsertWithoutHistoryInputSchema: z.ZodType<Prisma.PatientUps
     })
     .strict();
 
-export const PatientUpdateToOneWithWhereWithoutHistoryInputSchema: z.ZodType<Prisma.PatientUpdateToOneWithWhereWithoutHistoryInput> =
-  z
+export const PatientUpdateToOneWithWhereWithoutHistoryInputSchema: z.ZodType<Prisma.PatientUpdateToOneWithWhereWithoutHistoryInput>
+  = z
     .object({
       data: z.union([
         z.lazy(() => PatientUpdateWithoutHistoryInputSchema),
@@ -7972,8 +7972,8 @@ export const PatientUpdateToOneWithWhereWithoutHistoryInputSchema: z.ZodType<Pri
     })
     .strict();
 
-export const PatientUpdateWithoutHistoryInputSchema: z.ZodType<Prisma.PatientUpdateWithoutHistoryInput> =
-  z
+export const PatientUpdateWithoutHistoryInputSchema: z.ZodType<Prisma.PatientUpdateWithoutHistoryInput>
+  = z
     .object({
       address: z
         .union([
@@ -8160,8 +8160,8 @@ export const PatientUpdateWithoutHistoryInputSchema: z.ZodType<Prisma.PatientUpd
     })
     .strict();
 
-export const PatientUncheckedUpdateWithoutHistoryInputSchema: z.ZodType<Prisma.PatientUncheckedUpdateWithoutHistoryInput> =
-  z
+export const PatientUncheckedUpdateWithoutHistoryInputSchema: z.ZodType<Prisma.PatientUncheckedUpdateWithoutHistoryInput>
+  = z
     .object({
       address: z
         .union([
@@ -8351,8 +8351,8 @@ export const PatientUncheckedUpdateWithoutHistoryInputSchema: z.ZodType<Prisma.P
     })
     .strict();
 
-export const PatientCreateWithoutExamInputSchema: z.ZodType<Prisma.PatientCreateWithoutExamInput> =
-  z
+export const PatientCreateWithoutExamInputSchema: z.ZodType<Prisma.PatientCreateWithoutExamInput>
+  = z
     .object({
       address: z.string().optional().nullable(),
       age: z.number().int().optional().nullable(),
@@ -8394,8 +8394,8 @@ export const PatientCreateWithoutExamInputSchema: z.ZodType<Prisma.PatientCreate
     })
     .strict();
 
-export const PatientUncheckedCreateWithoutExamInputSchema: z.ZodType<Prisma.PatientUncheckedCreateWithoutExamInput> =
-  z
+export const PatientUncheckedCreateWithoutExamInputSchema: z.ZodType<Prisma.PatientUncheckedCreateWithoutExamInput>
+  = z
     .object({
       address: z.string().optional().nullable(),
       age: z.number().int().optional().nullable(),
@@ -8440,8 +8440,8 @@ export const PatientUncheckedCreateWithoutExamInputSchema: z.ZodType<Prisma.Pati
     })
     .strict();
 
-export const PatientCreateOrConnectWithoutExamInputSchema: z.ZodType<Prisma.PatientCreateOrConnectWithoutExamInput> =
-  z
+export const PatientCreateOrConnectWithoutExamInputSchema: z.ZodType<Prisma.PatientCreateOrConnectWithoutExamInput>
+  = z
     .object({
       create: z.union([
         z.lazy(() => PatientCreateWithoutExamInputSchema),
@@ -8451,8 +8451,8 @@ export const PatientCreateOrConnectWithoutExamInputSchema: z.ZodType<Prisma.Pati
     })
     .strict();
 
-export const PatientUpsertWithoutExamInputSchema: z.ZodType<Prisma.PatientUpsertWithoutExamInput> =
-  z
+export const PatientUpsertWithoutExamInputSchema: z.ZodType<Prisma.PatientUpsertWithoutExamInput>
+  = z
     .object({
       create: z.union([
         z.lazy(() => PatientCreateWithoutExamInputSchema),
@@ -8466,8 +8466,8 @@ export const PatientUpsertWithoutExamInputSchema: z.ZodType<Prisma.PatientUpsert
     })
     .strict();
 
-export const PatientUpdateToOneWithWhereWithoutExamInputSchema: z.ZodType<Prisma.PatientUpdateToOneWithWhereWithoutExamInput> =
-  z
+export const PatientUpdateToOneWithWhereWithoutExamInputSchema: z.ZodType<Prisma.PatientUpdateToOneWithWhereWithoutExamInput>
+  = z
     .object({
       data: z.union([
         z.lazy(() => PatientUpdateWithoutExamInputSchema),
@@ -8477,8 +8477,8 @@ export const PatientUpdateToOneWithWhereWithoutExamInputSchema: z.ZodType<Prisma
     })
     .strict();
 
-export const PatientUpdateWithoutExamInputSchema: z.ZodType<Prisma.PatientUpdateWithoutExamInput> =
-  z
+export const PatientUpdateWithoutExamInputSchema: z.ZodType<Prisma.PatientUpdateWithoutExamInput>
+  = z
     .object({
       address: z
         .union([
@@ -8665,8 +8665,8 @@ export const PatientUpdateWithoutExamInputSchema: z.ZodType<Prisma.PatientUpdate
     })
     .strict();
 
-export const PatientUncheckedUpdateWithoutExamInputSchema: z.ZodType<Prisma.PatientUncheckedUpdateWithoutExamInput> =
-  z
+export const PatientUncheckedUpdateWithoutExamInputSchema: z.ZodType<Prisma.PatientUncheckedUpdateWithoutExamInput>
+  = z
     .object({
       address: z
         .union([
@@ -8856,8 +8856,8 @@ export const PatientUncheckedUpdateWithoutExamInputSchema: z.ZodType<Prisma.Pati
     })
     .strict();
 
-export const PatientCreateWithoutStationPatientInputSchema: z.ZodType<Prisma.PatientCreateWithoutStationPatientInput> =
-  z
+export const PatientCreateWithoutStationPatientInputSchema: z.ZodType<Prisma.PatientCreateWithoutStationPatientInput>
+  = z
     .object({
       address: z.string().optional().nullable(),
       age: z.number().int().optional().nullable(),
@@ -8899,8 +8899,8 @@ export const PatientCreateWithoutStationPatientInputSchema: z.ZodType<Prisma.Pat
     })
     .strict();
 
-export const PatientUncheckedCreateWithoutStationPatientInputSchema: z.ZodType<Prisma.PatientUncheckedCreateWithoutStationPatientInput> =
-  z
+export const PatientUncheckedCreateWithoutStationPatientInputSchema: z.ZodType<Prisma.PatientUncheckedCreateWithoutStationPatientInput>
+  = z
     .object({
       address: z.string().optional().nullable(),
       age: z.number().int().optional().nullable(),
@@ -8942,8 +8942,8 @@ export const PatientUncheckedCreateWithoutStationPatientInputSchema: z.ZodType<P
     })
     .strict();
 
-export const PatientCreateOrConnectWithoutStationPatientInputSchema: z.ZodType<Prisma.PatientCreateOrConnectWithoutStationPatientInput> =
-  z
+export const PatientCreateOrConnectWithoutStationPatientInputSchema: z.ZodType<Prisma.PatientCreateOrConnectWithoutStationPatientInput>
+  = z
     .object({
       create: z.union([
         z.lazy(() => PatientCreateWithoutStationPatientInputSchema),
@@ -8953,8 +8953,8 @@ export const PatientCreateOrConnectWithoutStationPatientInputSchema: z.ZodType<P
     })
     .strict();
 
-export const PatientUpsertWithoutStationPatientInputSchema: z.ZodType<Prisma.PatientUpsertWithoutStationPatientInput> =
-  z
+export const PatientUpsertWithoutStationPatientInputSchema: z.ZodType<Prisma.PatientUpsertWithoutStationPatientInput>
+  = z
     .object({
       create: z.union([
         z.lazy(() => PatientCreateWithoutStationPatientInputSchema),
@@ -8968,8 +8968,8 @@ export const PatientUpsertWithoutStationPatientInputSchema: z.ZodType<Prisma.Pat
     })
     .strict();
 
-export const PatientUpdateToOneWithWhereWithoutStationPatientInputSchema: z.ZodType<Prisma.PatientUpdateToOneWithWhereWithoutStationPatientInput> =
-  z
+export const PatientUpdateToOneWithWhereWithoutStationPatientInputSchema: z.ZodType<Prisma.PatientUpdateToOneWithWhereWithoutStationPatientInput>
+  = z
     .object({
       data: z.union([
         z.lazy(() => PatientUpdateWithoutStationPatientInputSchema),
@@ -8979,8 +8979,8 @@ export const PatientUpdateToOneWithWhereWithoutStationPatientInputSchema: z.ZodT
     })
     .strict();
 
-export const PatientUpdateWithoutStationPatientInputSchema: z.ZodType<Prisma.PatientUpdateWithoutStationPatientInput> =
-  z
+export const PatientUpdateWithoutStationPatientInputSchema: z.ZodType<Prisma.PatientUpdateWithoutStationPatientInput>
+  = z
     .object({
       address: z
         .union([
@@ -9167,8 +9167,8 @@ export const PatientUpdateWithoutStationPatientInputSchema: z.ZodType<Prisma.Pat
     })
     .strict();
 
-export const PatientUncheckedUpdateWithoutStationPatientInputSchema: z.ZodType<Prisma.PatientUncheckedUpdateWithoutStationPatientInput> =
-  z
+export const PatientUncheckedUpdateWithoutStationPatientInputSchema: z.ZodType<Prisma.PatientUncheckedUpdateWithoutStationPatientInput>
+  = z
     .object({
       address: z
         .union([
@@ -9355,8 +9355,8 @@ export const PatientUncheckedUpdateWithoutStationPatientInputSchema: z.ZodType<P
     })
     .strict();
 
-export const PatientCreateWithoutTeatmentInputSchema: z.ZodType<Prisma.PatientCreateWithoutTeatmentInput> =
-  z
+export const PatientCreateWithoutTeatmentInputSchema: z.ZodType<Prisma.PatientCreateWithoutTeatmentInput>
+  = z
     .object({
       address: z.string().optional().nullable(),
       age: z.number().int().optional().nullable(),
@@ -9398,8 +9398,8 @@ export const PatientCreateWithoutTeatmentInputSchema: z.ZodType<Prisma.PatientCr
     })
     .strict();
 
-export const PatientUncheckedCreateWithoutTeatmentInputSchema: z.ZodType<Prisma.PatientUncheckedCreateWithoutTeatmentInput> =
-  z
+export const PatientUncheckedCreateWithoutTeatmentInputSchema: z.ZodType<Prisma.PatientUncheckedCreateWithoutTeatmentInput>
+  = z
     .object({
       address: z.string().optional().nullable(),
       age: z.number().int().optional().nullable(),
@@ -9444,8 +9444,8 @@ export const PatientUncheckedCreateWithoutTeatmentInputSchema: z.ZodType<Prisma.
     })
     .strict();
 
-export const PatientCreateOrConnectWithoutTeatmentInputSchema: z.ZodType<Prisma.PatientCreateOrConnectWithoutTeatmentInput> =
-  z
+export const PatientCreateOrConnectWithoutTeatmentInputSchema: z.ZodType<Prisma.PatientCreateOrConnectWithoutTeatmentInput>
+  = z
     .object({
       create: z.union([
         z.lazy(() => PatientCreateWithoutTeatmentInputSchema),
@@ -9455,8 +9455,8 @@ export const PatientCreateOrConnectWithoutTeatmentInputSchema: z.ZodType<Prisma.
     })
     .strict();
 
-export const PatientUpsertWithoutTeatmentInputSchema: z.ZodType<Prisma.PatientUpsertWithoutTeatmentInput> =
-  z
+export const PatientUpsertWithoutTeatmentInputSchema: z.ZodType<Prisma.PatientUpsertWithoutTeatmentInput>
+  = z
     .object({
       create: z.union([
         z.lazy(() => PatientCreateWithoutTeatmentInputSchema),
@@ -9470,8 +9470,8 @@ export const PatientUpsertWithoutTeatmentInputSchema: z.ZodType<Prisma.PatientUp
     })
     .strict();
 
-export const PatientUpdateToOneWithWhereWithoutTeatmentInputSchema: z.ZodType<Prisma.PatientUpdateToOneWithWhereWithoutTeatmentInput> =
-  z
+export const PatientUpdateToOneWithWhereWithoutTeatmentInputSchema: z.ZodType<Prisma.PatientUpdateToOneWithWhereWithoutTeatmentInput>
+  = z
     .object({
       data: z.union([
         z.lazy(() => PatientUpdateWithoutTeatmentInputSchema),
@@ -9481,8 +9481,8 @@ export const PatientUpdateToOneWithWhereWithoutTeatmentInputSchema: z.ZodType<Pr
     })
     .strict();
 
-export const PatientUpdateWithoutTeatmentInputSchema: z.ZodType<Prisma.PatientUpdateWithoutTeatmentInput> =
-  z
+export const PatientUpdateWithoutTeatmentInputSchema: z.ZodType<Prisma.PatientUpdateWithoutTeatmentInput>
+  = z
     .object({
       address: z
         .union([
@@ -9669,8 +9669,8 @@ export const PatientUpdateWithoutTeatmentInputSchema: z.ZodType<Prisma.PatientUp
     })
     .strict();
 
-export const PatientUncheckedUpdateWithoutTeatmentInputSchema: z.ZodType<Prisma.PatientUncheckedUpdateWithoutTeatmentInput> =
-  z
+export const PatientUncheckedUpdateWithoutTeatmentInputSchema: z.ZodType<Prisma.PatientUncheckedUpdateWithoutTeatmentInput>
+  = z
     .object({
       address: z
         .union([
@@ -9860,8 +9860,8 @@ export const PatientUncheckedUpdateWithoutTeatmentInputSchema: z.ZodType<Prisma.
     })
     .strict();
 
-export const ExamCreateManyPatientInputSchema: z.ZodType<Prisma.ExamCreateManyPatientInput> =
-  z
+export const ExamCreateManyPatientInputSchema: z.ZodType<Prisma.ExamCreateManyPatientInput>
+  = z
     .object({
       create_by: z.string().optional().nullable(),
       create_date: z.coerce.date().optional().nullable(),
@@ -9874,8 +9874,8 @@ export const ExamCreateManyPatientInputSchema: z.ZodType<Prisma.ExamCreateManyPa
     })
     .strict();
 
-export const StationPatientCreateManyPatientInputSchema: z.ZodType<Prisma.StationPatientCreateManyPatientInput> =
-  z
+export const StationPatientCreateManyPatientInputSchema: z.ZodType<Prisma.StationPatientCreateManyPatientInput>
+  = z
     .object({
       create_date: z.coerce.date().optional().nullable(),
       description: z.string().optional().nullable(),
@@ -9887,8 +9887,8 @@ export const StationPatientCreateManyPatientInputSchema: z.ZodType<Prisma.Statio
     })
     .strict();
 
-export const ExamUpdateWithoutPatientInputSchema: z.ZodType<Prisma.ExamUpdateWithoutPatientInput> =
-  z
+export const ExamUpdateWithoutPatientInputSchema: z.ZodType<Prisma.ExamUpdateWithoutPatientInput>
+  = z
     .object({
       create_by: z
         .union([
@@ -9946,8 +9946,8 @@ export const ExamUpdateWithoutPatientInputSchema: z.ZodType<Prisma.ExamUpdateWit
     })
     .strict();
 
-export const ExamUncheckedUpdateWithoutPatientInputSchema: z.ZodType<Prisma.ExamUncheckedUpdateWithoutPatientInput> =
-  z
+export const ExamUncheckedUpdateWithoutPatientInputSchema: z.ZodType<Prisma.ExamUncheckedUpdateWithoutPatientInput>
+  = z
     .object({
       create_by: z
         .union([
@@ -10005,8 +10005,8 @@ export const ExamUncheckedUpdateWithoutPatientInputSchema: z.ZodType<Prisma.Exam
     })
     .strict();
 
-export const ExamUncheckedUpdateManyWithoutPatientInputSchema: z.ZodType<Prisma.ExamUncheckedUpdateManyWithoutPatientInput> =
-  z
+export const ExamUncheckedUpdateManyWithoutPatientInputSchema: z.ZodType<Prisma.ExamUncheckedUpdateManyWithoutPatientInput>
+  = z
     .object({
       create_by: z
         .union([
@@ -10064,8 +10064,8 @@ export const ExamUncheckedUpdateManyWithoutPatientInputSchema: z.ZodType<Prisma.
     })
     .strict();
 
-export const StationPatientUpdateWithoutPatientInputSchema: z.ZodType<Prisma.StationPatientUpdateWithoutPatientInput> =
-  z
+export const StationPatientUpdateWithoutPatientInputSchema: z.ZodType<Prisma.StationPatientUpdateWithoutPatientInput>
+  = z
     .object({
       create_date: z
         .union([
@@ -10116,8 +10116,8 @@ export const StationPatientUpdateWithoutPatientInputSchema: z.ZodType<Prisma.Sta
     })
     .strict();
 
-export const StationPatientUncheckedUpdateWithoutPatientInputSchema: z.ZodType<Prisma.StationPatientUncheckedUpdateWithoutPatientInput> =
-  z
+export const StationPatientUncheckedUpdateWithoutPatientInputSchema: z.ZodType<Prisma.StationPatientUncheckedUpdateWithoutPatientInput>
+  = z
     .object({
       create_date: z
         .union([
@@ -10168,8 +10168,8 @@ export const StationPatientUncheckedUpdateWithoutPatientInputSchema: z.ZodType<P
     })
     .strict();
 
-export const StationPatientUncheckedUpdateManyWithoutPatientInputSchema: z.ZodType<Prisma.StationPatientUncheckedUpdateManyWithoutPatientInput> =
-  z
+export const StationPatientUncheckedUpdateManyWithoutPatientInputSchema: z.ZodType<Prisma.StationPatientUncheckedUpdateManyWithoutPatientInput>
+  = z
     .object({
       create_date: z
         .union([
@@ -10224,8 +10224,8 @@ export const StationPatientUncheckedUpdateManyWithoutPatientInputSchema: z.ZodTy
 // ARGS
 /////////////////////////////////////////
 
-export const PatientFindFirstArgsSchema: z.ZodType<Prisma.PatientFindFirstArgs> =
-  z
+export const PatientFindFirstArgsSchema: z.ZodType<Prisma.PatientFindFirstArgs>
+  = z
     .object({
       cursor: PatientWhereUniqueInputSchema.optional(),
       distinct: z
@@ -10248,8 +10248,8 @@ export const PatientFindFirstArgsSchema: z.ZodType<Prisma.PatientFindFirstArgs> 
     })
     .strict();
 
-export const PatientFindFirstOrThrowArgsSchema: z.ZodType<Prisma.PatientFindFirstOrThrowArgs> =
-  z
+export const PatientFindFirstOrThrowArgsSchema: z.ZodType<Prisma.PatientFindFirstOrThrowArgs>
+  = z
     .object({
       cursor: PatientWhereUniqueInputSchema.optional(),
       distinct: z
@@ -10272,8 +10272,8 @@ export const PatientFindFirstOrThrowArgsSchema: z.ZodType<Prisma.PatientFindFirs
     })
     .strict();
 
-export const PatientFindManyArgsSchema: z.ZodType<Prisma.PatientFindManyArgs> =
-  z
+export const PatientFindManyArgsSchema: z.ZodType<Prisma.PatientFindManyArgs>
+  = z
     .object({
       cursor: PatientWhereUniqueInputSchema.optional(),
       distinct: z
@@ -10296,8 +10296,8 @@ export const PatientFindManyArgsSchema: z.ZodType<Prisma.PatientFindManyArgs> =
     })
     .strict();
 
-export const PatientAggregateArgsSchema: z.ZodType<Prisma.PatientAggregateArgs> =
-  z
+export const PatientAggregateArgsSchema: z.ZodType<Prisma.PatientAggregateArgs>
+  = z
     .object({
       cursor: PatientWhereUniqueInputSchema.optional(),
       orderBy: z
@@ -10328,8 +10328,8 @@ export const PatientGroupByArgsSchema: z.ZodType<Prisma.PatientGroupByArgs> = z
   })
   .strict();
 
-export const PatientFindUniqueArgsSchema: z.ZodType<Prisma.PatientFindUniqueArgs> =
-  z
+export const PatientFindUniqueArgsSchema: z.ZodType<Prisma.PatientFindUniqueArgs>
+  = z
     .object({
       include: PatientIncludeSchema.optional(),
       select: PatientSelectSchema.optional(),
@@ -10337,8 +10337,8 @@ export const PatientFindUniqueArgsSchema: z.ZodType<Prisma.PatientFindUniqueArgs
     })
     .strict();
 
-export const PatientFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.PatientFindUniqueOrThrowArgs> =
-  z
+export const PatientFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.PatientFindUniqueOrThrowArgs>
+  = z
     .object({
       include: PatientIncludeSchema.optional(),
       select: PatientSelectSchema.optional(),
@@ -10346,8 +10346,8 @@ export const PatientFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.PatientFindUni
     })
     .strict();
 
-export const HistoryFindFirstArgsSchema: z.ZodType<Prisma.HistoryFindFirstArgs> =
-  z
+export const HistoryFindFirstArgsSchema: z.ZodType<Prisma.HistoryFindFirstArgs>
+  = z
     .object({
       cursor: HistoryWhereUniqueInputSchema.optional(),
       distinct: z
@@ -10370,8 +10370,8 @@ export const HistoryFindFirstArgsSchema: z.ZodType<Prisma.HistoryFindFirstArgs> 
     })
     .strict();
 
-export const HistoryFindFirstOrThrowArgsSchema: z.ZodType<Prisma.HistoryFindFirstOrThrowArgs> =
-  z
+export const HistoryFindFirstOrThrowArgsSchema: z.ZodType<Prisma.HistoryFindFirstOrThrowArgs>
+  = z
     .object({
       cursor: HistoryWhereUniqueInputSchema.optional(),
       distinct: z
@@ -10394,8 +10394,8 @@ export const HistoryFindFirstOrThrowArgsSchema: z.ZodType<Prisma.HistoryFindFirs
     })
     .strict();
 
-export const HistoryFindManyArgsSchema: z.ZodType<Prisma.HistoryFindManyArgs> =
-  z
+export const HistoryFindManyArgsSchema: z.ZodType<Prisma.HistoryFindManyArgs>
+  = z
     .object({
       cursor: HistoryWhereUniqueInputSchema.optional(),
       distinct: z
@@ -10418,8 +10418,8 @@ export const HistoryFindManyArgsSchema: z.ZodType<Prisma.HistoryFindManyArgs> =
     })
     .strict();
 
-export const HistoryAggregateArgsSchema: z.ZodType<Prisma.HistoryAggregateArgs> =
-  z
+export const HistoryAggregateArgsSchema: z.ZodType<Prisma.HistoryAggregateArgs>
+  = z
     .object({
       cursor: HistoryWhereUniqueInputSchema.optional(),
       orderBy: z
@@ -10450,8 +10450,8 @@ export const HistoryGroupByArgsSchema: z.ZodType<Prisma.HistoryGroupByArgs> = z
   })
   .strict();
 
-export const HistoryFindUniqueArgsSchema: z.ZodType<Prisma.HistoryFindUniqueArgs> =
-  z
+export const HistoryFindUniqueArgsSchema: z.ZodType<Prisma.HistoryFindUniqueArgs>
+  = z
     .object({
       include: HistoryIncludeSchema.optional(),
       select: HistorySelectSchema.optional(),
@@ -10459,8 +10459,8 @@ export const HistoryFindUniqueArgsSchema: z.ZodType<Prisma.HistoryFindUniqueArgs
     })
     .strict();
 
-export const HistoryFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.HistoryFindUniqueOrThrowArgs> =
-  z
+export const HistoryFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.HistoryFindUniqueOrThrowArgs>
+  = z
     .object({
       include: HistoryIncludeSchema.optional(),
       select: HistorySelectSchema.optional(),
@@ -10488,8 +10488,8 @@ export const ExamFindFirstArgsSchema: z.ZodType<Prisma.ExamFindFirstArgs> = z
   })
   .strict();
 
-export const ExamFindFirstOrThrowArgsSchema: z.ZodType<Prisma.ExamFindFirstOrThrowArgs> =
-  z
+export const ExamFindFirstOrThrowArgsSchema: z.ZodType<Prisma.ExamFindFirstOrThrowArgs>
+  = z
     .object({
       cursor: ExamWhereUniqueInputSchema.optional(),
       distinct: z
@@ -10568,8 +10568,8 @@ export const ExamFindUniqueArgsSchema: z.ZodType<Prisma.ExamFindUniqueArgs> = z
   })
   .strict();
 
-export const ExamFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.ExamFindUniqueOrThrowArgs> =
-  z
+export const ExamFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.ExamFindUniqueOrThrowArgs>
+  = z
     .object({
       include: ExamIncludeSchema.optional(),
       select: ExamSelectSchema.optional(),
@@ -10577,8 +10577,8 @@ export const ExamFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.ExamFindUniqueOrT
     })
     .strict();
 
-export const StationPatientFindFirstArgsSchema: z.ZodType<Prisma.StationPatientFindFirstArgs> =
-  z
+export const StationPatientFindFirstArgsSchema: z.ZodType<Prisma.StationPatientFindFirstArgs>
+  = z
     .object({
       cursor: StationPatientWhereUniqueInputSchema.optional(),
       distinct: z
@@ -10601,8 +10601,8 @@ export const StationPatientFindFirstArgsSchema: z.ZodType<Prisma.StationPatientF
     })
     .strict();
 
-export const StationPatientFindFirstOrThrowArgsSchema: z.ZodType<Prisma.StationPatientFindFirstOrThrowArgs> =
-  z
+export const StationPatientFindFirstOrThrowArgsSchema: z.ZodType<Prisma.StationPatientFindFirstOrThrowArgs>
+  = z
     .object({
       cursor: StationPatientWhereUniqueInputSchema.optional(),
       distinct: z
@@ -10625,8 +10625,8 @@ export const StationPatientFindFirstOrThrowArgsSchema: z.ZodType<Prisma.StationP
     })
     .strict();
 
-export const StationPatientFindManyArgsSchema: z.ZodType<Prisma.StationPatientFindManyArgs> =
-  z
+export const StationPatientFindManyArgsSchema: z.ZodType<Prisma.StationPatientFindManyArgs>
+  = z
     .object({
       cursor: StationPatientWhereUniqueInputSchema.optional(),
       distinct: z
@@ -10649,8 +10649,8 @@ export const StationPatientFindManyArgsSchema: z.ZodType<Prisma.StationPatientFi
     })
     .strict();
 
-export const StationPatientAggregateArgsSchema: z.ZodType<Prisma.StationPatientAggregateArgs> =
-  z
+export const StationPatientAggregateArgsSchema: z.ZodType<Prisma.StationPatientAggregateArgs>
+  = z
     .object({
       cursor: StationPatientWhereUniqueInputSchema.optional(),
       orderBy: z
@@ -10665,8 +10665,8 @@ export const StationPatientAggregateArgsSchema: z.ZodType<Prisma.StationPatientA
     })
     .strict();
 
-export const StationPatientGroupByArgsSchema: z.ZodType<Prisma.StationPatientGroupByArgs> =
-  z
+export const StationPatientGroupByArgsSchema: z.ZodType<Prisma.StationPatientGroupByArgs>
+  = z
     .object({
       by: StationPatientScalarFieldEnumSchema.array(),
       having: StationPatientScalarWhereWithAggregatesInputSchema.optional(),
@@ -10682,8 +10682,8 @@ export const StationPatientGroupByArgsSchema: z.ZodType<Prisma.StationPatientGro
     })
     .strict();
 
-export const StationPatientFindUniqueArgsSchema: z.ZodType<Prisma.StationPatientFindUniqueArgs> =
-  z
+export const StationPatientFindUniqueArgsSchema: z.ZodType<Prisma.StationPatientFindUniqueArgs>
+  = z
     .object({
       include: StationPatientIncludeSchema.optional(),
       select: StationPatientSelectSchema.optional(),
@@ -10691,8 +10691,8 @@ export const StationPatientFindUniqueArgsSchema: z.ZodType<Prisma.StationPatient
     })
     .strict();
 
-export const StationPatientFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.StationPatientFindUniqueOrThrowArgs> =
-  z
+export const StationPatientFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.StationPatientFindUniqueOrThrowArgs>
+  = z
     .object({
       include: StationPatientIncludeSchema.optional(),
       select: StationPatientSelectSchema.optional(),
@@ -10700,8 +10700,8 @@ export const StationPatientFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.Station
     })
     .strict();
 
-export const TeatmentFindFirstArgsSchema: z.ZodType<Prisma.TeatmentFindFirstArgs> =
-  z
+export const TeatmentFindFirstArgsSchema: z.ZodType<Prisma.TeatmentFindFirstArgs>
+  = z
     .object({
       cursor: TeatmentWhereUniqueInputSchema.optional(),
       distinct: z
@@ -10724,8 +10724,8 @@ export const TeatmentFindFirstArgsSchema: z.ZodType<Prisma.TeatmentFindFirstArgs
     })
     .strict();
 
-export const TeatmentFindFirstOrThrowArgsSchema: z.ZodType<Prisma.TeatmentFindFirstOrThrowArgs> =
-  z
+export const TeatmentFindFirstOrThrowArgsSchema: z.ZodType<Prisma.TeatmentFindFirstOrThrowArgs>
+  = z
     .object({
       cursor: TeatmentWhereUniqueInputSchema.optional(),
       distinct: z
@@ -10748,8 +10748,8 @@ export const TeatmentFindFirstOrThrowArgsSchema: z.ZodType<Prisma.TeatmentFindFi
     })
     .strict();
 
-export const TeatmentFindManyArgsSchema: z.ZodType<Prisma.TeatmentFindManyArgs> =
-  z
+export const TeatmentFindManyArgsSchema: z.ZodType<Prisma.TeatmentFindManyArgs>
+  = z
     .object({
       cursor: TeatmentWhereUniqueInputSchema.optional(),
       distinct: z
@@ -10772,8 +10772,8 @@ export const TeatmentFindManyArgsSchema: z.ZodType<Prisma.TeatmentFindManyArgs> 
     })
     .strict();
 
-export const TeatmentAggregateArgsSchema: z.ZodType<Prisma.TeatmentAggregateArgs> =
-  z
+export const TeatmentAggregateArgsSchema: z.ZodType<Prisma.TeatmentAggregateArgs>
+  = z
     .object({
       cursor: TeatmentWhereUniqueInputSchema.optional(),
       orderBy: z
@@ -10788,8 +10788,8 @@ export const TeatmentAggregateArgsSchema: z.ZodType<Prisma.TeatmentAggregateArgs
     })
     .strict();
 
-export const TeatmentGroupByArgsSchema: z.ZodType<Prisma.TeatmentGroupByArgs> =
-  z
+export const TeatmentGroupByArgsSchema: z.ZodType<Prisma.TeatmentGroupByArgs>
+  = z
     .object({
       by: TeatmentScalarFieldEnumSchema.array(),
       having: TeatmentScalarWhereWithAggregatesInputSchema.optional(),
@@ -10805,8 +10805,8 @@ export const TeatmentGroupByArgsSchema: z.ZodType<Prisma.TeatmentGroupByArgs> =
     })
     .strict();
 
-export const TeatmentFindUniqueArgsSchema: z.ZodType<Prisma.TeatmentFindUniqueArgs> =
-  z
+export const TeatmentFindUniqueArgsSchema: z.ZodType<Prisma.TeatmentFindUniqueArgs>
+  = z
     .object({
       include: TeatmentIncludeSchema.optional(),
       select: TeatmentSelectSchema.optional(),
@@ -10814,8 +10814,8 @@ export const TeatmentFindUniqueArgsSchema: z.ZodType<Prisma.TeatmentFindUniqueAr
     })
     .strict();
 
-export const TeatmentFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.TeatmentFindUniqueOrThrowArgs> =
-  z
+export const TeatmentFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.TeatmentFindUniqueOrThrowArgs>
+  = z
     .object({
       include: TeatmentIncludeSchema.optional(),
       select: TeatmentSelectSchema.optional(),
@@ -10850,8 +10850,8 @@ export const PatientUpsertArgsSchema: z.ZodType<Prisma.PatientUpsertArgs> = z
   })
   .strict();
 
-export const PatientCreateManyArgsSchema: z.ZodType<Prisma.PatientCreateManyArgs> =
-  z
+export const PatientCreateManyArgsSchema: z.ZodType<Prisma.PatientCreateManyArgs>
+  = z
     .object({
       data: z.union([
         PatientCreateManyInputSchema,
@@ -10861,8 +10861,8 @@ export const PatientCreateManyArgsSchema: z.ZodType<Prisma.PatientCreateManyArgs
     })
     .strict();
 
-export const PatientCreateManyAndReturnArgsSchema: z.ZodType<Prisma.PatientCreateManyAndReturnArgs> =
-  z
+export const PatientCreateManyAndReturnArgsSchema: z.ZodType<Prisma.PatientCreateManyAndReturnArgs>
+  = z
     .object({
       data: z.union([
         PatientCreateManyInputSchema,
@@ -10892,8 +10892,8 @@ export const PatientUpdateArgsSchema: z.ZodType<Prisma.PatientUpdateArgs> = z
   })
   .strict();
 
-export const PatientUpdateManyArgsSchema: z.ZodType<Prisma.PatientUpdateManyArgs> =
-  z
+export const PatientUpdateManyArgsSchema: z.ZodType<Prisma.PatientUpdateManyArgs>
+  = z
     .object({
       data: z.union([
         PatientUpdateManyMutationInputSchema,
@@ -10904,8 +10904,8 @@ export const PatientUpdateManyArgsSchema: z.ZodType<Prisma.PatientUpdateManyArgs
     })
     .strict();
 
-export const PatientUpdateManyAndReturnArgsSchema: z.ZodType<Prisma.PatientUpdateManyAndReturnArgs> =
-  z
+export const PatientUpdateManyAndReturnArgsSchema: z.ZodType<Prisma.PatientUpdateManyAndReturnArgs>
+  = z
     .object({
       data: z.union([
         PatientUpdateManyMutationInputSchema,
@@ -10916,8 +10916,8 @@ export const PatientUpdateManyAndReturnArgsSchema: z.ZodType<Prisma.PatientUpdat
     })
     .strict();
 
-export const PatientDeleteManyArgsSchema: z.ZodType<Prisma.PatientDeleteManyArgs> =
-  z
+export const PatientDeleteManyArgsSchema: z.ZodType<Prisma.PatientDeleteManyArgs>
+  = z
     .object({
       limit: z.number().optional(),
       where: PatientWhereInputSchema.optional(),
@@ -10951,8 +10951,8 @@ export const HistoryUpsertArgsSchema: z.ZodType<Prisma.HistoryUpsertArgs> = z
   })
   .strict();
 
-export const HistoryCreateManyArgsSchema: z.ZodType<Prisma.HistoryCreateManyArgs> =
-  z
+export const HistoryCreateManyArgsSchema: z.ZodType<Prisma.HistoryCreateManyArgs>
+  = z
     .object({
       data: z.union([
         HistoryCreateManyInputSchema,
@@ -10962,8 +10962,8 @@ export const HistoryCreateManyArgsSchema: z.ZodType<Prisma.HistoryCreateManyArgs
     })
     .strict();
 
-export const HistoryCreateManyAndReturnArgsSchema: z.ZodType<Prisma.HistoryCreateManyAndReturnArgs> =
-  z
+export const HistoryCreateManyAndReturnArgsSchema: z.ZodType<Prisma.HistoryCreateManyAndReturnArgs>
+  = z
     .object({
       data: z.union([
         HistoryCreateManyInputSchema,
@@ -10993,8 +10993,8 @@ export const HistoryUpdateArgsSchema: z.ZodType<Prisma.HistoryUpdateArgs> = z
   })
   .strict();
 
-export const HistoryUpdateManyArgsSchema: z.ZodType<Prisma.HistoryUpdateManyArgs> =
-  z
+export const HistoryUpdateManyArgsSchema: z.ZodType<Prisma.HistoryUpdateManyArgs>
+  = z
     .object({
       data: z.union([
         HistoryUpdateManyMutationInputSchema,
@@ -11005,8 +11005,8 @@ export const HistoryUpdateManyArgsSchema: z.ZodType<Prisma.HistoryUpdateManyArgs
     })
     .strict();
 
-export const HistoryUpdateManyAndReturnArgsSchema: z.ZodType<Prisma.HistoryUpdateManyAndReturnArgs> =
-  z
+export const HistoryUpdateManyAndReturnArgsSchema: z.ZodType<Prisma.HistoryUpdateManyAndReturnArgs>
+  = z
     .object({
       data: z.union([
         HistoryUpdateManyMutationInputSchema,
@@ -11017,8 +11017,8 @@ export const HistoryUpdateManyAndReturnArgsSchema: z.ZodType<Prisma.HistoryUpdat
     })
     .strict();
 
-export const HistoryDeleteManyArgsSchema: z.ZodType<Prisma.HistoryDeleteManyArgs> =
-  z
+export const HistoryDeleteManyArgsSchema: z.ZodType<Prisma.HistoryDeleteManyArgs>
+  = z
     .object({
       limit: z.number().optional(),
       where: HistoryWhereInputSchema.optional(),
@@ -11053,8 +11053,8 @@ export const ExamCreateManyArgsSchema: z.ZodType<Prisma.ExamCreateManyArgs> = z
   })
   .strict();
 
-export const ExamCreateManyAndReturnArgsSchema: z.ZodType<Prisma.ExamCreateManyAndReturnArgs> =
-  z
+export const ExamCreateManyAndReturnArgsSchema: z.ZodType<Prisma.ExamCreateManyAndReturnArgs>
+  = z
     .object({
       data: z.union([
         ExamCreateManyInputSchema,
@@ -11092,8 +11092,8 @@ export const ExamUpdateManyArgsSchema: z.ZodType<Prisma.ExamUpdateManyArgs> = z
   })
   .strict();
 
-export const ExamUpdateManyAndReturnArgsSchema: z.ZodType<Prisma.ExamUpdateManyAndReturnArgs> =
-  z
+export const ExamUpdateManyAndReturnArgsSchema: z.ZodType<Prisma.ExamUpdateManyAndReturnArgs>
+  = z
     .object({
       data: z.union([
         ExamUpdateManyMutationInputSchema,
@@ -11111,8 +11111,8 @@ export const ExamDeleteManyArgsSchema: z.ZodType<Prisma.ExamDeleteManyArgs> = z
   })
   .strict();
 
-export const StationPatientCreateArgsSchema: z.ZodType<Prisma.StationPatientCreateArgs> =
-  z
+export const StationPatientCreateArgsSchema: z.ZodType<Prisma.StationPatientCreateArgs>
+  = z
     .object({
       data: z.union([
         StationPatientCreateInputSchema,
@@ -11123,8 +11123,8 @@ export const StationPatientCreateArgsSchema: z.ZodType<Prisma.StationPatientCrea
     })
     .strict();
 
-export const StationPatientUpsertArgsSchema: z.ZodType<Prisma.StationPatientUpsertArgs> =
-  z
+export const StationPatientUpsertArgsSchema: z.ZodType<Prisma.StationPatientUpsertArgs>
+  = z
     .object({
       create: z.union([
         StationPatientCreateInputSchema,
@@ -11140,8 +11140,8 @@ export const StationPatientUpsertArgsSchema: z.ZodType<Prisma.StationPatientUpse
     })
     .strict();
 
-export const StationPatientCreateManyArgsSchema: z.ZodType<Prisma.StationPatientCreateManyArgs> =
-  z
+export const StationPatientCreateManyArgsSchema: z.ZodType<Prisma.StationPatientCreateManyArgs>
+  = z
     .object({
       data: z.union([
         StationPatientCreateManyInputSchema,
@@ -11151,8 +11151,8 @@ export const StationPatientCreateManyArgsSchema: z.ZodType<Prisma.StationPatient
     })
     .strict();
 
-export const StationPatientCreateManyAndReturnArgsSchema: z.ZodType<Prisma.StationPatientCreateManyAndReturnArgs> =
-  z
+export const StationPatientCreateManyAndReturnArgsSchema: z.ZodType<Prisma.StationPatientCreateManyAndReturnArgs>
+  = z
     .object({
       data: z.union([
         StationPatientCreateManyInputSchema,
@@ -11162,8 +11162,8 @@ export const StationPatientCreateManyAndReturnArgsSchema: z.ZodType<Prisma.Stati
     })
     .strict();
 
-export const StationPatientDeleteArgsSchema: z.ZodType<Prisma.StationPatientDeleteArgs> =
-  z
+export const StationPatientDeleteArgsSchema: z.ZodType<Prisma.StationPatientDeleteArgs>
+  = z
     .object({
       include: StationPatientIncludeSchema.optional(),
       select: StationPatientSelectSchema.optional(),
@@ -11171,8 +11171,8 @@ export const StationPatientDeleteArgsSchema: z.ZodType<Prisma.StationPatientDele
     })
     .strict();
 
-export const StationPatientUpdateArgsSchema: z.ZodType<Prisma.StationPatientUpdateArgs> =
-  z
+export const StationPatientUpdateArgsSchema: z.ZodType<Prisma.StationPatientUpdateArgs>
+  = z
     .object({
       data: z.union([
         StationPatientUpdateInputSchema,
@@ -11184,8 +11184,8 @@ export const StationPatientUpdateArgsSchema: z.ZodType<Prisma.StationPatientUpda
     })
     .strict();
 
-export const StationPatientUpdateManyArgsSchema: z.ZodType<Prisma.StationPatientUpdateManyArgs> =
-  z
+export const StationPatientUpdateManyArgsSchema: z.ZodType<Prisma.StationPatientUpdateManyArgs>
+  = z
     .object({
       data: z.union([
         StationPatientUpdateManyMutationInputSchema,
@@ -11196,8 +11196,8 @@ export const StationPatientUpdateManyArgsSchema: z.ZodType<Prisma.StationPatient
     })
     .strict();
 
-export const StationPatientUpdateManyAndReturnArgsSchema: z.ZodType<Prisma.StationPatientUpdateManyAndReturnArgs> =
-  z
+export const StationPatientUpdateManyAndReturnArgsSchema: z.ZodType<Prisma.StationPatientUpdateManyAndReturnArgs>
+  = z
     .object({
       data: z.union([
         StationPatientUpdateManyMutationInputSchema,
@@ -11208,8 +11208,8 @@ export const StationPatientUpdateManyAndReturnArgsSchema: z.ZodType<Prisma.Stati
     })
     .strict();
 
-export const StationPatientDeleteManyArgsSchema: z.ZodType<Prisma.StationPatientDeleteManyArgs> =
-  z
+export const StationPatientDeleteManyArgsSchema: z.ZodType<Prisma.StationPatientDeleteManyArgs>
+  = z
     .object({
       limit: z.number().optional(),
       where: StationPatientWhereInputSchema.optional(),
@@ -11243,8 +11243,8 @@ export const TeatmentUpsertArgsSchema: z.ZodType<Prisma.TeatmentUpsertArgs> = z
   })
   .strict();
 
-export const TeatmentCreateManyArgsSchema: z.ZodType<Prisma.TeatmentCreateManyArgs> =
-  z
+export const TeatmentCreateManyArgsSchema: z.ZodType<Prisma.TeatmentCreateManyArgs>
+  = z
     .object({
       data: z.union([
         TeatmentCreateManyInputSchema,
@@ -11254,8 +11254,8 @@ export const TeatmentCreateManyArgsSchema: z.ZodType<Prisma.TeatmentCreateManyAr
     })
     .strict();
 
-export const TeatmentCreateManyAndReturnArgsSchema: z.ZodType<Prisma.TeatmentCreateManyAndReturnArgs> =
-  z
+export const TeatmentCreateManyAndReturnArgsSchema: z.ZodType<Prisma.TeatmentCreateManyAndReturnArgs>
+  = z
     .object({
       data: z.union([
         TeatmentCreateManyInputSchema,
@@ -11285,8 +11285,8 @@ export const TeatmentUpdateArgsSchema: z.ZodType<Prisma.TeatmentUpdateArgs> = z
   })
   .strict();
 
-export const TeatmentUpdateManyArgsSchema: z.ZodType<Prisma.TeatmentUpdateManyArgs> =
-  z
+export const TeatmentUpdateManyArgsSchema: z.ZodType<Prisma.TeatmentUpdateManyArgs>
+  = z
     .object({
       data: z.union([
         TeatmentUpdateManyMutationInputSchema,
@@ -11297,8 +11297,8 @@ export const TeatmentUpdateManyArgsSchema: z.ZodType<Prisma.TeatmentUpdateManyAr
     })
     .strict();
 
-export const TeatmentUpdateManyAndReturnArgsSchema: z.ZodType<Prisma.TeatmentUpdateManyAndReturnArgs> =
-  z
+export const TeatmentUpdateManyAndReturnArgsSchema: z.ZodType<Prisma.TeatmentUpdateManyAndReturnArgs>
+  = z
     .object({
       data: z.union([
         TeatmentUpdateManyMutationInputSchema,
@@ -11309,8 +11309,8 @@ export const TeatmentUpdateManyAndReturnArgsSchema: z.ZodType<Prisma.TeatmentUpd
     })
     .strict();
 
-export const TeatmentDeleteManyArgsSchema: z.ZodType<Prisma.TeatmentDeleteManyArgs> =
-  z
+export const TeatmentDeleteManyArgsSchema: z.ZodType<Prisma.TeatmentDeleteManyArgs>
+  = z
     .object({
       limit: z.number().optional(),
       where: TeatmentWhereInputSchema.optional(),

@@ -43,7 +43,7 @@ export default (app: TypeApplication) =>
   app.get("/", Docs, RequestQuery, async (c) => {
     const query = c.req.valid("query");
     const program = VehicleServiceContext.pipe(
-      Effect.andThen((service) =>
+      Effect.andThen(service =>
         service.getAll({
           orderBy: { create_date: "desc" },
           pagination: { limit: query.limit, page: query.page * query.limit },
@@ -56,8 +56,8 @@ export default (app: TypeApplication) =>
           meta_data: { total, ...query },
         }),
       ),
-      Effect.andThen((data) => c.json(data, 200)),
-      Effect.catchAll((error) =>
+      Effect.andThen(data => c.json(data, 200)),
+      Effect.catchAll(error =>
         Effect.succeed(c.json(error, { status: error.status })),
       ),
     );
