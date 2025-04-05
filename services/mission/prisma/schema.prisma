@@ -48,6 +48,7 @@ model Mission {
   SubMission    SubMission[]
   Joiners       Joiner[]
   HistoryJoiner HistoryJoiner[]
+  Patient       Patient[]
 
   @@index([id])
   @@index([status])
@@ -66,6 +67,19 @@ model Joiner {
   @@unique([mission_id, user_id])
   @@index([mission_id, user_id])
   @@index([user_id])
+}
+
+model Patient {
+  id          String    @id @default(uuid())
+  mission_id  String
+  patient_id  String
+  Mission     Mission   @relation(fields: [mission_id], references: [id])
+  create_date DateTime? @default(now())
+  update_date DateTime? @updatedAt
+
+  @@unique([mission_id, patient_id])
+  @@index([mission_id, patient_id])
+  @@index([patient_id])
 }
 
 model HistoryJoiner {
@@ -114,6 +128,7 @@ model SubMissionTag {
   @@index([title])
   @@index([sub_mission_id])
 }
+
 enum MissionStatus {
   Pending
   Progress

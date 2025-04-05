@@ -22,6 +22,7 @@ export const PatientScalarFieldEnumSchema = z.enum([
   "first_name",
   "last_name",
   "qr_number",
+  "hn_number",
   "age",
   "birthday",
   "id_card",
@@ -57,6 +58,7 @@ export const HistoryScalarFieldEnumSchema = z.enum([
   "update_by",
   "physical_status",
   "triage_lavel",
+  "triage",
 ]);
 
 export const ExamScalarFieldEnumSchema = z.enum([
@@ -135,6 +137,7 @@ export const PatientSchema = z.object({
   first_name: z.string().nullish(),
   gender: GenderSchema,
   group_blood: GroupBloodSchema.nullish(),
+  hn_number: z.string().nullish(),
   id: z.string().uuid(),
   id_card: z.string().nullish(),
   image: z.string().nullish(),
@@ -175,7 +178,7 @@ export type PatientOptionalDefaults = z.infer<
 // ------------------------------------------------------
 
 export type PatientRelations = {
-  History?: HistoryWithRelations | null;
+  History: HistoryWithRelations[];
   Exam: ExamWithRelations[];
   StationPatient: StationPatientWithRelations[];
   Teatment?: TeatmentWithRelations | null;
@@ -188,7 +191,7 @@ export const PatientWithRelationsSchema: z.ZodType<PatientWithRelations>
   = PatientSchema.merge(
     z.object({
       Exam: z.lazy(() => ExamWithRelationsSchema).array(),
-      History: z.lazy(() => HistoryWithRelationsSchema).nullish(),
+      History: z.lazy(() => HistoryWithRelationsSchema).array(),
       StationPatient: z.lazy(() => StationPatientWithRelationsSchema).array(),
       Teatment: z.lazy(() => TeatmentWithRelationsSchema).nullish(),
     }),
@@ -198,7 +201,7 @@ export const PatientWithRelationsSchema: z.ZodType<PatientWithRelations>
 // ------------------------------------------------------
 
 export type PatientOptionalDefaultsRelations = {
-  History?: HistoryOptionalDefaultsWithRelations | null;
+  History: HistoryOptionalDefaultsWithRelations[];
   Exam: ExamOptionalDefaultsWithRelations[];
   StationPatient: StationPatientOptionalDefaultsWithRelations[];
   Teatment?: TeatmentOptionalDefaultsWithRelations | null;
@@ -213,9 +216,7 @@ export const PatientOptionalDefaultsWithRelationsSchema: z.ZodType<PatientOption
   = PatientOptionalDefaultsSchema.merge(
     z.object({
       Exam: z.lazy(() => ExamOptionalDefaultsWithRelationsSchema).array(),
-      History: z
-        .lazy(() => HistoryOptionalDefaultsWithRelationsSchema)
-        .nullish(),
+      History: z.lazy(() => HistoryOptionalDefaultsWithRelationsSchema).array(),
       StationPatient: z
         .lazy(() => StationPatientOptionalDefaultsWithRelationsSchema)
         .array(),
@@ -229,7 +230,7 @@ export const PatientOptionalDefaultsWithRelationsSchema: z.ZodType<PatientOption
 // ------------------------------------------------------
 
 export type PatientPartialRelations = {
-  History?: HistoryPartialWithRelations | null;
+  History?: HistoryPartialWithRelations[];
   Exam?: ExamPartialWithRelations[];
   StationPatient?: StationPatientPartialWithRelations[];
   Teatment?: TeatmentPartialWithRelations | null;
@@ -242,7 +243,7 @@ export const PatientPartialWithRelationsSchema: z.ZodType<PatientPartialWithRela
   = PatientPartialSchema.merge(
     z.object({
       Exam: z.lazy(() => ExamPartialWithRelationsSchema).array(),
-      History: z.lazy(() => HistoryPartialWithRelationsSchema).nullish(),
+      History: z.lazy(() => HistoryPartialWithRelationsSchema).array(),
       StationPatient: z
         .lazy(() => StationPatientPartialWithRelationsSchema)
         .array(),
@@ -260,7 +261,7 @@ export const PatientOptionalDefaultsWithPartialRelationsSchema: z.ZodType<Patien
     z
       .object({
         Exam: z.lazy(() => ExamPartialWithRelationsSchema).array(),
-        History: z.lazy(() => HistoryPartialWithRelationsSchema).nullish(),
+        History: z.lazy(() => HistoryPartialWithRelationsSchema).array(),
         StationPatient: z
           .lazy(() => StationPatientPartialWithRelationsSchema)
           .array(),
@@ -277,7 +278,7 @@ export const PatientWithPartialRelationsSchema: z.ZodType<PatientWithPartialRela
     z
       .object({
         Exam: z.lazy(() => ExamPartialWithRelationsSchema).array(),
-        History: z.lazy(() => HistoryPartialWithRelationsSchema).nullish(),
+        History: z.lazy(() => HistoryPartialWithRelationsSchema).array(),
         StationPatient: z
           .lazy(() => StationPatientPartialWithRelationsSchema)
           .array(),
@@ -300,6 +301,7 @@ export const HistorySchema = z.object({
   present_illness: z.string(),
   symptom_details: z.string(),
   teatment: z.string(),
+  triage: z.string().nullish(),
   triage_lavel: z.string().nullish(),
   update_by: z.string().nullish(),
   update_date: z.coerce.date(),
@@ -791,7 +793,9 @@ export const PatientIncludeSchema: z.ZodType<Prisma.PatientInclude> = z
     Exam: z
       .union([z.boolean(), z.lazy(() => ExamFindManyArgsSchema)])
       .optional(),
-    History: z.union([z.boolean(), z.lazy(() => HistoryArgsSchema)]).optional(),
+    History: z
+      .union([z.boolean(), z.lazy(() => HistoryFindManyArgsSchema)])
+      .optional(),
     StationPatient: z
       .union([z.boolean(), z.lazy(() => StationPatientFindManyArgsSchema)])
       .optional(),
@@ -819,6 +823,7 @@ export const PatientCountOutputTypeSelectSchema: z.ZodType<Prisma.PatientCountOu
   = z
     .object({
       Exam: z.boolean().optional(),
+      History: z.boolean().optional(),
       StationPatient: z.boolean().optional(),
     })
     .strict();
@@ -847,7 +852,10 @@ export const PatientSelectSchema: z.ZodType<Prisma.PatientSelect> = z
     first_name: z.boolean().optional(),
     gender: z.boolean().optional(),
     group_blood: z.boolean().optional(),
-    History: z.union([z.boolean(), z.lazy(() => HistoryArgsSchema)]).optional(),
+    History: z
+      .union([z.boolean(), z.lazy(() => HistoryFindManyArgsSchema)])
+      .optional(),
+    hn_number: z.boolean().optional(),
     id: z.boolean().optional(),
     id_card: z.boolean().optional(),
     image: z.boolean().optional(),
@@ -894,6 +902,7 @@ export const HistorySelectSchema: z.ZodType<Prisma.HistorySelect> = z
     present_illness: z.boolean().optional(),
     symptom_details: z.boolean().optional(),
     teatment: z.boolean().optional(),
+    triage: z.boolean().optional(),
     triage_lavel: z.boolean().optional(),
     update_by: z.boolean().optional(),
     update_date: z.boolean().optional(),
@@ -1080,11 +1089,9 @@ export const PatientWhereInputSchema: z.ZodType<Prisma.PatientWhereInput> = z
       ])
       .optional()
       .nullable(),
-    History: z
-      .union([
-        z.lazy(() => HistoryNullableScalarRelationFilterSchema),
-        z.lazy(() => HistoryWhereInputSchema),
-      ])
+    History: z.lazy(() => HistoryListRelationFilterSchema).optional(),
+    hn_number: z
+      .union([z.lazy(() => StringNullableFilterSchema), z.string()])
       .optional()
       .nullable(),
     id: z.union([z.lazy(() => StringFilterSchema), z.string()]).optional(),
@@ -1238,7 +1245,15 @@ export const PatientOrderByWithRelationInputSchema: z.ZodType<Prisma.PatientOrde
           z.lazy(() => SortOrderInputSchema),
         ])
         .optional(),
-      History: z.lazy(() => HistoryOrderByWithRelationInputSchema).optional(),
+      History: z
+        .lazy(() => HistoryOrderByRelationAggregateInputSchema)
+        .optional(),
+      hn_number: z
+        .union([
+          z.lazy(() => SortOrderSchema),
+          z.lazy(() => SortOrderInputSchema),
+        ])
+        .optional(),
       id: z.lazy(() => SortOrderSchema).optional(),
       id_card: z
         .union([
@@ -1397,11 +1412,9 @@ export const PatientWhereUniqueInputSchema: z.ZodType<Prisma.PatientWhereUniqueI
             ])
             .optional()
             .nullable(),
-          History: z
-            .union([
-              z.lazy(() => HistoryNullableScalarRelationFilterSchema),
-              z.lazy(() => HistoryWhereInputSchema),
-            ])
+          History: z.lazy(() => HistoryListRelationFilterSchema).optional(),
+          hn_number: z
+            .union([z.lazy(() => StringNullableFilterSchema), z.string()])
             .optional()
             .nullable(),
           id: z.string().uuid().optional(),
@@ -1558,6 +1571,12 @@ export const PatientOrderByWithAggregationInputSchema: z.ZodType<Prisma.PatientO
         .optional(),
       gender: z.lazy(() => SortOrderSchema).optional(),
       group_blood: z
+        .union([
+          z.lazy(() => SortOrderSchema),
+          z.lazy(() => SortOrderInputSchema),
+        ])
+        .optional(),
+      hn_number: z
         .union([
           z.lazy(() => SortOrderSchema),
           z.lazy(() => SortOrderInputSchema),
@@ -1735,6 +1754,13 @@ export const PatientScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.Patie
         ])
         .optional()
         .nullable(),
+      hn_number: z
+        .union([
+          z.lazy(() => StringNullableWithAggregatesFilterSchema),
+          z.string(),
+        ])
+        .optional()
+        .nullable(),
       id: z
         .union([z.lazy(() => StringWithAggregatesFilterSchema), z.string()])
         .optional(),
@@ -1859,6 +1885,10 @@ export const HistoryWhereInputSchema: z.ZodType<Prisma.HistoryWhereInput> = z
     teatment: z
       .union([z.lazy(() => StringFilterSchema), z.string()])
       .optional(),
+    triage: z
+      .union([z.lazy(() => StringNullableFilterSchema), z.string()])
+      .optional()
+      .nullable(),
     triage_lavel: z
       .union([z.lazy(() => StringNullableFilterSchema), z.string()])
       .optional()
@@ -1902,6 +1932,12 @@ export const HistoryOrderByWithRelationInputSchema: z.ZodType<Prisma.HistoryOrde
       present_illness: z.lazy(() => SortOrderSchema).optional(),
       symptom_details: z.lazy(() => SortOrderSchema).optional(),
       teatment: z.lazy(() => SortOrderSchema).optional(),
+      triage: z
+        .union([
+          z.lazy(() => SortOrderSchema),
+          z.lazy(() => SortOrderInputSchema),
+        ])
+        .optional(),
       triage_lavel: z
         .union([
           z.lazy(() => SortOrderSchema),
@@ -1991,6 +2027,10 @@ export const HistoryWhereUniqueInputSchema: z.ZodType<Prisma.HistoryWhereUniqueI
           teatment: z
             .union([z.lazy(() => StringFilterSchema), z.string()])
             .optional(),
+          triage: z
+            .union([z.lazy(() => StringNullableFilterSchema), z.string()])
+            .optional()
+            .nullable(),
           triage_lavel: z
             .union([z.lazy(() => StringNullableFilterSchema), z.string()])
             .optional()
@@ -2040,6 +2080,12 @@ export const HistoryOrderByWithAggregationInputSchema: z.ZodType<Prisma.HistoryO
       present_illness: z.lazy(() => SortOrderSchema).optional(),
       symptom_details: z.lazy(() => SortOrderSchema).optional(),
       teatment: z.lazy(() => SortOrderSchema).optional(),
+      triage: z
+        .union([
+          z.lazy(() => SortOrderSchema),
+          z.lazy(() => SortOrderInputSchema),
+        ])
+        .optional(),
       triage_lavel: z
         .union([
           z.lazy(() => SortOrderSchema),
@@ -2119,6 +2165,13 @@ export const HistoryScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.Histo
       teatment: z
         .union([z.lazy(() => StringWithAggregatesFilterSchema), z.string()])
         .optional(),
+      triage: z
+        .union([
+          z.lazy(() => StringNullableWithAggregatesFilterSchema),
+          z.string(),
+        ])
+        .optional()
+        .nullable(),
       triage_lavel: z
         .union([
           z.lazy(() => StringNullableWithAggregatesFilterSchema),
@@ -3075,8 +3128,9 @@ export const PatientCreateInputSchema: z.ZodType<Prisma.PatientCreateInput> = z
       .optional()
       .nullable(),
     History: z
-      .lazy(() => HistoryCreateNestedOneWithoutPatientInputSchema)
+      .lazy(() => HistoryCreateNestedManyWithoutPatientInputSchema)
       .optional(),
+    hn_number: z.string().optional().nullable(),
     id: z.string().uuid().optional(),
     id_card: z.string().optional().nullable(),
     image: z.string().optional().nullable(),
@@ -3121,8 +3175,9 @@ export const PatientUncheckedCreateInputSchema: z.ZodType<Prisma.PatientUnchecke
         .optional()
         .nullable(),
       History: z
-        .lazy(() => HistoryUncheckedCreateNestedOneWithoutPatientInputSchema)
+        .lazy(() => HistoryUncheckedCreateNestedManyWithoutPatientInputSchema)
         .optional(),
+      hn_number: z.string().optional().nullable(),
       id: z.string().uuid().optional(),
       id_card: z.string().optional().nullable(),
       image: z.string().optional().nullable(),
@@ -3261,8 +3316,15 @@ export const PatientUpdateInputSchema: z.ZodType<Prisma.PatientUpdateInput> = z
       .optional()
       .nullable(),
     History: z
-      .lazy(() => HistoryUpdateOneWithoutPatientNestedInputSchema)
+      .lazy(() => HistoryUpdateManyWithoutPatientNestedInputSchema)
       .optional(),
+    hn_number: z
+      .union([
+        z.string(),
+        z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
+      ])
+      .optional()
+      .nullable(),
     id: z
       .union([
         z.string().uuid(),
@@ -3452,8 +3514,15 @@ export const PatientUncheckedUpdateInputSchema: z.ZodType<Prisma.PatientUnchecke
         .optional()
         .nullable(),
       History: z
-        .lazy(() => HistoryUncheckedUpdateOneWithoutPatientNestedInputSchema)
+        .lazy(() => HistoryUncheckedUpdateManyWithoutPatientNestedInputSchema)
         .optional(),
+      hn_number: z
+        .union([
+          z.string(),
+          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
       id: z
         .union([
           z.string().uuid(),
@@ -3550,6 +3619,7 @@ export const PatientCreateManyInputSchema: z.ZodType<Prisma.PatientCreateManyInp
         .lazy(() => GroupBloodSchema)
         .optional()
         .nullable(),
+      hn_number: z.string().optional().nullable(),
       id: z.string().uuid().optional(),
       id_card: z.string().optional().nullable(),
       image: z.string().optional().nullable(),
@@ -3673,6 +3743,13 @@ export const PatientUpdateManyMutationInputSchema: z.ZodType<Prisma.PatientUpdat
         .union([
           z.lazy(() => GroupBloodSchema),
           z.lazy(() => NullableEnumGroupBloodFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+      hn_number: z
+        .union([
+          z.string(),
+          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
         ])
         .optional()
         .nullable(),
@@ -3855,6 +3932,13 @@ export const PatientUncheckedUpdateManyInputSchema: z.ZodType<Prisma.PatientUnch
         ])
         .optional()
         .nullable(),
+      hn_number: z
+        .union([
+          z.string(),
+          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
       id: z
         .union([
           z.string().uuid(),
@@ -3931,6 +4015,7 @@ export const HistoryCreateInputSchema: z.ZodType<Prisma.HistoryCreateInput> = z
     present_illness: z.string(),
     symptom_details: z.string(),
     teatment: z.string(),
+    triage: z.string().optional().nullable(),
     triage_lavel: z.string().optional().nullable(),
     update_by: z.string().optional().nullable(),
     update_date: z.coerce.date().optional().nullable(),
@@ -3949,6 +4034,7 @@ export const HistoryUncheckedCreateInputSchema: z.ZodType<Prisma.HistoryUnchecke
       present_illness: z.string(),
       symptom_details: z.string(),
       teatment: z.string(),
+      triage: z.string().optional().nullable(),
       triage_lavel: z.string().optional().nullable(),
       update_by: z.string().optional().nullable(),
       update_date: z.coerce.date().optional().nullable(),
@@ -3999,6 +4085,13 @@ export const HistoryUpdateInputSchema: z.ZodType<Prisma.HistoryUpdateInput> = z
     teatment: z
       .union([z.string(), z.lazy(() => StringFieldUpdateOperationsInputSchema)])
       .optional(),
+    triage: z
+      .union([
+        z.string(),
+        z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
+      ])
+      .optional()
+      .nullable(),
     triage_lavel: z
       .union([
         z.string(),
@@ -4083,6 +4176,13 @@ export const HistoryUncheckedUpdateInputSchema: z.ZodType<Prisma.HistoryUnchecke
           z.lazy(() => StringFieldUpdateOperationsInputSchema),
         ])
         .optional(),
+      triage: z
+        .union([
+          z.string(),
+          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
       triage_lavel: z
         .union([
           z.string(),
@@ -4119,6 +4219,7 @@ export const HistoryCreateManyInputSchema: z.ZodType<Prisma.HistoryCreateManyInp
       present_illness: z.string(),
       symptom_details: z.string(),
       teatment: z.string(),
+      triage: z.string().optional().nullable(),
       triage_lavel: z.string().optional().nullable(),
       update_by: z.string().optional().nullable(),
       update_date: z.coerce.date().optional().nullable(),
@@ -4179,6 +4280,13 @@ export const HistoryUpdateManyMutationInputSchema: z.ZodType<Prisma.HistoryUpdat
           z.lazy(() => StringFieldUpdateOperationsInputSchema),
         ])
         .optional(),
+      triage: z
+        .union([
+          z.string(),
+          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
       triage_lavel: z
         .union([
           z.string(),
@@ -4263,6 +4371,13 @@ export const HistoryUncheckedUpdateManyInputSchema: z.ZodType<Prisma.HistoryUnch
           z.lazy(() => StringFieldUpdateOperationsInputSchema),
         ])
         .optional(),
+      triage: z
+        .union([
+          z.string(),
+          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
       triage_lavel: z
         .union([
           z.string(),
@@ -5329,17 +5444,12 @@ export const DateTimeNullableFilterSchema: z.ZodType<Prisma.DateTimeNullableFilt
     })
     .strict();
 
-export const HistoryNullableScalarRelationFilterSchema: z.ZodType<Prisma.HistoryNullableScalarRelationFilter>
+export const HistoryListRelationFilterSchema: z.ZodType<Prisma.HistoryListRelationFilter>
   = z
     .object({
-      is: z
-        .lazy(() => HistoryWhereInputSchema)
-        .optional()
-        .nullable(),
-      isNot: z
-        .lazy(() => HistoryWhereInputSchema)
-        .optional()
-        .nullable(),
+      every: z.lazy(() => HistoryWhereInputSchema).optional(),
+      none: z.lazy(() => HistoryWhereInputSchema).optional(),
+      some: z.lazy(() => HistoryWhereInputSchema).optional(),
     })
     .strict();
 
@@ -5382,6 +5492,13 @@ export const SortOrderInputSchema: z.ZodType<Prisma.SortOrderInput> = z
   })
   .strict();
 
+export const HistoryOrderByRelationAggregateInputSchema: z.ZodType<Prisma.HistoryOrderByRelationAggregateInput>
+  = z
+    .object({
+      _count: z.lazy(() => SortOrderSchema).optional(),
+    })
+    .strict();
+
 export const ExamOrderByRelationAggregateInputSchema: z.ZodType<Prisma.ExamOrderByRelationAggregateInput>
   = z
     .object({
@@ -5415,6 +5532,7 @@ export const PatientCountOrderByAggregateInputSchema: z.ZodType<Prisma.PatientCo
       first_name: z.lazy(() => SortOrderSchema).optional(),
       gender: z.lazy(() => SortOrderSchema).optional(),
       group_blood: z.lazy(() => SortOrderSchema).optional(),
+      hn_number: z.lazy(() => SortOrderSchema).optional(),
       id: z.lazy(() => SortOrderSchema).optional(),
       id_card: z.lazy(() => SortOrderSchema).optional(),
       image: z.lazy(() => SortOrderSchema).optional(),
@@ -5453,6 +5571,7 @@ export const PatientMaxOrderByAggregateInputSchema: z.ZodType<Prisma.PatientMaxO
       first_name: z.lazy(() => SortOrderSchema).optional(),
       gender: z.lazy(() => SortOrderSchema).optional(),
       group_blood: z.lazy(() => SortOrderSchema).optional(),
+      hn_number: z.lazy(() => SortOrderSchema).optional(),
       id: z.lazy(() => SortOrderSchema).optional(),
       id_card: z.lazy(() => SortOrderSchema).optional(),
       image: z.lazy(() => SortOrderSchema).optional(),
@@ -5484,6 +5603,7 @@ export const PatientMinOrderByAggregateInputSchema: z.ZodType<Prisma.PatientMinO
       first_name: z.lazy(() => SortOrderSchema).optional(),
       gender: z.lazy(() => SortOrderSchema).optional(),
       group_blood: z.lazy(() => SortOrderSchema).optional(),
+      hn_number: z.lazy(() => SortOrderSchema).optional(),
       id: z.lazy(() => SortOrderSchema).optional(),
       id_card: z.lazy(() => SortOrderSchema).optional(),
       image: z.lazy(() => SortOrderSchema).optional(),
@@ -5678,6 +5798,7 @@ export const HistoryCountOrderByAggregateInputSchema: z.ZodType<Prisma.HistoryCo
       present_illness: z.lazy(() => SortOrderSchema).optional(),
       symptom_details: z.lazy(() => SortOrderSchema).optional(),
       teatment: z.lazy(() => SortOrderSchema).optional(),
+      triage: z.lazy(() => SortOrderSchema).optional(),
       triage_lavel: z.lazy(() => SortOrderSchema).optional(),
       update_by: z.lazy(() => SortOrderSchema).optional(),
       update_date: z.lazy(() => SortOrderSchema).optional(),
@@ -5696,6 +5817,7 @@ export const HistoryMaxOrderByAggregateInputSchema: z.ZodType<Prisma.HistoryMaxO
       present_illness: z.lazy(() => SortOrderSchema).optional(),
       symptom_details: z.lazy(() => SortOrderSchema).optional(),
       teatment: z.lazy(() => SortOrderSchema).optional(),
+      triage: z.lazy(() => SortOrderSchema).optional(),
       triage_lavel: z.lazy(() => SortOrderSchema).optional(),
       update_by: z.lazy(() => SortOrderSchema).optional(),
       update_date: z.lazy(() => SortOrderSchema).optional(),
@@ -5714,6 +5836,7 @@ export const HistoryMinOrderByAggregateInputSchema: z.ZodType<Prisma.HistoryMinO
       present_illness: z.lazy(() => SortOrderSchema).optional(),
       symptom_details: z.lazy(() => SortOrderSchema).optional(),
       teatment: z.lazy(() => SortOrderSchema).optional(),
+      triage: z.lazy(() => SortOrderSchema).optional(),
       triage_lavel: z.lazy(() => SortOrderSchema).optional(),
       update_by: z.lazy(() => SortOrderSchema).optional(),
       update_date: z.lazy(() => SortOrderSchema).optional(),
@@ -5909,18 +6032,31 @@ export const TeatmentMinOrderByAggregateInputSchema: z.ZodType<Prisma.TeatmentMi
     })
     .strict();
 
-export const HistoryCreateNestedOneWithoutPatientInputSchema: z.ZodType<Prisma.HistoryCreateNestedOneWithoutPatientInput>
+export const HistoryCreateNestedManyWithoutPatientInputSchema: z.ZodType<Prisma.HistoryCreateNestedManyWithoutPatientInput>
   = z
     .object({
-      connect: z.lazy(() => HistoryWhereUniqueInputSchema).optional(),
+      connect: z
+        .union([
+          z.lazy(() => HistoryWhereUniqueInputSchema),
+          z.lazy(() => HistoryWhereUniqueInputSchema).array(),
+        ])
+        .optional(),
       connectOrCreate: z
-        .lazy(() => HistoryCreateOrConnectWithoutPatientInputSchema)
+        .union([
+          z.lazy(() => HistoryCreateOrConnectWithoutPatientInputSchema),
+          z.lazy(() => HistoryCreateOrConnectWithoutPatientInputSchema).array(),
+        ])
         .optional(),
       create: z
         .union([
           z.lazy(() => HistoryCreateWithoutPatientInputSchema),
+          z.lazy(() => HistoryCreateWithoutPatientInputSchema).array(),
           z.lazy(() => HistoryUncheckedCreateWithoutPatientInputSchema),
+          z.lazy(() => HistoryUncheckedCreateWithoutPatientInputSchema).array(),
         ])
+        .optional(),
+      createMany: z
+        .lazy(() => HistoryCreateManyPatientInputEnvelopeSchema)
         .optional(),
     })
     .strict();
@@ -6003,18 +6139,31 @@ export const TeatmentCreateNestedOneWithoutPatientInputSchema: z.ZodType<Prisma.
     })
     .strict();
 
-export const HistoryUncheckedCreateNestedOneWithoutPatientInputSchema: z.ZodType<Prisma.HistoryUncheckedCreateNestedOneWithoutPatientInput>
+export const HistoryUncheckedCreateNestedManyWithoutPatientInputSchema: z.ZodType<Prisma.HistoryUncheckedCreateNestedManyWithoutPatientInput>
   = z
     .object({
-      connect: z.lazy(() => HistoryWhereUniqueInputSchema).optional(),
+      connect: z
+        .union([
+          z.lazy(() => HistoryWhereUniqueInputSchema),
+          z.lazy(() => HistoryWhereUniqueInputSchema).array(),
+        ])
+        .optional(),
       connectOrCreate: z
-        .lazy(() => HistoryCreateOrConnectWithoutPatientInputSchema)
+        .union([
+          z.lazy(() => HistoryCreateOrConnectWithoutPatientInputSchema),
+          z.lazy(() => HistoryCreateOrConnectWithoutPatientInputSchema).array(),
+        ])
         .optional(),
       create: z
         .union([
           z.lazy(() => HistoryCreateWithoutPatientInputSchema),
+          z.lazy(() => HistoryCreateWithoutPatientInputSchema).array(),
           z.lazy(() => HistoryUncheckedCreateWithoutPatientInputSchema),
+          z.lazy(() => HistoryUncheckedCreateWithoutPatientInputSchema).array(),
         ])
+        .optional(),
+      createMany: z
+        .lazy(() => HistoryCreateManyPatientInputEnvelopeSchema)
         .optional(),
     })
     .strict();
@@ -6146,33 +6295,80 @@ export const NullableDateTimeFieldUpdateOperationsInputSchema: z.ZodType<Prisma.
     })
     .strict();
 
-export const HistoryUpdateOneWithoutPatientNestedInputSchema: z.ZodType<Prisma.HistoryUpdateOneWithoutPatientNestedInput>
+export const HistoryUpdateManyWithoutPatientNestedInputSchema: z.ZodType<Prisma.HistoryUpdateManyWithoutPatientNestedInput>
   = z
     .object({
-      connect: z.lazy(() => HistoryWhereUniqueInputSchema).optional(),
+      connect: z
+        .union([
+          z.lazy(() => HistoryWhereUniqueInputSchema),
+          z.lazy(() => HistoryWhereUniqueInputSchema).array(),
+        ])
+        .optional(),
       connectOrCreate: z
-        .lazy(() => HistoryCreateOrConnectWithoutPatientInputSchema)
+        .union([
+          z.lazy(() => HistoryCreateOrConnectWithoutPatientInputSchema),
+          z.lazy(() => HistoryCreateOrConnectWithoutPatientInputSchema).array(),
+        ])
         .optional(),
       create: z
         .union([
           z.lazy(() => HistoryCreateWithoutPatientInputSchema),
+          z.lazy(() => HistoryCreateWithoutPatientInputSchema).array(),
           z.lazy(() => HistoryUncheckedCreateWithoutPatientInputSchema),
+          z.lazy(() => HistoryUncheckedCreateWithoutPatientInputSchema).array(),
         ])
         .optional(),
+      createMany: z
+        .lazy(() => HistoryCreateManyPatientInputEnvelopeSchema)
+        .optional(),
       delete: z
-        .union([z.boolean(), z.lazy(() => HistoryWhereInputSchema)])
+        .union([
+          z.lazy(() => HistoryWhereUniqueInputSchema),
+          z.lazy(() => HistoryWhereUniqueInputSchema).array(),
+        ])
+        .optional(),
+      deleteMany: z
+        .union([
+          z.lazy(() => HistoryScalarWhereInputSchema),
+          z.lazy(() => HistoryScalarWhereInputSchema).array(),
+        ])
         .optional(),
       disconnect: z
-        .union([z.boolean(), z.lazy(() => HistoryWhereInputSchema)])
+        .union([
+          z.lazy(() => HistoryWhereUniqueInputSchema),
+          z.lazy(() => HistoryWhereUniqueInputSchema).array(),
+        ])
+        .optional(),
+      set: z
+        .union([
+          z.lazy(() => HistoryWhereUniqueInputSchema),
+          z.lazy(() => HistoryWhereUniqueInputSchema).array(),
+        ])
         .optional(),
       update: z
         .union([
-          z.lazy(() => HistoryUpdateToOneWithWhereWithoutPatientInputSchema),
-          z.lazy(() => HistoryUpdateWithoutPatientInputSchema),
-          z.lazy(() => HistoryUncheckedUpdateWithoutPatientInputSchema),
+          z.lazy(() => HistoryUpdateWithWhereUniqueWithoutPatientInputSchema),
+          z
+            .lazy(() => HistoryUpdateWithWhereUniqueWithoutPatientInputSchema)
+            .array(),
         ])
         .optional(),
-      upsert: z.lazy(() => HistoryUpsertWithoutPatientInputSchema).optional(),
+      updateMany: z
+        .union([
+          z.lazy(() => HistoryUpdateManyWithWhereWithoutPatientInputSchema),
+          z
+            .lazy(() => HistoryUpdateManyWithWhereWithoutPatientInputSchema)
+            .array(),
+        ])
+        .optional(),
+      upsert: z
+        .union([
+          z.lazy(() => HistoryUpsertWithWhereUniqueWithoutPatientInputSchema),
+          z
+            .lazy(() => HistoryUpsertWithWhereUniqueWithoutPatientInputSchema)
+            .array(),
+        ])
+        .optional(),
     })
     .strict();
 
@@ -6378,33 +6574,80 @@ export const TeatmentUpdateOneWithoutPatientNestedInputSchema: z.ZodType<Prisma.
     })
     .strict();
 
-export const HistoryUncheckedUpdateOneWithoutPatientNestedInputSchema: z.ZodType<Prisma.HistoryUncheckedUpdateOneWithoutPatientNestedInput>
+export const HistoryUncheckedUpdateManyWithoutPatientNestedInputSchema: z.ZodType<Prisma.HistoryUncheckedUpdateManyWithoutPatientNestedInput>
   = z
     .object({
-      connect: z.lazy(() => HistoryWhereUniqueInputSchema).optional(),
+      connect: z
+        .union([
+          z.lazy(() => HistoryWhereUniqueInputSchema),
+          z.lazy(() => HistoryWhereUniqueInputSchema).array(),
+        ])
+        .optional(),
       connectOrCreate: z
-        .lazy(() => HistoryCreateOrConnectWithoutPatientInputSchema)
+        .union([
+          z.lazy(() => HistoryCreateOrConnectWithoutPatientInputSchema),
+          z.lazy(() => HistoryCreateOrConnectWithoutPatientInputSchema).array(),
+        ])
         .optional(),
       create: z
         .union([
           z.lazy(() => HistoryCreateWithoutPatientInputSchema),
+          z.lazy(() => HistoryCreateWithoutPatientInputSchema).array(),
           z.lazy(() => HistoryUncheckedCreateWithoutPatientInputSchema),
+          z.lazy(() => HistoryUncheckedCreateWithoutPatientInputSchema).array(),
         ])
         .optional(),
+      createMany: z
+        .lazy(() => HistoryCreateManyPatientInputEnvelopeSchema)
+        .optional(),
       delete: z
-        .union([z.boolean(), z.lazy(() => HistoryWhereInputSchema)])
+        .union([
+          z.lazy(() => HistoryWhereUniqueInputSchema),
+          z.lazy(() => HistoryWhereUniqueInputSchema).array(),
+        ])
+        .optional(),
+      deleteMany: z
+        .union([
+          z.lazy(() => HistoryScalarWhereInputSchema),
+          z.lazy(() => HistoryScalarWhereInputSchema).array(),
+        ])
         .optional(),
       disconnect: z
-        .union([z.boolean(), z.lazy(() => HistoryWhereInputSchema)])
+        .union([
+          z.lazy(() => HistoryWhereUniqueInputSchema),
+          z.lazy(() => HistoryWhereUniqueInputSchema).array(),
+        ])
+        .optional(),
+      set: z
+        .union([
+          z.lazy(() => HistoryWhereUniqueInputSchema),
+          z.lazy(() => HistoryWhereUniqueInputSchema).array(),
+        ])
         .optional(),
       update: z
         .union([
-          z.lazy(() => HistoryUpdateToOneWithWhereWithoutPatientInputSchema),
-          z.lazy(() => HistoryUpdateWithoutPatientInputSchema),
-          z.lazy(() => HistoryUncheckedUpdateWithoutPatientInputSchema),
+          z.lazy(() => HistoryUpdateWithWhereUniqueWithoutPatientInputSchema),
+          z
+            .lazy(() => HistoryUpdateWithWhereUniqueWithoutPatientInputSchema)
+            .array(),
         ])
         .optional(),
-      upsert: z.lazy(() => HistoryUpsertWithoutPatientInputSchema).optional(),
+      updateMany: z
+        .union([
+          z.lazy(() => HistoryUpdateManyWithWhereWithoutPatientInputSchema),
+          z
+            .lazy(() => HistoryUpdateManyWithWhereWithoutPatientInputSchema)
+            .array(),
+        ])
+        .optional(),
+      upsert: z
+        .union([
+          z.lazy(() => HistoryUpsertWithWhereUniqueWithoutPatientInputSchema),
+          z
+            .lazy(() => HistoryUpsertWithWhereUniqueWithoutPatientInputSchema)
+            .array(),
+        ])
+        .optional(),
     })
     .strict();
 
@@ -7142,6 +7385,7 @@ export const HistoryCreateWithoutPatientInputSchema: z.ZodType<Prisma.HistoryCre
       present_illness: z.string(),
       symptom_details: z.string(),
       teatment: z.string(),
+      triage: z.string().optional().nullable(),
       triage_lavel: z.string().optional().nullable(),
       update_by: z.string().optional().nullable(),
       update_date: z.coerce.date().optional().nullable(),
@@ -7159,6 +7403,7 @@ export const HistoryUncheckedCreateWithoutPatientInputSchema: z.ZodType<Prisma.H
       present_illness: z.string(),
       symptom_details: z.string(),
       teatment: z.string(),
+      triage: z.string().optional().nullable(),
       triage_lavel: z.string().optional().nullable(),
       update_by: z.string().optional().nullable(),
       update_date: z.coerce.date().optional().nullable(),
@@ -7173,6 +7418,17 @@ export const HistoryCreateOrConnectWithoutPatientInputSchema: z.ZodType<Prisma.H
         z.lazy(() => HistoryUncheckedCreateWithoutPatientInputSchema),
       ]),
       where: z.lazy(() => HistoryWhereUniqueInputSchema),
+    })
+    .strict();
+
+export const HistoryCreateManyPatientInputEnvelopeSchema: z.ZodType<Prisma.HistoryCreateManyPatientInputEnvelope>
+  = z
+    .object({
+      data: z.union([
+        z.lazy(() => HistoryCreateManyPatientInputSchema),
+        z.lazy(() => HistoryCreateManyPatientInputSchema).array(),
+      ]),
+      skipDuplicates: z.boolean().optional(),
     })
     .strict();
 
@@ -7317,7 +7573,7 @@ export const TeatmentCreateOrConnectWithoutPatientInputSchema: z.ZodType<Prisma.
     })
     .strict();
 
-export const HistoryUpsertWithoutPatientInputSchema: z.ZodType<Prisma.HistoryUpsertWithoutPatientInput>
+export const HistoryUpsertWithWhereUniqueWithoutPatientInputSchema: z.ZodType<Prisma.HistoryUpsertWithWhereUniqueWithoutPatientInput>
   = z
     .object({
       create: z.union([
@@ -7328,172 +7584,93 @@ export const HistoryUpsertWithoutPatientInputSchema: z.ZodType<Prisma.HistoryUps
         z.lazy(() => HistoryUpdateWithoutPatientInputSchema),
         z.lazy(() => HistoryUncheckedUpdateWithoutPatientInputSchema),
       ]),
-      where: z.lazy(() => HistoryWhereInputSchema).optional(),
+      where: z.lazy(() => HistoryWhereUniqueInputSchema),
     })
     .strict();
 
-export const HistoryUpdateToOneWithWhereWithoutPatientInputSchema: z.ZodType<Prisma.HistoryUpdateToOneWithWhereWithoutPatientInput>
+export const HistoryUpdateWithWhereUniqueWithoutPatientInputSchema: z.ZodType<Prisma.HistoryUpdateWithWhereUniqueWithoutPatientInput>
   = z
     .object({
       data: z.union([
         z.lazy(() => HistoryUpdateWithoutPatientInputSchema),
         z.lazy(() => HistoryUncheckedUpdateWithoutPatientInputSchema),
       ]),
-      where: z.lazy(() => HistoryWhereInputSchema).optional(),
+      where: z.lazy(() => HistoryWhereUniqueInputSchema),
     })
     .strict();
 
-export const HistoryUpdateWithoutPatientInputSchema: z.ZodType<Prisma.HistoryUpdateWithoutPatientInput>
+export const HistoryUpdateManyWithWhereWithoutPatientInputSchema: z.ZodType<Prisma.HistoryUpdateManyWithWhereWithoutPatientInput>
   = z
     .object({
-      chief_complaint: z
-        .union([
-          z.string(),
-          z.lazy(() => StringFieldUpdateOperationsInputSchema),
-        ])
-        .optional(),
-      create_by: z
-        .union([
-          z.string(),
-          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
-        ])
-        .optional()
-        .nullable(),
-      create_date: z
-        .union([
-          z.coerce.date(),
-          z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema),
-        ])
-        .optional()
-        .nullable(),
-      id: z
-        .union([
-          z.string().uuid(),
-          z.lazy(() => StringFieldUpdateOperationsInputSchema),
-        ])
-        .optional(),
-      physical_status: z
-        .union([
-          z.string(),
-          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
-        ])
-        .optional()
-        .nullable(),
-      present_illness: z
-        .union([
-          z.string(),
-          z.lazy(() => StringFieldUpdateOperationsInputSchema),
-        ])
-        .optional(),
-      symptom_details: z
-        .union([
-          z.string(),
-          z.lazy(() => StringFieldUpdateOperationsInputSchema),
-        ])
-        .optional(),
-      teatment: z
-        .union([
-          z.string(),
-          z.lazy(() => StringFieldUpdateOperationsInputSchema),
-        ])
-        .optional(),
-      triage_lavel: z
-        .union([
-          z.string(),
-          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
-        ])
-        .optional()
-        .nullable(),
-      update_by: z
-        .union([
-          z.string(),
-          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
-        ])
-        .optional()
-        .nullable(),
-      update_date: z
-        .union([
-          z.coerce.date(),
-          z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema),
-        ])
-        .optional()
-        .nullable(),
+      data: z.union([
+        z.lazy(() => HistoryUpdateManyMutationInputSchema),
+        z.lazy(() => HistoryUncheckedUpdateManyWithoutPatientInputSchema),
+      ]),
+      where: z.lazy(() => HistoryScalarWhereInputSchema),
     })
     .strict();
 
-export const HistoryUncheckedUpdateWithoutPatientInputSchema: z.ZodType<Prisma.HistoryUncheckedUpdateWithoutPatientInput>
+export const HistoryScalarWhereInputSchema: z.ZodType<Prisma.HistoryScalarWhereInput>
   = z
     .object({
-      chief_complaint: z
+      AND: z
         .union([
-          z.string(),
-          z.lazy(() => StringFieldUpdateOperationsInputSchema),
+          z.lazy(() => HistoryScalarWhereInputSchema),
+          z.lazy(() => HistoryScalarWhereInputSchema).array(),
         ])
         .optional(),
+      chief_complaint: z
+        .union([z.lazy(() => StringFilterSchema), z.string()])
+        .optional(),
       create_by: z
-        .union([
-          z.string(),
-          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
-        ])
+        .union([z.lazy(() => StringNullableFilterSchema), z.string()])
         .optional()
         .nullable(),
       create_date: z
-        .union([
-          z.coerce.date(),
-          z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema),
-        ])
+        .union([z.lazy(() => DateTimeNullableFilterSchema), z.coerce.date()])
         .optional()
         .nullable(),
-      id: z
+      id: z.union([z.lazy(() => StringFilterSchema), z.string()]).optional(),
+      NOT: z
         .union([
-          z.string().uuid(),
-          z.lazy(() => StringFieldUpdateOperationsInputSchema),
+          z.lazy(() => HistoryScalarWhereInputSchema),
+          z.lazy(() => HistoryScalarWhereInputSchema).array(),
         ])
         .optional(),
+      OR: z
+        .lazy(() => HistoryScalarWhereInputSchema)
+        .array()
+        .optional(),
+      patient_id: z
+        .union([z.lazy(() => StringFilterSchema), z.string()])
+        .optional(),
       physical_status: z
-        .union([
-          z.string(),
-          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
-        ])
+        .union([z.lazy(() => StringNullableFilterSchema), z.string()])
         .optional()
         .nullable(),
       present_illness: z
-        .union([
-          z.string(),
-          z.lazy(() => StringFieldUpdateOperationsInputSchema),
-        ])
+        .union([z.lazy(() => StringFilterSchema), z.string()])
         .optional(),
       symptom_details: z
-        .union([
-          z.string(),
-          z.lazy(() => StringFieldUpdateOperationsInputSchema),
-        ])
+        .union([z.lazy(() => StringFilterSchema), z.string()])
         .optional(),
       teatment: z
-        .union([
-          z.string(),
-          z.lazy(() => StringFieldUpdateOperationsInputSchema),
-        ])
+        .union([z.lazy(() => StringFilterSchema), z.string()])
         .optional(),
+      triage: z
+        .union([z.lazy(() => StringNullableFilterSchema), z.string()])
+        .optional()
+        .nullable(),
       triage_lavel: z
-        .union([
-          z.string(),
-          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
-        ])
+        .union([z.lazy(() => StringNullableFilterSchema), z.string()])
         .optional()
         .nullable(),
       update_by: z
-        .union([
-          z.string(),
-          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
-        ])
+        .union([z.lazy(() => StringNullableFilterSchema), z.string()])
         .optional()
         .nullable(),
       update_date: z
-        .union([
-          z.coerce.date(),
-          z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema),
-        ])
+        .union([z.lazy(() => DateTimeNullableFilterSchema), z.coerce.date()])
         .optional()
         .nullable(),
     })
@@ -7871,6 +8048,7 @@ export const PatientCreateWithoutHistoryInputSchema: z.ZodType<Prisma.PatientCre
         .lazy(() => GroupBloodSchema)
         .optional()
         .nullable(),
+      hn_number: z.string().optional().nullable(),
       id: z.string().uuid().optional(),
       id_card: z.string().optional().nullable(),
       image: z.string().optional().nullable(),
@@ -7914,6 +8092,7 @@ export const PatientUncheckedCreateWithoutHistoryInputSchema: z.ZodType<Prisma.P
         .lazy(() => GroupBloodSchema)
         .optional()
         .nullable(),
+      hn_number: z.string().optional().nullable(),
       id: z.string().uuid().optional(),
       id_card: z.string().optional().nullable(),
       image: z.string().optional().nullable(),
@@ -8086,6 +8265,13 @@ export const PatientUpdateWithoutHistoryInputSchema: z.ZodType<Prisma.PatientUpd
         .union([
           z.lazy(() => GroupBloodSchema),
           z.lazy(() => NullableEnumGroupBloodFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+      hn_number: z
+        .union([
+          z.string(),
+          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
         ])
         .optional()
         .nullable(),
@@ -8277,6 +8463,13 @@ export const PatientUncheckedUpdateWithoutHistoryInputSchema: z.ZodType<Prisma.P
         ])
         .optional()
         .nullable(),
+      hn_number: z
+        .union([
+          z.string(),
+          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
       id: z
         .union([
           z.string().uuid(),
@@ -8374,8 +8567,9 @@ export const PatientCreateWithoutExamInputSchema: z.ZodType<Prisma.PatientCreate
         .optional()
         .nullable(),
       History: z
-        .lazy(() => HistoryCreateNestedOneWithoutPatientInputSchema)
+        .lazy(() => HistoryCreateNestedManyWithoutPatientInputSchema)
         .optional(),
+      hn_number: z.string().optional().nullable(),
       id: z.string().uuid().optional(),
       id_card: z.string().optional().nullable(),
       image: z.string().optional().nullable(),
@@ -8417,8 +8611,9 @@ export const PatientUncheckedCreateWithoutExamInputSchema: z.ZodType<Prisma.Pati
         .optional()
         .nullable(),
       History: z
-        .lazy(() => HistoryUncheckedCreateNestedOneWithoutPatientInputSchema)
+        .lazy(() => HistoryUncheckedCreateNestedManyWithoutPatientInputSchema)
         .optional(),
+      hn_number: z.string().optional().nullable(),
       id: z.string().uuid().optional(),
       id_card: z.string().optional().nullable(),
       image: z.string().optional().nullable(),
@@ -8592,8 +8787,15 @@ export const PatientUpdateWithoutExamInputSchema: z.ZodType<Prisma.PatientUpdate
         .optional()
         .nullable(),
       History: z
-        .lazy(() => HistoryUpdateOneWithoutPatientNestedInputSchema)
+        .lazy(() => HistoryUpdateManyWithoutPatientNestedInputSchema)
         .optional(),
+      hn_number: z
+        .union([
+          z.string(),
+          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
       id: z
         .union([
           z.string().uuid(),
@@ -8780,8 +8982,15 @@ export const PatientUncheckedUpdateWithoutExamInputSchema: z.ZodType<Prisma.Pati
         .optional()
         .nullable(),
       History: z
-        .lazy(() => HistoryUncheckedUpdateOneWithoutPatientNestedInputSchema)
+        .lazy(() => HistoryUncheckedUpdateManyWithoutPatientNestedInputSchema)
         .optional(),
+      hn_number: z
+        .union([
+          z.string(),
+          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
       id: z
         .union([
           z.string().uuid(),
@@ -8882,8 +9091,9 @@ export const PatientCreateWithoutStationPatientInputSchema: z.ZodType<Prisma.Pat
         .optional()
         .nullable(),
       History: z
-        .lazy(() => HistoryCreateNestedOneWithoutPatientInputSchema)
+        .lazy(() => HistoryCreateNestedManyWithoutPatientInputSchema)
         .optional(),
+      hn_number: z.string().optional().nullable(),
       id: z.string().uuid().optional(),
       id_card: z.string().optional().nullable(),
       image: z.string().optional().nullable(),
@@ -8925,8 +9135,9 @@ export const PatientUncheckedCreateWithoutStationPatientInputSchema: z.ZodType<P
         .optional()
         .nullable(),
       History: z
-        .lazy(() => HistoryUncheckedCreateNestedOneWithoutPatientInputSchema)
+        .lazy(() => HistoryUncheckedCreateNestedManyWithoutPatientInputSchema)
         .optional(),
+      hn_number: z.string().optional().nullable(),
       id: z.string().uuid().optional(),
       id_card: z.string().optional().nullable(),
       image: z.string().optional().nullable(),
@@ -9097,8 +9308,15 @@ export const PatientUpdateWithoutStationPatientInputSchema: z.ZodType<Prisma.Pat
         .optional()
         .nullable(),
       History: z
-        .lazy(() => HistoryUpdateOneWithoutPatientNestedInputSchema)
+        .lazy(() => HistoryUpdateManyWithoutPatientNestedInputSchema)
         .optional(),
+      hn_number: z
+        .union([
+          z.string(),
+          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
       id: z
         .union([
           z.string().uuid(),
@@ -9285,8 +9503,15 @@ export const PatientUncheckedUpdateWithoutStationPatientInputSchema: z.ZodType<P
         .optional()
         .nullable(),
       History: z
-        .lazy(() => HistoryUncheckedUpdateOneWithoutPatientNestedInputSchema)
+        .lazy(() => HistoryUncheckedUpdateManyWithoutPatientNestedInputSchema)
         .optional(),
+      hn_number: z
+        .union([
+          z.string(),
+          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
       id: z
         .union([
           z.string().uuid(),
@@ -9381,8 +9606,9 @@ export const PatientCreateWithoutTeatmentInputSchema: z.ZodType<Prisma.PatientCr
         .optional()
         .nullable(),
       History: z
-        .lazy(() => HistoryCreateNestedOneWithoutPatientInputSchema)
+        .lazy(() => HistoryCreateNestedManyWithoutPatientInputSchema)
         .optional(),
+      hn_number: z.string().optional().nullable(),
       id: z.string().uuid().optional(),
       id_card: z.string().optional().nullable(),
       image: z.string().optional().nullable(),
@@ -9424,8 +9650,9 @@ export const PatientUncheckedCreateWithoutTeatmentInputSchema: z.ZodType<Prisma.
         .optional()
         .nullable(),
       History: z
-        .lazy(() => HistoryUncheckedCreateNestedOneWithoutPatientInputSchema)
+        .lazy(() => HistoryUncheckedCreateNestedManyWithoutPatientInputSchema)
         .optional(),
+      hn_number: z.string().optional().nullable(),
       id: z.string().uuid().optional(),
       id_card: z.string().optional().nullable(),
       image: z.string().optional().nullable(),
@@ -9599,8 +9826,15 @@ export const PatientUpdateWithoutTeatmentInputSchema: z.ZodType<Prisma.PatientUp
         .optional()
         .nullable(),
       History: z
-        .lazy(() => HistoryUpdateOneWithoutPatientNestedInputSchema)
+        .lazy(() => HistoryUpdateManyWithoutPatientNestedInputSchema)
         .optional(),
+      hn_number: z
+        .union([
+          z.string(),
+          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
       id: z
         .union([
           z.string().uuid(),
@@ -9787,8 +10021,15 @@ export const PatientUncheckedUpdateWithoutTeatmentInputSchema: z.ZodType<Prisma.
         .optional()
         .nullable(),
       History: z
-        .lazy(() => HistoryUncheckedUpdateOneWithoutPatientNestedInputSchema)
+        .lazy(() => HistoryUncheckedUpdateManyWithoutPatientNestedInputSchema)
         .optional(),
+      hn_number: z
+        .union([
+          z.string(),
+          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
       id: z
         .union([
           z.string().uuid(),
@@ -9860,6 +10101,24 @@ export const PatientUncheckedUpdateWithoutTeatmentInputSchema: z.ZodType<Prisma.
     })
     .strict();
 
+export const HistoryCreateManyPatientInputSchema: z.ZodType<Prisma.HistoryCreateManyPatientInput>
+  = z
+    .object({
+      chief_complaint: z.string(),
+      create_by: z.string().optional().nullable(),
+      create_date: z.coerce.date().optional().nullable(),
+      id: z.string().uuid().optional(),
+      physical_status: z.string().optional().nullable(),
+      present_illness: z.string(),
+      symptom_details: z.string(),
+      teatment: z.string(),
+      triage: z.string().optional().nullable(),
+      triage_lavel: z.string().optional().nullable(),
+      update_by: z.string().optional().nullable(),
+      update_date: z.coerce.date().optional().nullable(),
+    })
+    .strict();
+
 export const ExamCreateManyPatientInputSchema: z.ZodType<Prisma.ExamCreateManyPatientInput>
   = z
     .object({
@@ -9884,6 +10143,261 @@ export const StationPatientCreateManyPatientInputSchema: z.ZodType<Prisma.Statio
       out_date: z.coerce.date().optional().nullable(),
       station: z.string(),
       update_date: z.coerce.date().optional().nullable(),
+    })
+    .strict();
+
+export const HistoryUpdateWithoutPatientInputSchema: z.ZodType<Prisma.HistoryUpdateWithoutPatientInput>
+  = z
+    .object({
+      chief_complaint: z
+        .union([
+          z.string(),
+          z.lazy(() => StringFieldUpdateOperationsInputSchema),
+        ])
+        .optional(),
+      create_by: z
+        .union([
+          z.string(),
+          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+      create_date: z
+        .union([
+          z.coerce.date(),
+          z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+      id: z
+        .union([
+          z.string().uuid(),
+          z.lazy(() => StringFieldUpdateOperationsInputSchema),
+        ])
+        .optional(),
+      physical_status: z
+        .union([
+          z.string(),
+          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+      present_illness: z
+        .union([
+          z.string(),
+          z.lazy(() => StringFieldUpdateOperationsInputSchema),
+        ])
+        .optional(),
+      symptom_details: z
+        .union([
+          z.string(),
+          z.lazy(() => StringFieldUpdateOperationsInputSchema),
+        ])
+        .optional(),
+      teatment: z
+        .union([
+          z.string(),
+          z.lazy(() => StringFieldUpdateOperationsInputSchema),
+        ])
+        .optional(),
+      triage: z
+        .union([
+          z.string(),
+          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+      triage_lavel: z
+        .union([
+          z.string(),
+          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+      update_by: z
+        .union([
+          z.string(),
+          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+      update_date: z
+        .union([
+          z.coerce.date(),
+          z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+    })
+    .strict();
+
+export const HistoryUncheckedUpdateWithoutPatientInputSchema: z.ZodType<Prisma.HistoryUncheckedUpdateWithoutPatientInput>
+  = z
+    .object({
+      chief_complaint: z
+        .union([
+          z.string(),
+          z.lazy(() => StringFieldUpdateOperationsInputSchema),
+        ])
+        .optional(),
+      create_by: z
+        .union([
+          z.string(),
+          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+      create_date: z
+        .union([
+          z.coerce.date(),
+          z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+      id: z
+        .union([
+          z.string().uuid(),
+          z.lazy(() => StringFieldUpdateOperationsInputSchema),
+        ])
+        .optional(),
+      physical_status: z
+        .union([
+          z.string(),
+          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+      present_illness: z
+        .union([
+          z.string(),
+          z.lazy(() => StringFieldUpdateOperationsInputSchema),
+        ])
+        .optional(),
+      symptom_details: z
+        .union([
+          z.string(),
+          z.lazy(() => StringFieldUpdateOperationsInputSchema),
+        ])
+        .optional(),
+      teatment: z
+        .union([
+          z.string(),
+          z.lazy(() => StringFieldUpdateOperationsInputSchema),
+        ])
+        .optional(),
+      triage: z
+        .union([
+          z.string(),
+          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+      triage_lavel: z
+        .union([
+          z.string(),
+          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+      update_by: z
+        .union([
+          z.string(),
+          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+      update_date: z
+        .union([
+          z.coerce.date(),
+          z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+    })
+    .strict();
+
+export const HistoryUncheckedUpdateManyWithoutPatientInputSchema: z.ZodType<Prisma.HistoryUncheckedUpdateManyWithoutPatientInput>
+  = z
+    .object({
+      chief_complaint: z
+        .union([
+          z.string(),
+          z.lazy(() => StringFieldUpdateOperationsInputSchema),
+        ])
+        .optional(),
+      create_by: z
+        .union([
+          z.string(),
+          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+      create_date: z
+        .union([
+          z.coerce.date(),
+          z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+      id: z
+        .union([
+          z.string().uuid(),
+          z.lazy(() => StringFieldUpdateOperationsInputSchema),
+        ])
+        .optional(),
+      physical_status: z
+        .union([
+          z.string(),
+          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+      present_illness: z
+        .union([
+          z.string(),
+          z.lazy(() => StringFieldUpdateOperationsInputSchema),
+        ])
+        .optional(),
+      symptom_details: z
+        .union([
+          z.string(),
+          z.lazy(() => StringFieldUpdateOperationsInputSchema),
+        ])
+        .optional(),
+      teatment: z
+        .union([
+          z.string(),
+          z.lazy(() => StringFieldUpdateOperationsInputSchema),
+        ])
+        .optional(),
+      triage: z
+        .union([
+          z.string(),
+          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+      triage_lavel: z
+        .union([
+          z.string(),
+          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+      update_by: z
+        .union([
+          z.string(),
+          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+      update_date: z
+        .union([
+          z.coerce.date(),
+          z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
     })
     .strict();
 

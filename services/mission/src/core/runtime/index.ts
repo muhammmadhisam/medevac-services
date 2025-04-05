@@ -4,6 +4,7 @@ import { DatabaseLayer } from "../databases/index.js";
 import {
   JoinerRepositoryContext,
   MissionsRepositoryContext,
+  PatientRepositoryContext,
   SubMissionsRepositoryContext,
   SubMissionTagRepositoryContext,
 } from "../repository/index.js";
@@ -14,6 +15,7 @@ import {
 } from "../services/index.js";
 import { JoinerServiceContext } from "../services/joiner/joiner.service.js";
 import { JwtServiceContext } from "../services/jwt/jwt.service.js";
+import { PatientServiceContext } from "../services/patient/patient.service.js";
 
 const PrismaClientLive = DatabaseLayer.Live;
 const JwtServiceLive = JwtServiceContext.Live;
@@ -33,6 +35,10 @@ const SubMissionTagServiceLive = SubMissionTagServiceContext.Live.pipe(
   Layer.provide(SubMissionTagRepositoryContext.Live),
   Layer.provide(PrismaClientLive),
 );
+const PatientServiceContextLive = PatientServiceContext.Live.pipe(
+  Layer.provide(PatientRepositoryContext.Live),
+  Layer.provide(PrismaClientLive),
+);
 export const ServicesLive = Layer.mergeAll(
   JwtServiceLive,
   PrismaClientLive,
@@ -40,5 +46,6 @@ export const ServicesLive = Layer.mergeAll(
   SubMissionServiceLive,
   SubMissionTagServiceLive,
   JoinerServiceLive,
+  PatientServiceContextLive,
 );
 export const ServicesRuntime = ManagedRuntime.make(ServicesLive);

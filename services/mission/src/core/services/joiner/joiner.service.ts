@@ -124,7 +124,7 @@ function init({ JoinerRepo }: { JoinerRepo: TypeJoinerRepository }) {
     },
   } satisfies TypeJoinerService;
 }
-export class JoinerServiceContext extends Context.Tag("service-sub-mission")<
+export class JoinerServiceContext extends Context.Tag("service-joinner")<
   JoinerServiceContext,
   TypeJoinerService
 >() {

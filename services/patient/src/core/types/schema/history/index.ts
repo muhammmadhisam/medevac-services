@@ -14,7 +14,7 @@ export const HistoryUpdateSchema = HistoryUpdateInputSchema;
 export const HistoryGetOneParamSchema = HistoryWhereInputSchema;
 export const HistoryGetAllParamSchema = z.object({
   orderBy: HistoryOrderByWithAggregationInputSchema.optional(),
-  pagination: PaginationSchema,
+  pagination: PaginationSchema.optional(),
   where: HistoryGetOneParamSchema.optional(),
 });
 export type TypeHistoryCreate = z.infer<typeof HistoryCreateSchema>;

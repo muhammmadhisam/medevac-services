@@ -1,11 +1,9 @@
 import type { TypeApplication } from "@/core/configs/create-application.js";
 import { createApplication } from "@/core/configs/create-application.js";
-import getById from "./get-by-id";
-import update from "./update";
 
-export function setupUsersHandler() {
+export function setupExamHandler() {
   const app: TypeApplication = createApplication();
-  const handlers = [update, getById];
-  handlers.forEach(handler => handler(app));
+  // const handlers = [create, getAll, remove, getById, update];
+  // handlers.forEach(handler => handler(app));
   return app;
 }

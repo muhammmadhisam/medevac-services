@@ -1,35 +1,55 @@
 import type {
-  SubMissionTagId,
+  JoinerMissionId,
   TypeFailResponse,
   TypeGetAllData,
 } from "@/core/types";
-import type { TypeSubMissionTagRepository } from "@/core/types/repositories";
+import type { TypePatientRepository } from "@/core/types/repositories";
 import type {
   TypeGetAllParam,
   TypeGetOneParam,
+  TypePatientCreate,
+  TypePatientUpdate,
   TypeReturnItem,
-  TypeSubMissionTagCreate,
-  TypeSubMissionTagUpdate,
-} from "@/core/types/schema/sub-mission-tag";
-import type { TypeSubMissionTagService } from "@/core/types/services";
-import { SubMissionTagRepositoryContext } from "@/core/repository";
-import { TypeFailResponseError } from "@/core/types";
-import { Context, Effect, Layer } from "effect";
+} from "@/core/types/schema/patient";
+import type { TypePatientService } from "@/core/types/services";
 
-function init({
-  SubMissionTagRepo,
-}: {
-  SubMissionTagRepo: TypeSubMissionTagRepository;
-}) {
+import { PatientRepositoryContext } from "@/core/repository";
+import { MissionId, TypeFailResponseError } from "@/core/types";
+
+import { PatientId } from "@/core/types/private/paitnet";
+import { Context, Effect, Layer } from "effect";
+import tapDuplicatePatientJoinMission from "../tap/tap-duplicate-patient-join-mission";
+import tapNotfountByMissionId from "../tap/tap-notfount-by-mission-id";
+
+function init({ PatientRepo }: { PatientRepo: TypePatientRepository }) {
   return {
     create(
-      data: TypeSubMissionTagCreate,
+      data: TypePatientCreate,
     ): Effect.Effect<TypeReturnItem, TypeFailResponse> {
-      return SubMissionTagRepo.create(data).pipe(
-        Effect.catchTags({
-          CreateSubMissionTagError: error =>
-            Effect.fail(TypeFailResponseError.new("เพิ่มข้อมูลล้มเหลว")(error)),
-        }),
+      return Effect.Do.pipe(
+        Effect.tap(() =>
+          tapNotfountByMissionId(
+            MissionId(data.Mission.connect?.id as unknown as string),
+          ),
+        ),
+        Effect.tap(() =>
+          tapDuplicatePatientJoinMission({
+            mission_id: MissionId(
+              data.Mission.connect?.id as unknown as string,
+            ),
+            patient_id: PatientId(data.patient_id),
+          }),
+        ),
+        Effect.andThen(() =>
+          PatientRepo.create(data).pipe(
+            Effect.catchTags({
+              CreateJoinerError: error =>
+                Effect.fail(
+                  TypeFailResponseError.new("เพิ่มข้อมูลล้มเหลว")(error),
+                ),
+            }),
+          ),
+        ),
       );
     },
     getAll(
@@ -37,18 +57,18 @@ function init({
     ): Effect.Effect<TypeGetAllData<TypeReturnItem>, TypeFailResponse> {
       return Effect.Do.pipe(
         Effect.bind("data", () =>
-          SubMissionTagRepo.getAll(param).pipe(
+          PatientRepo.getAll(param).pipe(
             Effect.catchTags({
-              GetAllSubMissionTagError: error =>
+              GetAllJoinerError: error =>
                 Effect.fail(
                   TypeFailResponseError.new("ขอข้อมุลล้มเหลว")(error),
                 ),
             }),
           )),
         Effect.bind("total", () =>
-          SubMissionTagRepo.count(param.where).pipe(
+          PatientRepo.count(param.where).pipe(
             Effect.catchTags({
-              CountSubMissionTagError: error =>
+              CountJoinerError: error =>
                 Effect.fail(
                   TypeFailResponseError.new("ขอข้อมุลล้มเหลว")(error),
                 ),
@@ -59,9 +79,9 @@ function init({
     getOne(
       param: TypeGetOneParam,
     ): Effect.Effect<TypeReturnItem, TypeFailResponse> {
-      return SubMissionTagRepo.getOne(param).pipe(
+      return PatientRepo.getOne(param).pipe(
         Effect.catchTags({
-          GetOneSubMissionTagError: error =>
+          GetOneJoinerError: error =>
             Effect.fail(TypeFailResponseError.new("ขอข้อมุลล้มเหลว")(error)),
           NoSuchElementException: error =>
             Effect.fail(TypeFailResponseError.new("ไม่พบข้อมุล")(error, 404)),
@@ -69,11 +89,11 @@ function init({
       );
     },
     getOneById(
-      id: SubMissionTagId,
+      id: JoinerMissionId,
     ): Effect.Effect<TypeReturnItem, TypeFailResponse> {
-      return SubMissionTagRepo.getOne({ id }).pipe(
+      return PatientRepo.getOne({ id }).pipe(
         Effect.catchTags({
-          GetOneSubMissionTagError: error =>
+          GetOneJoinerError: error =>
             Effect.fail(TypeFailResponseError.new("ขอข้อมุลล้มเหลว")(error)),
           NoSuchElementException: error =>
             Effect.fail(TypeFailResponseError.new("ไม่พบข้อมุล")(error, 404)),
@@ -81,39 +101,40 @@ function init({
       );
     },
     remove(
-      id: SubMissionTagId,
+      id: JoinerMissionId,
     ): Effect.Effect<TypeReturnItem, TypeFailResponse> {
       return Effect.Do.pipe(
         Effect.tap(() => this.getOneById(id)),
-        Effect.flatMap(() => SubMissionTagRepo.remove(id)),
+        Effect.flatMap(() => PatientRepo.remove(id)),
         Effect.catchTags({
-          RemoveSubMissionTagError: error =>
+          RemoveJoinerError: error =>
             Effect.fail(TypeFailResponseError.new("ลบข้อมูลล้มเหลว")(error)),
         }),
       );
     },
     update(
-      id: SubMissionTagId,
-      data: TypeSubMissionTagUpdate,
+      id: JoinerMissionId,
+      data: TypePatientUpdate,
     ): Effect.Effect<TypeReturnItem, TypeFailResponse> {
       return Effect.Do.pipe(
         Effect.tap(() => this.getOneById(id)),
-        Effect.flatMap(() => SubMissionTagRepo.update(id, data)),
+        Effect.flatMap(() => PatientRepo.update(id, data)),
         Effect.catchTags({
-          UpdateSubMissionTagError: error =>
+          UpdateJoinerError: error =>
             Effect.fail(TypeFailResponseError.new("แก้ไขข้อมูลล้มเหลว")(error)),
         }),
       );
     },
-  } satisfies TypeSubMissionTagService;
+  } satisfies TypePatientService;
 }
-export class SubMissionTagServiceContext extends Context.Tag(
-  "service-sub-missio-tagn",
-)<SubMissionTagServiceContext, TypeSubMissionTagService>() {
+export class PatientServiceContext extends Context.Tag("service-paitent")<
+  PatientServiceContext,
+  TypePatientService
+>() {
   static Live = Layer.effect(
     this,
     Effect.all({
-      SubMissionTagRepo: SubMissionTagRepositoryContext,
+      PatientRepo: PatientRepositoryContext,
     }).pipe(Effect.andThen(init)),
   );
 }

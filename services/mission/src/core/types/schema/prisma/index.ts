@@ -42,6 +42,14 @@ export const JoinerScalarFieldEnumSchema = z.enum([
   "update_date",
 ]);
 
+export const PatientScalarFieldEnumSchema = z.enum([
+  "id",
+  "mission_id",
+  "patient_id",
+  "create_date",
+  "update_date",
+]);
+
 export const HistoryJoinerScalarFieldEnumSchema = z.enum([
   "id",
   "mission_id",
@@ -145,6 +153,7 @@ export type MissionRelations = {
   SubMission: SubMissionWithRelations[];
   Joiners: JoinerWithRelations[];
   HistoryJoiner: HistoryJoinerWithRelations[];
+  Patient: PatientWithRelations[];
 };
 
 export type MissionWithRelations = z.infer<typeof MissionSchema> &
@@ -155,6 +164,7 @@ export const MissionWithRelationsSchema: z.ZodType<MissionWithRelations>
     z.object({
       HistoryJoiner: z.lazy(() => HistoryJoinerWithRelationsSchema).array(),
       Joiners: z.lazy(() => JoinerWithRelationsSchema).array(),
+      Patient: z.lazy(() => PatientWithRelationsSchema).array(),
       SubMission: z.lazy(() => SubMissionWithRelationsSchema).array(),
     }),
   );
@@ -166,6 +176,7 @@ export type MissionOptionalDefaultsRelations = {
   SubMission: SubMissionOptionalDefaultsWithRelations[];
   Joiners: JoinerOptionalDefaultsWithRelations[];
   HistoryJoiner: HistoryJoinerOptionalDefaultsWithRelations[];
+  Patient: PatientOptionalDefaultsWithRelations[];
 };
 
 export type MissionOptionalDefaultsWithRelations = z.infer<
@@ -180,6 +191,7 @@ export const MissionOptionalDefaultsWithRelationsSchema: z.ZodType<MissionOption
         .lazy(() => HistoryJoinerOptionalDefaultsWithRelationsSchema)
         .array(),
       Joiners: z.lazy(() => JoinerOptionalDefaultsWithRelationsSchema).array(),
+      Patient: z.lazy(() => PatientOptionalDefaultsWithRelationsSchema).array(),
       SubMission: z
         .lazy(() => SubMissionOptionalDefaultsWithRelationsSchema)
         .array(),
@@ -193,6 +205,7 @@ export type MissionPartialRelations = {
   SubMission?: SubMissionPartialWithRelations[];
   Joiners?: JoinerPartialWithRelations[];
   HistoryJoiner?: HistoryJoinerPartialWithRelations[];
+  Patient?: PatientPartialWithRelations[];
 };
 
 export type MissionPartialWithRelations = z.infer<typeof MissionPartialSchema> &
@@ -205,6 +218,7 @@ export const MissionPartialWithRelationsSchema: z.ZodType<MissionPartialWithRela
         .lazy(() => HistoryJoinerPartialWithRelationsSchema)
         .array(),
       Joiners: z.lazy(() => JoinerPartialWithRelationsSchema).array(),
+      Patient: z.lazy(() => PatientPartialWithRelationsSchema).array(),
       SubMission: z.lazy(() => SubMissionPartialWithRelationsSchema).array(),
     }),
   ).partial();
@@ -222,6 +236,7 @@ export const MissionOptionalDefaultsWithPartialRelationsSchema: z.ZodType<Missio
           .lazy(() => HistoryJoinerPartialWithRelationsSchema)
           .array(),
         Joiners: z.lazy(() => JoinerPartialWithRelationsSchema).array(),
+        Patient: z.lazy(() => PatientPartialWithRelationsSchema).array(),
         SubMission: z.lazy(() => SubMissionPartialWithRelationsSchema).array(),
       })
       .partial(),
@@ -238,6 +253,7 @@ export const MissionWithPartialRelationsSchema: z.ZodType<MissionWithPartialRela
           .lazy(() => HistoryJoinerPartialWithRelationsSchema)
           .array(),
         Joiners: z.lazy(() => JoinerPartialWithRelationsSchema).array(),
+        Patient: z.lazy(() => PatientPartialWithRelationsSchema).array(),
         SubMission: z.lazy(() => SubMissionPartialWithRelationsSchema).array(),
       })
       .partial(),
@@ -352,6 +368,122 @@ export type JoinerWithPartialRelations = z.infer<typeof JoinerSchema> &
 
 export const JoinerWithPartialRelationsSchema: z.ZodType<JoinerWithPartialRelations>
   = JoinerSchema.merge(
+    z
+      .object({
+        Mission: z.lazy(() => MissionPartialWithRelationsSchema),
+      })
+      .partial(),
+  );
+
+/////////////////////////////////////////
+// PATIENT SCHEMA
+/////////////////////////////////////////
+
+export const PatientSchema = z.object({
+  create_date: z.coerce.date(),
+  id: z.string().uuid(),
+  mission_id: z.string(),
+  patient_id: z.string(),
+  update_date: z.coerce.date(),
+});
+
+export type Patient = z.infer<typeof PatientSchema>;
+
+/////////////////////////////////////////
+// PATIENT PARTIAL SCHEMA
+/////////////////////////////////////////
+
+export const PatientPartialSchema = PatientSchema.partial();
+
+export type PatientPartial = z.infer<typeof PatientPartialSchema>;
+
+// PATIENT OPTIONAL DEFAULTS SCHEMA
+// ------------------------------------------------------
+
+export const PatientOptionalDefaultsSchema = PatientSchema.merge(
+  z.object({
+    create_date: z.coerce.date().optional(),
+    id: z.string().uuid().optional(),
+    update_date: z.coerce.date().optional(),
+  }),
+);
+
+export type PatientOptionalDefaults = z.infer<
+  typeof PatientOptionalDefaultsSchema
+>;
+
+// PATIENT RELATION SCHEMA
+// ------------------------------------------------------
+
+export type PatientRelations = {
+  Mission: MissionWithRelations;
+};
+
+export type PatientWithRelations = z.infer<typeof PatientSchema> &
+  PatientRelations;
+
+export const PatientWithRelationsSchema: z.ZodType<PatientWithRelations>
+  = PatientSchema.merge(
+    z.object({
+      Mission: z.lazy(() => MissionWithRelationsSchema),
+    }),
+  );
+
+// PATIENT OPTIONAL DEFAULTS RELATION SCHEMA
+// ------------------------------------------------------
+
+export type PatientOptionalDefaultsRelations = {
+  Mission: MissionOptionalDefaultsWithRelations;
+};
+
+export type PatientOptionalDefaultsWithRelations = z.infer<
+  typeof PatientOptionalDefaultsSchema
+> &
+PatientOptionalDefaultsRelations;
+
+export const PatientOptionalDefaultsWithRelationsSchema: z.ZodType<PatientOptionalDefaultsWithRelations>
+  = PatientOptionalDefaultsSchema.merge(
+    z.object({
+      Mission: z.lazy(() => MissionOptionalDefaultsWithRelationsSchema),
+    }),
+  );
+
+// PATIENT PARTIAL RELATION SCHEMA
+// ------------------------------------------------------
+
+export type PatientPartialRelations = {
+  Mission?: MissionPartialWithRelations;
+};
+
+export type PatientPartialWithRelations = z.infer<typeof PatientPartialSchema> &
+  PatientPartialRelations;
+
+export const PatientPartialWithRelationsSchema: z.ZodType<PatientPartialWithRelations>
+  = PatientPartialSchema.merge(
+    z.object({
+      Mission: z.lazy(() => MissionPartialWithRelationsSchema),
+    }),
+  ).partial();
+
+export type PatientOptionalDefaultsWithPartialRelations = z.infer<
+  typeof PatientOptionalDefaultsSchema
+> &
+PatientPartialRelations;
+
+export const PatientOptionalDefaultsWithPartialRelationsSchema: z.ZodType<PatientOptionalDefaultsWithPartialRelations>
+  = PatientOptionalDefaultsSchema.merge(
+    z
+      .object({
+        Mission: z.lazy(() => MissionPartialWithRelationsSchema),
+      })
+      .partial(),
+  );
+
+export type PatientWithPartialRelations = z.infer<typeof PatientSchema> &
+  PatientPartialRelations;
+
+export const PatientWithPartialRelationsSchema: z.ZodType<PatientWithPartialRelations>
+  = PatientSchema.merge(
     z
       .object({
         Mission: z.lazy(() => MissionPartialWithRelationsSchema),
@@ -756,6 +888,9 @@ export const MissionIncludeSchema: z.ZodType<Prisma.MissionInclude> = z
     Joiners: z
       .union([z.boolean(), z.lazy(() => JoinerFindManyArgsSchema)])
       .optional(),
+    Patient: z
+      .union([z.boolean(), z.lazy(() => PatientFindManyArgsSchema)])
+      .optional(),
     SubMission: z
       .union([z.boolean(), z.lazy(() => SubMissionFindManyArgsSchema)])
       .optional(),
@@ -781,6 +916,7 @@ export const MissionCountOutputTypeSelectSchema: z.ZodType<Prisma.MissionCountOu
     .object({
       HistoryJoiner: z.boolean().optional(),
       Joiners: z.boolean().optional(),
+      Patient: z.boolean().optional(),
       SubMission: z.boolean().optional(),
     })
     .strict();
@@ -807,6 +943,9 @@ export const MissionSelectSchema: z.ZodType<Prisma.MissionSelect> = z
     lat: z.boolean().optional(),
     long: z.boolean().optional(),
     mgrs: z.boolean().optional(),
+    Patient: z
+      .union([z.boolean(), z.lazy(() => PatientFindManyArgsSchema)])
+      .optional(),
     status: z.boolean().optional(),
     SubMission: z
       .union([z.boolean(), z.lazy(() => SubMissionFindManyArgsSchema)])
@@ -841,6 +980,33 @@ export const JoinerSelectSchema: z.ZodType<Prisma.JoinerSelect> = z
     mission_id: z.boolean().optional(),
     update_date: z.boolean().optional(),
     user_id: z.boolean().optional(),
+  })
+  .strict();
+
+// PATIENT
+// ------------------------------------------------------
+
+export const PatientIncludeSchema: z.ZodType<Prisma.PatientInclude> = z
+  .object({
+    Mission: z.union([z.boolean(), z.lazy(() => MissionArgsSchema)]).optional(),
+  })
+  .strict();
+
+export const PatientArgsSchema: z.ZodType<Prisma.PatientDefaultArgs> = z
+  .object({
+    include: z.lazy(() => PatientIncludeSchema).optional(),
+    select: z.lazy(() => PatientSelectSchema).optional(),
+  })
+  .strict();
+
+export const PatientSelectSchema: z.ZodType<Prisma.PatientSelect> = z
+  .object({
+    create_date: z.boolean().optional(),
+    id: z.boolean().optional(),
+    Mission: z.union([z.boolean(), z.lazy(() => MissionArgsSchema)]).optional(),
+    mission_id: z.boolean().optional(),
+    patient_id: z.boolean().optional(),
+    update_date: z.boolean().optional(),
   })
   .strict();
 
@@ -1036,6 +1202,7 @@ export const MissionWhereInputSchema: z.ZodType<Prisma.MissionWhereInput> = z
       .lazy(() => MissionWhereInputSchema)
       .array()
       .optional(),
+    Patient: z.lazy(() => PatientListRelationFilterSchema).optional(),
     status: z
       .union([
         z.lazy(() => EnumMissionStatusFilterSchema),
@@ -1124,6 +1291,9 @@ export const MissionOrderByWithRelationInputSchema: z.ZodType<Prisma.MissionOrde
           z.lazy(() => SortOrderSchema),
           z.lazy(() => SortOrderInputSchema),
         ])
+        .optional(),
+      Patient: z
+        .lazy(() => PatientOrderByRelationAggregateInputSchema)
         .optional(),
       status: z.lazy(() => SortOrderSchema).optional(),
       SubMission: z
@@ -1232,6 +1402,7 @@ export const MissionWhereUniqueInputSchema: z.ZodType<Prisma.MissionWhereUniqueI
             .lazy(() => MissionWhereInputSchema)
             .array()
             .optional(),
+          Patient: z.lazy(() => PatientListRelationFilterSchema).optional(),
           status: z
             .union([
               z.lazy(() => EnumMissionStatusFilterSchema),
@@ -1658,6 +1829,210 @@ export const JoinerScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.Joiner
       user_id: z
         .union([z.lazy(() => StringWithAggregatesFilterSchema), z.string()])
         .optional(),
+    })
+    .strict();
+
+export const PatientWhereInputSchema: z.ZodType<Prisma.PatientWhereInput> = z
+  .object({
+    AND: z
+      .union([
+        z.lazy(() => PatientWhereInputSchema),
+        z.lazy(() => PatientWhereInputSchema).array(),
+      ])
+      .optional(),
+    create_date: z
+      .union([z.lazy(() => DateTimeNullableFilterSchema), z.coerce.date()])
+      .optional()
+      .nullable(),
+    id: z.union([z.lazy(() => StringFilterSchema), z.string()]).optional(),
+    Mission: z
+      .union([
+        z.lazy(() => MissionScalarRelationFilterSchema),
+        z.lazy(() => MissionWhereInputSchema),
+      ])
+      .optional(),
+    mission_id: z
+      .union([z.lazy(() => StringFilterSchema), z.string()])
+      .optional(),
+    NOT: z
+      .union([
+        z.lazy(() => PatientWhereInputSchema),
+        z.lazy(() => PatientWhereInputSchema).array(),
+      ])
+      .optional(),
+    OR: z
+      .lazy(() => PatientWhereInputSchema)
+      .array()
+      .optional(),
+    patient_id: z
+      .union([z.lazy(() => StringFilterSchema), z.string()])
+      .optional(),
+    update_date: z
+      .union([z.lazy(() => DateTimeNullableFilterSchema), z.coerce.date()])
+      .optional()
+      .nullable(),
+  })
+  .strict();
+
+export const PatientOrderByWithRelationInputSchema: z.ZodType<Prisma.PatientOrderByWithRelationInput>
+  = z
+    .object({
+      create_date: z
+        .union([
+          z.lazy(() => SortOrderSchema),
+          z.lazy(() => SortOrderInputSchema),
+        ])
+        .optional(),
+      id: z.lazy(() => SortOrderSchema).optional(),
+      Mission: z.lazy(() => MissionOrderByWithRelationInputSchema).optional(),
+      mission_id: z.lazy(() => SortOrderSchema).optional(),
+      patient_id: z.lazy(() => SortOrderSchema).optional(),
+      update_date: z
+        .union([
+          z.lazy(() => SortOrderSchema),
+          z.lazy(() => SortOrderInputSchema),
+        ])
+        .optional(),
+    })
+    .strict();
+
+export const PatientWhereUniqueInputSchema: z.ZodType<Prisma.PatientWhereUniqueInput>
+  = z
+    .union([
+      z.object({
+        id: z.string().uuid(),
+        mission_id_patient_id: z.lazy(
+          () => PatientMission_idPatient_idCompoundUniqueInputSchema,
+        ),
+      }),
+      z.object({
+        id: z.string().uuid(),
+      }),
+      z.object({
+        mission_id_patient_id: z.lazy(
+          () => PatientMission_idPatient_idCompoundUniqueInputSchema,
+        ),
+      }),
+    ])
+    .and(
+      z
+        .object({
+          AND: z
+            .union([
+              z.lazy(() => PatientWhereInputSchema),
+              z.lazy(() => PatientWhereInputSchema).array(),
+            ])
+            .optional(),
+          create_date: z
+            .union([
+              z.lazy(() => DateTimeNullableFilterSchema),
+              z.coerce.date(),
+            ])
+            .optional()
+            .nullable(),
+          id: z.string().uuid().optional(),
+          Mission: z
+            .union([
+              z.lazy(() => MissionScalarRelationFilterSchema),
+              z.lazy(() => MissionWhereInputSchema),
+            ])
+            .optional(),
+          mission_id: z
+            .union([z.lazy(() => StringFilterSchema), z.string()])
+            .optional(),
+          mission_id_patient_id: z
+            .lazy(() => PatientMission_idPatient_idCompoundUniqueInputSchema)
+            .optional(),
+          NOT: z
+            .union([
+              z.lazy(() => PatientWhereInputSchema),
+              z.lazy(() => PatientWhereInputSchema).array(),
+            ])
+            .optional(),
+          OR: z
+            .lazy(() => PatientWhereInputSchema)
+            .array()
+            .optional(),
+          patient_id: z
+            .union([z.lazy(() => StringFilterSchema), z.string()])
+            .optional(),
+          update_date: z
+            .union([
+              z.lazy(() => DateTimeNullableFilterSchema),
+              z.coerce.date(),
+            ])
+            .optional()
+            .nullable(),
+        })
+        .strict(),
+    );
+
+export const PatientOrderByWithAggregationInputSchema: z.ZodType<Prisma.PatientOrderByWithAggregationInput>
+  = z
+    .object({
+      _count: z.lazy(() => PatientCountOrderByAggregateInputSchema).optional(),
+      _max: z.lazy(() => PatientMaxOrderByAggregateInputSchema).optional(),
+      _min: z.lazy(() => PatientMinOrderByAggregateInputSchema).optional(),
+      create_date: z
+        .union([
+          z.lazy(() => SortOrderSchema),
+          z.lazy(() => SortOrderInputSchema),
+        ])
+        .optional(),
+      id: z.lazy(() => SortOrderSchema).optional(),
+      mission_id: z.lazy(() => SortOrderSchema).optional(),
+      patient_id: z.lazy(() => SortOrderSchema).optional(),
+      update_date: z
+        .union([
+          z.lazy(() => SortOrderSchema),
+          z.lazy(() => SortOrderInputSchema),
+        ])
+        .optional(),
+    })
+    .strict();
+
+export const PatientScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.PatientScalarWhereWithAggregatesInput>
+  = z
+    .object({
+      AND: z
+        .union([
+          z.lazy(() => PatientScalarWhereWithAggregatesInputSchema),
+          z.lazy(() => PatientScalarWhereWithAggregatesInputSchema).array(),
+        ])
+        .optional(),
+      create_date: z
+        .union([
+          z.lazy(() => DateTimeNullableWithAggregatesFilterSchema),
+          z.coerce.date(),
+        ])
+        .optional()
+        .nullable(),
+      id: z
+        .union([z.lazy(() => StringWithAggregatesFilterSchema), z.string()])
+        .optional(),
+      mission_id: z
+        .union([z.lazy(() => StringWithAggregatesFilterSchema), z.string()])
+        .optional(),
+      NOT: z
+        .union([
+          z.lazy(() => PatientScalarWhereWithAggregatesInputSchema),
+          z.lazy(() => PatientScalarWhereWithAggregatesInputSchema).array(),
+        ])
+        .optional(),
+      OR: z
+        .lazy(() => PatientScalarWhereWithAggregatesInputSchema)
+        .array()
+        .optional(),
+      patient_id: z
+        .union([z.lazy(() => StringWithAggregatesFilterSchema), z.string()])
+        .optional(),
+      update_date: z
+        .union([
+          z.lazy(() => DateTimeNullableWithAggregatesFilterSchema),
+          z.coerce.date(),
+        ])
+        .optional()
+        .nullable(),
     })
     .strict();
 
@@ -2402,6 +2777,9 @@ export const MissionCreateInputSchema: z.ZodType<Prisma.MissionCreateInput> = z
     lat: z.string().optional().nullable(),
     long: z.string().optional().nullable(),
     mgrs: z.string().optional().nullable(),
+    Patient: z
+      .lazy(() => PatientCreateNestedManyWithoutMissionInputSchema)
+      .optional(),
     status: z.lazy(() => MissionStatusSchema).optional(),
     SubMission: z
       .lazy(() => SubMissionCreateNestedManyWithoutMissionInputSchema)
@@ -2434,6 +2812,9 @@ export const MissionUncheckedCreateInputSchema: z.ZodType<Prisma.MissionUnchecke
       lat: z.string().optional().nullable(),
       long: z.string().optional().nullable(),
       mgrs: z.string().optional().nullable(),
+      Patient: z
+        .lazy(() => PatientUncheckedCreateNestedManyWithoutMissionInputSchema)
+        .optional(),
       status: z.lazy(() => MissionStatusSchema).optional(),
       SubMission: z
         .lazy(
@@ -2530,6 +2911,9 @@ export const MissionUpdateInputSchema: z.ZodType<Prisma.MissionUpdateInput> = z
       ])
       .optional()
       .nullable(),
+    Patient: z
+      .lazy(() => PatientUpdateManyWithoutMissionNestedInputSchema)
+      .optional(),
     status: z
       .union([
         z.lazy(() => MissionStatusSchema),
@@ -2646,6 +3030,9 @@ export const MissionUncheckedUpdateInputSchema: z.ZodType<Prisma.MissionUnchecke
         ])
         .optional()
         .nullable(),
+      Patient: z
+        .lazy(() => PatientUncheckedUpdateManyWithoutMissionNestedInputSchema)
+        .optional(),
       status: z
         .union([
           z.lazy(() => MissionStatusSchema),
@@ -3085,6 +3472,177 @@ export const JoinerUncheckedUpdateManyInputSchema: z.ZodType<Prisma.JoinerUnchec
           z.lazy(() => StringFieldUpdateOperationsInputSchema),
         ])
         .optional(),
+    })
+    .strict();
+
+export const PatientCreateInputSchema: z.ZodType<Prisma.PatientCreateInput> = z
+  .object({
+    create_date: z.coerce.date().optional().nullable(),
+    id: z.string().uuid().optional(),
+    Mission: z.lazy(() => MissionCreateNestedOneWithoutPatientInputSchema),
+    patient_id: z.string(),
+    update_date: z.coerce.date().optional().nullable(),
+  })
+  .strict();
+
+export const PatientUncheckedCreateInputSchema: z.ZodType<Prisma.PatientUncheckedCreateInput>
+  = z
+    .object({
+      create_date: z.coerce.date().optional().nullable(),
+      id: z.string().uuid().optional(),
+      mission_id: z.string(),
+      patient_id: z.string(),
+      update_date: z.coerce.date().optional().nullable(),
+    })
+    .strict();
+
+export const PatientUpdateInputSchema: z.ZodType<Prisma.PatientUpdateInput> = z
+  .object({
+    create_date: z
+      .union([
+        z.coerce.date(),
+        z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema),
+      ])
+      .optional()
+      .nullable(),
+    id: z
+      .union([
+        z.string().uuid(),
+        z.lazy(() => StringFieldUpdateOperationsInputSchema),
+      ])
+      .optional(),
+    Mission: z
+      .lazy(() => MissionUpdateOneRequiredWithoutPatientNestedInputSchema)
+      .optional(),
+    patient_id: z
+      .union([z.string(), z.lazy(() => StringFieldUpdateOperationsInputSchema)])
+      .optional(),
+    update_date: z
+      .union([
+        z.coerce.date(),
+        z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema),
+      ])
+      .optional()
+      .nullable(),
+  })
+  .strict();
+
+export const PatientUncheckedUpdateInputSchema: z.ZodType<Prisma.PatientUncheckedUpdateInput>
+  = z
+    .object({
+      create_date: z
+        .union([
+          z.coerce.date(),
+          z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+      id: z
+        .union([
+          z.string().uuid(),
+          z.lazy(() => StringFieldUpdateOperationsInputSchema),
+        ])
+        .optional(),
+      mission_id: z
+        .union([
+          z.string(),
+          z.lazy(() => StringFieldUpdateOperationsInputSchema),
+        ])
+        .optional(),
+      patient_id: z
+        .union([
+          z.string(),
+          z.lazy(() => StringFieldUpdateOperationsInputSchema),
+        ])
+        .optional(),
+      update_date: z
+        .union([
+          z.coerce.date(),
+          z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+    })
+    .strict();
+
+export const PatientCreateManyInputSchema: z.ZodType<Prisma.PatientCreateManyInput>
+  = z
+    .object({
+      create_date: z.coerce.date().optional().nullable(),
+      id: z.string().uuid().optional(),
+      mission_id: z.string(),
+      patient_id: z.string(),
+      update_date: z.coerce.date().optional().nullable(),
+    })
+    .strict();
+
+export const PatientUpdateManyMutationInputSchema: z.ZodType<Prisma.PatientUpdateManyMutationInput>
+  = z
+    .object({
+      create_date: z
+        .union([
+          z.coerce.date(),
+          z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+      id: z
+        .union([
+          z.string().uuid(),
+          z.lazy(() => StringFieldUpdateOperationsInputSchema),
+        ])
+        .optional(),
+      patient_id: z
+        .union([
+          z.string(),
+          z.lazy(() => StringFieldUpdateOperationsInputSchema),
+        ])
+        .optional(),
+      update_date: z
+        .union([
+          z.coerce.date(),
+          z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+    })
+    .strict();
+
+export const PatientUncheckedUpdateManyInputSchema: z.ZodType<Prisma.PatientUncheckedUpdateManyInput>
+  = z
+    .object({
+      create_date: z
+        .union([
+          z.coerce.date(),
+          z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+      id: z
+        .union([
+          z.string().uuid(),
+          z.lazy(() => StringFieldUpdateOperationsInputSchema),
+        ])
+        .optional(),
+      mission_id: z
+        .union([
+          z.string(),
+          z.lazy(() => StringFieldUpdateOperationsInputSchema),
+        ])
+        .optional(),
+      patient_id: z
+        .union([
+          z.string(),
+          z.lazy(() => StringFieldUpdateOperationsInputSchema),
+        ])
+        .optional(),
+      update_date: z
+        .union([
+          z.coerce.date(),
+          z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
     })
     .strict();
 
@@ -3866,6 +4424,15 @@ export const HistoryJoinerListRelationFilterSchema: z.ZodType<Prisma.HistoryJoin
     })
     .strict();
 
+export const PatientListRelationFilterSchema: z.ZodType<Prisma.PatientListRelationFilter>
+  = z
+    .object({
+      every: z.lazy(() => PatientWhereInputSchema).optional(),
+      none: z.lazy(() => PatientWhereInputSchema).optional(),
+      some: z.lazy(() => PatientWhereInputSchema).optional(),
+    })
+    .strict();
+
 export const SortOrderInputSchema: z.ZodType<Prisma.SortOrderInput> = z
   .object({
     nulls: z.lazy(() => NullsOrderSchema).optional(),
@@ -3888,6 +4455,13 @@ export const JoinerOrderByRelationAggregateInputSchema: z.ZodType<Prisma.JoinerO
     .strict();
 
 export const HistoryJoinerOrderByRelationAggregateInputSchema: z.ZodType<Prisma.HistoryJoinerOrderByRelationAggregateInput>
+  = z
+    .object({
+      _count: z.lazy(() => SortOrderSchema).optional(),
+    })
+    .strict();
+
+export const PatientOrderByRelationAggregateInputSchema: z.ZodType<Prisma.PatientOrderByRelationAggregateInput>
   = z
     .object({
       _count: z.lazy(() => SortOrderSchema).optional(),
@@ -4103,6 +4677,47 @@ export const JoinerMinOrderByAggregateInputSchema: z.ZodType<Prisma.JoinerMinOrd
       mission_id: z.lazy(() => SortOrderSchema).optional(),
       update_date: z.lazy(() => SortOrderSchema).optional(),
       user_id: z.lazy(() => SortOrderSchema).optional(),
+    })
+    .strict();
+
+export const PatientMission_idPatient_idCompoundUniqueInputSchema: z.ZodType<Prisma.PatientMission_idPatient_idCompoundUniqueInput>
+  = z
+    .object({
+      mission_id: z.string(),
+      patient_id: z.string(),
+    })
+    .strict();
+
+export const PatientCountOrderByAggregateInputSchema: z.ZodType<Prisma.PatientCountOrderByAggregateInput>
+  = z
+    .object({
+      create_date: z.lazy(() => SortOrderSchema).optional(),
+      id: z.lazy(() => SortOrderSchema).optional(),
+      mission_id: z.lazy(() => SortOrderSchema).optional(),
+      patient_id: z.lazy(() => SortOrderSchema).optional(),
+      update_date: z.lazy(() => SortOrderSchema).optional(),
+    })
+    .strict();
+
+export const PatientMaxOrderByAggregateInputSchema: z.ZodType<Prisma.PatientMaxOrderByAggregateInput>
+  = z
+    .object({
+      create_date: z.lazy(() => SortOrderSchema).optional(),
+      id: z.lazy(() => SortOrderSchema).optional(),
+      mission_id: z.lazy(() => SortOrderSchema).optional(),
+      patient_id: z.lazy(() => SortOrderSchema).optional(),
+      update_date: z.lazy(() => SortOrderSchema).optional(),
+    })
+    .strict();
+
+export const PatientMinOrderByAggregateInputSchema: z.ZodType<Prisma.PatientMinOrderByAggregateInput>
+  = z
+    .object({
+      create_date: z.lazy(() => SortOrderSchema).optional(),
+      id: z.lazy(() => SortOrderSchema).optional(),
+      mission_id: z.lazy(() => SortOrderSchema).optional(),
+      patient_id: z.lazy(() => SortOrderSchema).optional(),
+      update_date: z.lazy(() => SortOrderSchema).optional(),
     })
     .strict();
 
@@ -4390,6 +5005,35 @@ export const HistoryJoinerCreateNestedManyWithoutMissionInputSchema: z.ZodType<P
     })
     .strict();
 
+export const PatientCreateNestedManyWithoutMissionInputSchema: z.ZodType<Prisma.PatientCreateNestedManyWithoutMissionInput>
+  = z
+    .object({
+      connect: z
+        .union([
+          z.lazy(() => PatientWhereUniqueInputSchema),
+          z.lazy(() => PatientWhereUniqueInputSchema).array(),
+        ])
+        .optional(),
+      connectOrCreate: z
+        .union([
+          z.lazy(() => PatientCreateOrConnectWithoutMissionInputSchema),
+          z.lazy(() => PatientCreateOrConnectWithoutMissionInputSchema).array(),
+        ])
+        .optional(),
+      create: z
+        .union([
+          z.lazy(() => PatientCreateWithoutMissionInputSchema),
+          z.lazy(() => PatientCreateWithoutMissionInputSchema).array(),
+          z.lazy(() => PatientUncheckedCreateWithoutMissionInputSchema),
+          z.lazy(() => PatientUncheckedCreateWithoutMissionInputSchema).array(),
+        ])
+        .optional(),
+      createMany: z
+        .lazy(() => PatientCreateManyMissionInputEnvelopeSchema)
+        .optional(),
+    })
+    .strict();
+
 export const SubMissionUncheckedCreateNestedManyWithoutMissionInputSchema: z.ZodType<Prisma.SubMissionUncheckedCreateNestedManyWithoutMissionInput>
   = z
     .object({
@@ -4481,6 +5125,35 @@ export const HistoryJoinerUncheckedCreateNestedManyWithoutMissionInputSchema: z.
         .optional(),
       createMany: z
         .lazy(() => HistoryJoinerCreateManyMissionInputEnvelopeSchema)
+        .optional(),
+    })
+    .strict();
+
+export const PatientUncheckedCreateNestedManyWithoutMissionInputSchema: z.ZodType<Prisma.PatientUncheckedCreateNestedManyWithoutMissionInput>
+  = z
+    .object({
+      connect: z
+        .union([
+          z.lazy(() => PatientWhereUniqueInputSchema),
+          z.lazy(() => PatientWhereUniqueInputSchema).array(),
+        ])
+        .optional(),
+      connectOrCreate: z
+        .union([
+          z.lazy(() => PatientCreateOrConnectWithoutMissionInputSchema),
+          z.lazy(() => PatientCreateOrConnectWithoutMissionInputSchema).array(),
+        ])
+        .optional(),
+      create: z
+        .union([
+          z.lazy(() => PatientCreateWithoutMissionInputSchema),
+          z.lazy(() => PatientCreateWithoutMissionInputSchema).array(),
+          z.lazy(() => PatientUncheckedCreateWithoutMissionInputSchema),
+          z.lazy(() => PatientUncheckedCreateWithoutMissionInputSchema).array(),
+        ])
+        .optional(),
+      createMany: z
+        .lazy(() => PatientCreateManyMissionInputEnvelopeSchema)
         .optional(),
     })
     .strict();
@@ -4772,6 +5445,83 @@ export const HistoryJoinerUpdateManyWithoutMissionNestedInputSchema: z.ZodType<P
     })
     .strict();
 
+export const PatientUpdateManyWithoutMissionNestedInputSchema: z.ZodType<Prisma.PatientUpdateManyWithoutMissionNestedInput>
+  = z
+    .object({
+      connect: z
+        .union([
+          z.lazy(() => PatientWhereUniqueInputSchema),
+          z.lazy(() => PatientWhereUniqueInputSchema).array(),
+        ])
+        .optional(),
+      connectOrCreate: z
+        .union([
+          z.lazy(() => PatientCreateOrConnectWithoutMissionInputSchema),
+          z.lazy(() => PatientCreateOrConnectWithoutMissionInputSchema).array(),
+        ])
+        .optional(),
+      create: z
+        .union([
+          z.lazy(() => PatientCreateWithoutMissionInputSchema),
+          z.lazy(() => PatientCreateWithoutMissionInputSchema).array(),
+          z.lazy(() => PatientUncheckedCreateWithoutMissionInputSchema),
+          z.lazy(() => PatientUncheckedCreateWithoutMissionInputSchema).array(),
+        ])
+        .optional(),
+      createMany: z
+        .lazy(() => PatientCreateManyMissionInputEnvelopeSchema)
+        .optional(),
+      delete: z
+        .union([
+          z.lazy(() => PatientWhereUniqueInputSchema),
+          z.lazy(() => PatientWhereUniqueInputSchema).array(),
+        ])
+        .optional(),
+      deleteMany: z
+        .union([
+          z.lazy(() => PatientScalarWhereInputSchema),
+          z.lazy(() => PatientScalarWhereInputSchema).array(),
+        ])
+        .optional(),
+      disconnect: z
+        .union([
+          z.lazy(() => PatientWhereUniqueInputSchema),
+          z.lazy(() => PatientWhereUniqueInputSchema).array(),
+        ])
+        .optional(),
+      set: z
+        .union([
+          z.lazy(() => PatientWhereUniqueInputSchema),
+          z.lazy(() => PatientWhereUniqueInputSchema).array(),
+        ])
+        .optional(),
+      update: z
+        .union([
+          z.lazy(() => PatientUpdateWithWhereUniqueWithoutMissionInputSchema),
+          z
+            .lazy(() => PatientUpdateWithWhereUniqueWithoutMissionInputSchema)
+            .array(),
+        ])
+        .optional(),
+      updateMany: z
+        .union([
+          z.lazy(() => PatientUpdateManyWithWhereWithoutMissionInputSchema),
+          z
+            .lazy(() => PatientUpdateManyWithWhereWithoutMissionInputSchema)
+            .array(),
+        ])
+        .optional(),
+      upsert: z
+        .union([
+          z.lazy(() => PatientUpsertWithWhereUniqueWithoutMissionInputSchema),
+          z
+            .lazy(() => PatientUpsertWithWhereUniqueWithoutMissionInputSchema)
+            .array(),
+        ])
+        .optional(),
+    })
+    .strict();
+
 export const SubMissionUncheckedUpdateManyWithoutMissionNestedInputSchema: z.ZodType<Prisma.SubMissionUncheckedUpdateManyWithoutMissionNestedInput>
   = z
     .object({
@@ -5031,6 +5781,83 @@ export const HistoryJoinerUncheckedUpdateManyWithoutMissionNestedInputSchema: z.
     })
     .strict();
 
+export const PatientUncheckedUpdateManyWithoutMissionNestedInputSchema: z.ZodType<Prisma.PatientUncheckedUpdateManyWithoutMissionNestedInput>
+  = z
+    .object({
+      connect: z
+        .union([
+          z.lazy(() => PatientWhereUniqueInputSchema),
+          z.lazy(() => PatientWhereUniqueInputSchema).array(),
+        ])
+        .optional(),
+      connectOrCreate: z
+        .union([
+          z.lazy(() => PatientCreateOrConnectWithoutMissionInputSchema),
+          z.lazy(() => PatientCreateOrConnectWithoutMissionInputSchema).array(),
+        ])
+        .optional(),
+      create: z
+        .union([
+          z.lazy(() => PatientCreateWithoutMissionInputSchema),
+          z.lazy(() => PatientCreateWithoutMissionInputSchema).array(),
+          z.lazy(() => PatientUncheckedCreateWithoutMissionInputSchema),
+          z.lazy(() => PatientUncheckedCreateWithoutMissionInputSchema).array(),
+        ])
+        .optional(),
+      createMany: z
+        .lazy(() => PatientCreateManyMissionInputEnvelopeSchema)
+        .optional(),
+      delete: z
+        .union([
+          z.lazy(() => PatientWhereUniqueInputSchema),
+          z.lazy(() => PatientWhereUniqueInputSchema).array(),
+        ])
+        .optional(),
+      deleteMany: z
+        .union([
+          z.lazy(() => PatientScalarWhereInputSchema),
+          z.lazy(() => PatientScalarWhereInputSchema).array(),
+        ])
+        .optional(),
+      disconnect: z
+        .union([
+          z.lazy(() => PatientWhereUniqueInputSchema),
+          z.lazy(() => PatientWhereUniqueInputSchema).array(),
+        ])
+        .optional(),
+      set: z
+        .union([
+          z.lazy(() => PatientWhereUniqueInputSchema),
+          z.lazy(() => PatientWhereUniqueInputSchema).array(),
+        ])
+        .optional(),
+      update: z
+        .union([
+          z.lazy(() => PatientUpdateWithWhereUniqueWithoutMissionInputSchema),
+          z
+            .lazy(() => PatientUpdateWithWhereUniqueWithoutMissionInputSchema)
+            .array(),
+        ])
+        .optional(),
+      updateMany: z
+        .union([
+          z.lazy(() => PatientUpdateManyWithWhereWithoutMissionInputSchema),
+          z
+            .lazy(() => PatientUpdateManyWithWhereWithoutMissionInputSchema)
+            .array(),
+        ])
+        .optional(),
+      upsert: z
+        .union([
+          z.lazy(() => PatientUpsertWithWhereUniqueWithoutMissionInputSchema),
+          z
+            .lazy(() => PatientUpsertWithWhereUniqueWithoutMissionInputSchema)
+            .array(),
+        ])
+        .optional(),
+    })
+    .strict();
+
 export const MissionCreateNestedOneWithoutJoinersInputSchema: z.ZodType<Prisma.MissionCreateNestedOneWithoutJoinersInput>
   = z
     .object({
@@ -5068,6 +5895,46 @@ export const MissionUpdateOneRequiredWithoutJoinersNestedInputSchema: z.ZodType<
         ])
         .optional(),
       upsert: z.lazy(() => MissionUpsertWithoutJoinersInputSchema).optional(),
+    })
+    .strict();
+
+export const MissionCreateNestedOneWithoutPatientInputSchema: z.ZodType<Prisma.MissionCreateNestedOneWithoutPatientInput>
+  = z
+    .object({
+      connect: z.lazy(() => MissionWhereUniqueInputSchema).optional(),
+      connectOrCreate: z
+        .lazy(() => MissionCreateOrConnectWithoutPatientInputSchema)
+        .optional(),
+      create: z
+        .union([
+          z.lazy(() => MissionCreateWithoutPatientInputSchema),
+          z.lazy(() => MissionUncheckedCreateWithoutPatientInputSchema),
+        ])
+        .optional(),
+    })
+    .strict();
+
+export const MissionUpdateOneRequiredWithoutPatientNestedInputSchema: z.ZodType<Prisma.MissionUpdateOneRequiredWithoutPatientNestedInput>
+  = z
+    .object({
+      connect: z.lazy(() => MissionWhereUniqueInputSchema).optional(),
+      connectOrCreate: z
+        .lazy(() => MissionCreateOrConnectWithoutPatientInputSchema)
+        .optional(),
+      create: z
+        .union([
+          z.lazy(() => MissionCreateWithoutPatientInputSchema),
+          z.lazy(() => MissionUncheckedCreateWithoutPatientInputSchema),
+        ])
+        .optional(),
+      update: z
+        .union([
+          z.lazy(() => MissionUpdateToOneWithWhereWithoutPatientInputSchema),
+          z.lazy(() => MissionUpdateWithoutPatientInputSchema),
+          z.lazy(() => MissionUncheckedUpdateWithoutPatientInputSchema),
+        ])
+        .optional(),
+      upsert: z.lazy(() => MissionUpsertWithoutPatientInputSchema).optional(),
     })
     .strict();
 
@@ -5886,6 +6753,48 @@ export const HistoryJoinerCreateManyMissionInputEnvelopeSchema: z.ZodType<Prisma
     })
     .strict();
 
+export const PatientCreateWithoutMissionInputSchema: z.ZodType<Prisma.PatientCreateWithoutMissionInput>
+  = z
+    .object({
+      create_date: z.coerce.date().optional().nullable(),
+      id: z.string().uuid().optional(),
+      patient_id: z.string(),
+      update_date: z.coerce.date().optional().nullable(),
+    })
+    .strict();
+
+export const PatientUncheckedCreateWithoutMissionInputSchema: z.ZodType<Prisma.PatientUncheckedCreateWithoutMissionInput>
+  = z
+    .object({
+      create_date: z.coerce.date().optional().nullable(),
+      id: z.string().uuid().optional(),
+      patient_id: z.string(),
+      update_date: z.coerce.date().optional().nullable(),
+    })
+    .strict();
+
+export const PatientCreateOrConnectWithoutMissionInputSchema: z.ZodType<Prisma.PatientCreateOrConnectWithoutMissionInput>
+  = z
+    .object({
+      create: z.union([
+        z.lazy(() => PatientCreateWithoutMissionInputSchema),
+        z.lazy(() => PatientUncheckedCreateWithoutMissionInputSchema),
+      ]),
+      where: z.lazy(() => PatientWhereUniqueInputSchema),
+    })
+    .strict();
+
+export const PatientCreateManyMissionInputEnvelopeSchema: z.ZodType<Prisma.PatientCreateManyMissionInputEnvelope>
+  = z
+    .object({
+      data: z.union([
+        z.lazy(() => PatientCreateManyMissionInputSchema),
+        z.lazy(() => PatientCreateManyMissionInputSchema).array(),
+      ]),
+      skipDuplicates: z.boolean().optional(),
+    })
+    .strict();
+
 export const SubMissionUpsertWithWhereUniqueWithoutMissionInputSchema: z.ZodType<Prisma.SubMissionUpsertWithWhereUniqueWithoutMissionInput>
   = z
     .object({
@@ -6115,6 +7024,80 @@ export const HistoryJoinerScalarWhereInputSchema: z.ZodType<Prisma.HistoryJoiner
     })
     .strict();
 
+export const PatientUpsertWithWhereUniqueWithoutMissionInputSchema: z.ZodType<Prisma.PatientUpsertWithWhereUniqueWithoutMissionInput>
+  = z
+    .object({
+      create: z.union([
+        z.lazy(() => PatientCreateWithoutMissionInputSchema),
+        z.lazy(() => PatientUncheckedCreateWithoutMissionInputSchema),
+      ]),
+      update: z.union([
+        z.lazy(() => PatientUpdateWithoutMissionInputSchema),
+        z.lazy(() => PatientUncheckedUpdateWithoutMissionInputSchema),
+      ]),
+      where: z.lazy(() => PatientWhereUniqueInputSchema),
+    })
+    .strict();
+
+export const PatientUpdateWithWhereUniqueWithoutMissionInputSchema: z.ZodType<Prisma.PatientUpdateWithWhereUniqueWithoutMissionInput>
+  = z
+    .object({
+      data: z.union([
+        z.lazy(() => PatientUpdateWithoutMissionInputSchema),
+        z.lazy(() => PatientUncheckedUpdateWithoutMissionInputSchema),
+      ]),
+      where: z.lazy(() => PatientWhereUniqueInputSchema),
+    })
+    .strict();
+
+export const PatientUpdateManyWithWhereWithoutMissionInputSchema: z.ZodType<Prisma.PatientUpdateManyWithWhereWithoutMissionInput>
+  = z
+    .object({
+      data: z.union([
+        z.lazy(() => PatientUpdateManyMutationInputSchema),
+        z.lazy(() => PatientUncheckedUpdateManyWithoutMissionInputSchema),
+      ]),
+      where: z.lazy(() => PatientScalarWhereInputSchema),
+    })
+    .strict();
+
+export const PatientScalarWhereInputSchema: z.ZodType<Prisma.PatientScalarWhereInput>
+  = z
+    .object({
+      AND: z
+        .union([
+          z.lazy(() => PatientScalarWhereInputSchema),
+          z.lazy(() => PatientScalarWhereInputSchema).array(),
+        ])
+        .optional(),
+      create_date: z
+        .union([z.lazy(() => DateTimeNullableFilterSchema), z.coerce.date()])
+        .optional()
+        .nullable(),
+      id: z.union([z.lazy(() => StringFilterSchema), z.string()]).optional(),
+      mission_id: z
+        .union([z.lazy(() => StringFilterSchema), z.string()])
+        .optional(),
+      NOT: z
+        .union([
+          z.lazy(() => PatientScalarWhereInputSchema),
+          z.lazy(() => PatientScalarWhereInputSchema).array(),
+        ])
+        .optional(),
+      OR: z
+        .lazy(() => PatientScalarWhereInputSchema)
+        .array()
+        .optional(),
+      patient_id: z
+        .union([z.lazy(() => StringFilterSchema), z.string()])
+        .optional(),
+      update_date: z
+        .union([z.lazy(() => DateTimeNullableFilterSchema), z.coerce.date()])
+        .optional()
+        .nullable(),
+    })
+    .strict();
+
 export const MissionCreateWithoutJoinersInputSchema: z.ZodType<Prisma.MissionCreateWithoutJoinersInput>
   = z
     .object({
@@ -6132,6 +7115,9 @@ export const MissionCreateWithoutJoinersInputSchema: z.ZodType<Prisma.MissionCre
       lat: z.string().optional().nullable(),
       long: z.string().optional().nullable(),
       mgrs: z.string().optional().nullable(),
+      Patient: z
+        .lazy(() => PatientCreateNestedManyWithoutMissionInputSchema)
+        .optional(),
       status: z.lazy(() => MissionStatusSchema).optional(),
       SubMission: z
         .lazy(() => SubMissionCreateNestedManyWithoutMissionInputSchema)
@@ -6161,6 +7147,9 @@ export const MissionUncheckedCreateWithoutJoinersInputSchema: z.ZodType<Prisma.M
       lat: z.string().optional().nullable(),
       long: z.string().optional().nullable(),
       mgrs: z.string().optional().nullable(),
+      Patient: z
+        .lazy(() => PatientUncheckedCreateNestedManyWithoutMissionInputSchema)
+        .optional(),
       status: z.lazy(() => MissionStatusSchema).optional(),
       SubMission: z
         .lazy(
@@ -6292,6 +7281,9 @@ export const MissionUpdateWithoutJoinersInputSchema: z.ZodType<Prisma.MissionUpd
         ])
         .optional()
         .nullable(),
+      Patient: z
+        .lazy(() => PatientUpdateManyWithoutMissionNestedInputSchema)
+        .optional(),
       status: z
         .union([
           z.lazy(() => MissionStatusSchema),
@@ -6408,6 +7400,348 @@ export const MissionUncheckedUpdateWithoutJoinersInputSchema: z.ZodType<Prisma.M
         ])
         .optional()
         .nullable(),
+      Patient: z
+        .lazy(() => PatientUncheckedUpdateManyWithoutMissionNestedInputSchema)
+        .optional(),
+      status: z
+        .union([
+          z.lazy(() => MissionStatusSchema),
+          z.lazy(() => EnumMissionStatusFieldUpdateOperationsInputSchema),
+        ])
+        .optional(),
+      SubMission: z
+        .lazy(
+          () => SubMissionUncheckedUpdateManyWithoutMissionNestedInputSchema,
+        )
+        .optional(),
+      title: z
+        .union([
+          z.string(),
+          z.lazy(() => StringFieldUpdateOperationsInputSchema),
+        ])
+        .optional(),
+      update_date: z
+        .union([
+          z.coerce.date(),
+          z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+      utm: z
+        .union([
+          z.string(),
+          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+    })
+    .strict();
+
+export const MissionCreateWithoutPatientInputSchema: z.ZodType<Prisma.MissionCreateWithoutPatientInput>
+  = z
+    .object({
+      address: z.string().optional().nullable(),
+      case_number: z.string().optional().nullable(),
+      create_date: z.coerce.date().optional().nullable(),
+      delete_date: z.coerce.date().optional().nullable(),
+      description: z.string().optional().nullable(),
+      end_date: z.coerce.date().optional().nullable(),
+      HistoryJoiner: z
+        .lazy(() => HistoryJoinerCreateNestedManyWithoutMissionInputSchema)
+        .optional(),
+      id: z.string().uuid().optional(),
+      image: z.string().optional().nullable(),
+      Joiners: z
+        .lazy(() => JoinerCreateNestedManyWithoutMissionInputSchema)
+        .optional(),
+      lat: z.string().optional().nullable(),
+      long: z.string().optional().nullable(),
+      mgrs: z.string().optional().nullable(),
+      status: z.lazy(() => MissionStatusSchema).optional(),
+      SubMission: z
+        .lazy(() => SubMissionCreateNestedManyWithoutMissionInputSchema)
+        .optional(),
+      title: z.string(),
+      update_date: z.coerce.date().optional().nullable(),
+      utm: z.string().optional().nullable(),
+    })
+    .strict();
+
+export const MissionUncheckedCreateWithoutPatientInputSchema: z.ZodType<Prisma.MissionUncheckedCreateWithoutPatientInput>
+  = z
+    .object({
+      address: z.string().optional().nullable(),
+      case_number: z.string().optional().nullable(),
+      create_date: z.coerce.date().optional().nullable(),
+      delete_date: z.coerce.date().optional().nullable(),
+      description: z.string().optional().nullable(),
+      end_date: z.coerce.date().optional().nullable(),
+      HistoryJoiner: z
+        .lazy(
+          () => HistoryJoinerUncheckedCreateNestedManyWithoutMissionInputSchema,
+        )
+        .optional(),
+      id: z.string().uuid().optional(),
+      image: z.string().optional().nullable(),
+      Joiners: z
+        .lazy(() => JoinerUncheckedCreateNestedManyWithoutMissionInputSchema)
+        .optional(),
+      lat: z.string().optional().nullable(),
+      long: z.string().optional().nullable(),
+      mgrs: z.string().optional().nullable(),
+      status: z.lazy(() => MissionStatusSchema).optional(),
+      SubMission: z
+        .lazy(
+          () => SubMissionUncheckedCreateNestedManyWithoutMissionInputSchema,
+        )
+        .optional(),
+      title: z.string(),
+      update_date: z.coerce.date().optional().nullable(),
+      utm: z.string().optional().nullable(),
+    })
+    .strict();
+
+export const MissionCreateOrConnectWithoutPatientInputSchema: z.ZodType<Prisma.MissionCreateOrConnectWithoutPatientInput>
+  = z
+    .object({
+      create: z.union([
+        z.lazy(() => MissionCreateWithoutPatientInputSchema),
+        z.lazy(() => MissionUncheckedCreateWithoutPatientInputSchema),
+      ]),
+      where: z.lazy(() => MissionWhereUniqueInputSchema),
+    })
+    .strict();
+
+export const MissionUpsertWithoutPatientInputSchema: z.ZodType<Prisma.MissionUpsertWithoutPatientInput>
+  = z
+    .object({
+      create: z.union([
+        z.lazy(() => MissionCreateWithoutPatientInputSchema),
+        z.lazy(() => MissionUncheckedCreateWithoutPatientInputSchema),
+      ]),
+      update: z.union([
+        z.lazy(() => MissionUpdateWithoutPatientInputSchema),
+        z.lazy(() => MissionUncheckedUpdateWithoutPatientInputSchema),
+      ]),
+      where: z.lazy(() => MissionWhereInputSchema).optional(),
+    })
+    .strict();
+
+export const MissionUpdateToOneWithWhereWithoutPatientInputSchema: z.ZodType<Prisma.MissionUpdateToOneWithWhereWithoutPatientInput>
+  = z
+    .object({
+      data: z.union([
+        z.lazy(() => MissionUpdateWithoutPatientInputSchema),
+        z.lazy(() => MissionUncheckedUpdateWithoutPatientInputSchema),
+      ]),
+      where: z.lazy(() => MissionWhereInputSchema).optional(),
+    })
+    .strict();
+
+export const MissionUpdateWithoutPatientInputSchema: z.ZodType<Prisma.MissionUpdateWithoutPatientInput>
+  = z
+    .object({
+      address: z
+        .union([
+          z.string(),
+          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+      case_number: z
+        .union([
+          z.string(),
+          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+      create_date: z
+        .union([
+          z.coerce.date(),
+          z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+      delete_date: z
+        .union([
+          z.coerce.date(),
+          z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+      description: z
+        .union([
+          z.string(),
+          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+      end_date: z
+        .union([
+          z.coerce.date(),
+          z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+      HistoryJoiner: z
+        .lazy(() => HistoryJoinerUpdateManyWithoutMissionNestedInputSchema)
+        .optional(),
+      id: z
+        .union([
+          z.string().uuid(),
+          z.lazy(() => StringFieldUpdateOperationsInputSchema),
+        ])
+        .optional(),
+      image: z
+        .union([
+          z.string(),
+          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+      Joiners: z
+        .lazy(() => JoinerUpdateManyWithoutMissionNestedInputSchema)
+        .optional(),
+      lat: z
+        .union([
+          z.string(),
+          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+      long: z
+        .union([
+          z.string(),
+          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+      mgrs: z
+        .union([
+          z.string(),
+          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+      status: z
+        .union([
+          z.lazy(() => MissionStatusSchema),
+          z.lazy(() => EnumMissionStatusFieldUpdateOperationsInputSchema),
+        ])
+        .optional(),
+      SubMission: z
+        .lazy(() => SubMissionUpdateManyWithoutMissionNestedInputSchema)
+        .optional(),
+      title: z
+        .union([
+          z.string(),
+          z.lazy(() => StringFieldUpdateOperationsInputSchema),
+        ])
+        .optional(),
+      update_date: z
+        .union([
+          z.coerce.date(),
+          z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+      utm: z
+        .union([
+          z.string(),
+          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+    })
+    .strict();
+
+export const MissionUncheckedUpdateWithoutPatientInputSchema: z.ZodType<Prisma.MissionUncheckedUpdateWithoutPatientInput>
+  = z
+    .object({
+      address: z
+        .union([
+          z.string(),
+          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+      case_number: z
+        .union([
+          z.string(),
+          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+      create_date: z
+        .union([
+          z.coerce.date(),
+          z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+      delete_date: z
+        .union([
+          z.coerce.date(),
+          z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+      description: z
+        .union([
+          z.string(),
+          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+      end_date: z
+        .union([
+          z.coerce.date(),
+          z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+      HistoryJoiner: z
+        .lazy(
+          () => HistoryJoinerUncheckedUpdateManyWithoutMissionNestedInputSchema,
+        )
+        .optional(),
+      id: z
+        .union([
+          z.string().uuid(),
+          z.lazy(() => StringFieldUpdateOperationsInputSchema),
+        ])
+        .optional(),
+      image: z
+        .union([
+          z.string(),
+          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+      Joiners: z
+        .lazy(() => JoinerUncheckedUpdateManyWithoutMissionNestedInputSchema)
+        .optional(),
+      lat: z
+        .union([
+          z.string(),
+          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+      long: z
+        .union([
+          z.string(),
+          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+      mgrs: z
+        .union([
+          z.string(),
+          z.lazy(() => NullableStringFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
       status: z
         .union([
           z.lazy(() => MissionStatusSchema),
@@ -6459,6 +7793,9 @@ export const MissionCreateWithoutHistoryJoinerInputSchema: z.ZodType<Prisma.Miss
       lat: z.string().optional().nullable(),
       long: z.string().optional().nullable(),
       mgrs: z.string().optional().nullable(),
+      Patient: z
+        .lazy(() => PatientCreateNestedManyWithoutMissionInputSchema)
+        .optional(),
       status: z.lazy(() => MissionStatusSchema).optional(),
       SubMission: z
         .lazy(() => SubMissionCreateNestedManyWithoutMissionInputSchema)
@@ -6486,6 +7823,9 @@ export const MissionUncheckedCreateWithoutHistoryJoinerInputSchema: z.ZodType<Pr
       lat: z.string().optional().nullable(),
       long: z.string().optional().nullable(),
       mgrs: z.string().optional().nullable(),
+      Patient: z
+        .lazy(() => PatientUncheckedCreateNestedManyWithoutMissionInputSchema)
+        .optional(),
       status: z.lazy(() => MissionStatusSchema).optional(),
       SubMission: z
         .lazy(
@@ -6617,6 +7957,9 @@ export const MissionUpdateWithoutHistoryJoinerInputSchema: z.ZodType<Prisma.Miss
         ])
         .optional()
         .nullable(),
+      Patient: z
+        .lazy(() => PatientUpdateManyWithoutMissionNestedInputSchema)
+        .optional(),
       status: z
         .union([
           z.lazy(() => MissionStatusSchema),
@@ -6731,6 +8074,9 @@ export const MissionUncheckedUpdateWithoutHistoryJoinerInputSchema: z.ZodType<Pr
         ])
         .optional()
         .nullable(),
+      Patient: z
+        .lazy(() => PatientUncheckedUpdateManyWithoutMissionNestedInputSchema)
+        .optional(),
       status: z
         .union([
           z.lazy(() => MissionStatusSchema),
@@ -6785,6 +8131,9 @@ export const MissionCreateWithoutSubMissionInputSchema: z.ZodType<Prisma.Mission
       lat: z.string().optional().nullable(),
       long: z.string().optional().nullable(),
       mgrs: z.string().optional().nullable(),
+      Patient: z
+        .lazy(() => PatientCreateNestedManyWithoutMissionInputSchema)
+        .optional(),
       status: z.lazy(() => MissionStatusSchema).optional(),
       title: z.string(),
       update_date: z.coerce.date().optional().nullable(),
@@ -6814,6 +8163,9 @@ export const MissionUncheckedCreateWithoutSubMissionInputSchema: z.ZodType<Prism
       lat: z.string().optional().nullable(),
       long: z.string().optional().nullable(),
       mgrs: z.string().optional().nullable(),
+      Patient: z
+        .lazy(() => PatientUncheckedCreateNestedManyWithoutMissionInputSchema)
+        .optional(),
       status: z.lazy(() => MissionStatusSchema).optional(),
       title: z.string(),
       update_date: z.coerce.date().optional().nullable(),
@@ -6989,6 +8341,9 @@ export const MissionUpdateWithoutSubMissionInputSchema: z.ZodType<Prisma.Mission
         ])
         .optional()
         .nullable(),
+      Patient: z
+        .lazy(() => PatientUpdateManyWithoutMissionNestedInputSchema)
+        .optional(),
       status: z
         .union([
           z.lazy(() => MissionStatusSchema),
@@ -7105,6 +8460,9 @@ export const MissionUncheckedUpdateWithoutSubMissionInputSchema: z.ZodType<Prism
         ])
         .optional()
         .nullable(),
+      Patient: z
+        .lazy(() => PatientUncheckedUpdateManyWithoutMissionNestedInputSchema)
+        .optional(),
       status: z
         .union([
           z.lazy(() => MissionStatusSchema),
@@ -7406,6 +8764,16 @@ export const HistoryJoinerCreateManyMissionInputSchema: z.ZodType<Prisma.History
       id: z.string().uuid().optional(),
       update_date: z.coerce.date().optional().nullable(),
       user_id: z.string(),
+    })
+    .strict();
+
+export const PatientCreateManyMissionInputSchema: z.ZodType<Prisma.PatientCreateManyMissionInput>
+  = z
+    .object({
+      create_date: z.coerce.date().optional().nullable(),
+      id: z.string().uuid().optional(),
+      patient_id: z.string(),
+      update_date: z.coerce.date().optional().nullable(),
     })
     .strict();
 
@@ -7742,6 +9110,102 @@ export const HistoryJoinerUncheckedUpdateManyWithoutMissionInputSchema: z.ZodTyp
           z.lazy(() => StringFieldUpdateOperationsInputSchema),
         ])
         .optional(),
+    })
+    .strict();
+
+export const PatientUpdateWithoutMissionInputSchema: z.ZodType<Prisma.PatientUpdateWithoutMissionInput>
+  = z
+    .object({
+      create_date: z
+        .union([
+          z.coerce.date(),
+          z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+      id: z
+        .union([
+          z.string().uuid(),
+          z.lazy(() => StringFieldUpdateOperationsInputSchema),
+        ])
+        .optional(),
+      patient_id: z
+        .union([
+          z.string(),
+          z.lazy(() => StringFieldUpdateOperationsInputSchema),
+        ])
+        .optional(),
+      update_date: z
+        .union([
+          z.coerce.date(),
+          z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+    })
+    .strict();
+
+export const PatientUncheckedUpdateWithoutMissionInputSchema: z.ZodType<Prisma.PatientUncheckedUpdateWithoutMissionInput>
+  = z
+    .object({
+      create_date: z
+        .union([
+          z.coerce.date(),
+          z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+      id: z
+        .union([
+          z.string().uuid(),
+          z.lazy(() => StringFieldUpdateOperationsInputSchema),
+        ])
+        .optional(),
+      patient_id: z
+        .union([
+          z.string(),
+          z.lazy(() => StringFieldUpdateOperationsInputSchema),
+        ])
+        .optional(),
+      update_date: z
+        .union([
+          z.coerce.date(),
+          z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+    })
+    .strict();
+
+export const PatientUncheckedUpdateManyWithoutMissionInputSchema: z.ZodType<Prisma.PatientUncheckedUpdateManyWithoutMissionInput>
+  = z
+    .object({
+      create_date: z
+        .union([
+          z.coerce.date(),
+          z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
+      id: z
+        .union([
+          z.string().uuid(),
+          z.lazy(() => StringFieldUpdateOperationsInputSchema),
+        ])
+        .optional(),
+      patient_id: z
+        .union([
+          z.string(),
+          z.lazy(() => StringFieldUpdateOperationsInputSchema),
+        ])
+        .optional(),
+      update_date: z
+        .union([
+          z.coerce.date(),
+          z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema),
+        ])
+        .optional()
+        .nullable(),
     })
     .strict();
 
@@ -8133,6 +9597,128 @@ export const JoinerFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.JoinerFindUniqu
       include: JoinerIncludeSchema.optional(),
       select: JoinerSelectSchema.optional(),
       where: JoinerWhereUniqueInputSchema,
+    })
+    .strict();
+
+export const PatientFindFirstArgsSchema: z.ZodType<Prisma.PatientFindFirstArgs>
+  = z
+    .object({
+      cursor: PatientWhereUniqueInputSchema.optional(),
+      distinct: z
+        .union([
+          PatientScalarFieldEnumSchema,
+          PatientScalarFieldEnumSchema.array(),
+        ])
+        .optional(),
+      include: PatientIncludeSchema.optional(),
+      orderBy: z
+        .union([
+          PatientOrderByWithRelationInputSchema.array(),
+          PatientOrderByWithRelationInputSchema,
+        ])
+        .optional(),
+      select: PatientSelectSchema.optional(),
+      skip: z.number().optional(),
+      take: z.number().optional(),
+      where: PatientWhereInputSchema.optional(),
+    })
+    .strict();
+
+export const PatientFindFirstOrThrowArgsSchema: z.ZodType<Prisma.PatientFindFirstOrThrowArgs>
+  = z
+    .object({
+      cursor: PatientWhereUniqueInputSchema.optional(),
+      distinct: z
+        .union([
+          PatientScalarFieldEnumSchema,
+          PatientScalarFieldEnumSchema.array(),
+        ])
+        .optional(),
+      include: PatientIncludeSchema.optional(),
+      orderBy: z
+        .union([
+          PatientOrderByWithRelationInputSchema.array(),
+          PatientOrderByWithRelationInputSchema,
+        ])
+        .optional(),
+      select: PatientSelectSchema.optional(),
+      skip: z.number().optional(),
+      take: z.number().optional(),
+      where: PatientWhereInputSchema.optional(),
+    })
+    .strict();
+
+export const PatientFindManyArgsSchema: z.ZodType<Prisma.PatientFindManyArgs>
+  = z
+    .object({
+      cursor: PatientWhereUniqueInputSchema.optional(),
+      distinct: z
+        .union([
+          PatientScalarFieldEnumSchema,
+          PatientScalarFieldEnumSchema.array(),
+        ])
+        .optional(),
+      include: PatientIncludeSchema.optional(),
+      orderBy: z
+        .union([
+          PatientOrderByWithRelationInputSchema.array(),
+          PatientOrderByWithRelationInputSchema,
+        ])
+        .optional(),
+      select: PatientSelectSchema.optional(),
+      skip: z.number().optional(),
+      take: z.number().optional(),
+      where: PatientWhereInputSchema.optional(),
+    })
+    .strict();
+
+export const PatientAggregateArgsSchema: z.ZodType<Prisma.PatientAggregateArgs>
+  = z
+    .object({
+      cursor: PatientWhereUniqueInputSchema.optional(),
+      orderBy: z
+        .union([
+          PatientOrderByWithRelationInputSchema.array(),
+          PatientOrderByWithRelationInputSchema,
+        ])
+        .optional(),
+      skip: z.number().optional(),
+      take: z.number().optional(),
+      where: PatientWhereInputSchema.optional(),
+    })
+    .strict();
+
+export const PatientGroupByArgsSchema: z.ZodType<Prisma.PatientGroupByArgs> = z
+  .object({
+    by: PatientScalarFieldEnumSchema.array(),
+    having: PatientScalarWhereWithAggregatesInputSchema.optional(),
+    orderBy: z
+      .union([
+        PatientOrderByWithAggregationInputSchema.array(),
+        PatientOrderByWithAggregationInputSchema,
+      ])
+      .optional(),
+    skip: z.number().optional(),
+    take: z.number().optional(),
+    where: PatientWhereInputSchema.optional(),
+  })
+  .strict();
+
+export const PatientFindUniqueArgsSchema: z.ZodType<Prisma.PatientFindUniqueArgs>
+  = z
+    .object({
+      include: PatientIncludeSchema.optional(),
+      select: PatientSelectSchema.optional(),
+      where: PatientWhereUniqueInputSchema,
+    })
+    .strict();
+
+export const PatientFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.PatientFindUniqueOrThrowArgs>
+  = z
+    .object({
+      include: PatientIncludeSchema.optional(),
+      select: PatientSelectSchema.optional(),
+      where: PatientWhereUniqueInputSchema,
     })
     .strict();
 
@@ -8698,6 +10284,107 @@ export const JoinerDeleteManyArgsSchema: z.ZodType<Prisma.JoinerDeleteManyArgs>
     .object({
       limit: z.number().optional(),
       where: JoinerWhereInputSchema.optional(),
+    })
+    .strict();
+
+export const PatientCreateArgsSchema: z.ZodType<Prisma.PatientCreateArgs> = z
+  .object({
+    data: z.union([
+      PatientCreateInputSchema,
+      PatientUncheckedCreateInputSchema,
+    ]),
+    include: PatientIncludeSchema.optional(),
+    select: PatientSelectSchema.optional(),
+  })
+  .strict();
+
+export const PatientUpsertArgsSchema: z.ZodType<Prisma.PatientUpsertArgs> = z
+  .object({
+    create: z.union([
+      PatientCreateInputSchema,
+      PatientUncheckedCreateInputSchema,
+    ]),
+    include: PatientIncludeSchema.optional(),
+    select: PatientSelectSchema.optional(),
+    update: z.union([
+      PatientUpdateInputSchema,
+      PatientUncheckedUpdateInputSchema,
+    ]),
+    where: PatientWhereUniqueInputSchema,
+  })
+  .strict();
+
+export const PatientCreateManyArgsSchema: z.ZodType<Prisma.PatientCreateManyArgs>
+  = z
+    .object({
+      data: z.union([
+        PatientCreateManyInputSchema,
+        PatientCreateManyInputSchema.array(),
+      ]),
+      skipDuplicates: z.boolean().optional(),
+    })
+    .strict();
+
+export const PatientCreateManyAndReturnArgsSchema: z.ZodType<Prisma.PatientCreateManyAndReturnArgs>
+  = z
+    .object({
+      data: z.union([
+        PatientCreateManyInputSchema,
+        PatientCreateManyInputSchema.array(),
+      ]),
+      skipDuplicates: z.boolean().optional(),
+    })
+    .strict();
+
+export const PatientDeleteArgsSchema: z.ZodType<Prisma.PatientDeleteArgs> = z
+  .object({
+    include: PatientIncludeSchema.optional(),
+    select: PatientSelectSchema.optional(),
+    where: PatientWhereUniqueInputSchema,
+  })
+  .strict();
+
+export const PatientUpdateArgsSchema: z.ZodType<Prisma.PatientUpdateArgs> = z
+  .object({
+    data: z.union([
+      PatientUpdateInputSchema,
+      PatientUncheckedUpdateInputSchema,
+    ]),
+    include: PatientIncludeSchema.optional(),
+    select: PatientSelectSchema.optional(),
+    where: PatientWhereUniqueInputSchema,
+  })
+  .strict();
+
+export const PatientUpdateManyArgsSchema: z.ZodType<Prisma.PatientUpdateManyArgs>
+  = z
+    .object({
+      data: z.union([
+        PatientUpdateManyMutationInputSchema,
+        PatientUncheckedUpdateManyInputSchema,
+      ]),
+      limit: z.number().optional(),
+      where: PatientWhereInputSchema.optional(),
+    })
+    .strict();
+
+export const PatientUpdateManyAndReturnArgsSchema: z.ZodType<Prisma.PatientUpdateManyAndReturnArgs>
+  = z
+    .object({
+      data: z.union([
+        PatientUpdateManyMutationInputSchema,
+        PatientUncheckedUpdateManyInputSchema,
+      ]),
+      limit: z.number().optional(),
+      where: PatientWhereInputSchema.optional(),
+    })
+    .strict();
+
+export const PatientDeleteManyArgsSchema: z.ZodType<Prisma.PatientDeleteManyArgs>
+  = z
+    .object({
+      limit: z.number().optional(),
+      where: PatientWhereInputSchema.optional(),
     })
     .strict();
 

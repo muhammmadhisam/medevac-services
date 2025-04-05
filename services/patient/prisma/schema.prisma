@@ -58,7 +58,7 @@ model Patient {
   update_date DateTime? @updatedAt
   delete_date DateTime?
 
-  History        History?
+  History        History[]
   Exam           Exam[]
   StationPatient StationPatient[]
   Teatment       Teatment?
@@ -80,6 +80,7 @@ model History {
   update_by       String?
   physical_status String? // Json.stringfy
   triage_lavel    String?
+  triage          String? // Json.stringfy
 
   @@index([id, patient_id])
 }

@@ -17,6 +17,7 @@
     "@node-rs/argon2": "^2.0.2",
     "@prisma/client": "^6.4.1",
     "argon": "^2.0.21",
+    "date-fns": "^4.1.0",
     "effect": "^3.13.6",
     "hono": "^4.7.2"
   },
