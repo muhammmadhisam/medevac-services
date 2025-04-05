@@ -1,5 +1,5 @@
+import { serve } from "@hono/node-server";
 import { config } from "dotenv";
-
 import { showRoutes } from "hono/dev";
 import { logger } from "hono/logger";
 import setupApplication from "./applications/index.js";
@@ -23,9 +23,18 @@ app.route("/v1", setupApplication());
 const port = env.PORT;
 console.table(env);
 console.log(`Server is running on http://localhost:${port}`);
-console.log(`Server is running docs on http://localhost:${port}/patient/docs`);
+console.log(`Server is running docs on http://localhost:${port}/docs`);
 showRoutes(app);
-export default {
-  fetch: app.fetch,
-  port: env.PORT,
-};
+serve(
+  {
+    fetch: app.fetch,
+    port,
+  },
+  (i) => {
+    console.log(`Server is running on http://localhost:${i.port}`);
+    console.log(
+      `Server is running docs on http://localhost:${i.port}/patient/docs`,
+    );
+    console.log();
+  },
+);

@@ -1,9 +1,10 @@
 import type { TypeApplication } from "@/core/configs/create-application.js";
+import { COOKIE } from "@/core/constants/cookie.js";
+
 import {
   TOKEN_ACCESS_TIME,
   TOKEN_REFRESH_TIME,
 } from "@/core/constants/token-time.js";
-
 import {
   FailResponseSchema,
   SignInSchema,
@@ -33,7 +34,7 @@ const Docs = describeRoute({
     401: {
       content: {
         "application/json": {
-          schema: resolver(ResponseSchema),
+          schema: resolver(FailResponseSchema),
         },
       },
       description: "SignIn Fail",
@@ -56,7 +57,7 @@ export default (app: TypeApplication) =>
     const program = AuthServiceContext.pipe(
       Effect.andThen(service => service.signIn(data)),
       Effect.tap(({ access_token }) =>
-        setCookie(c, "access_token", access_token, {
+        setCookie(c, COOKIE.ACCESS, access_token, {
           httpOnly: true,
           maxAge: TOKEN_ACCESS_TIME,
           path: "/",
@@ -65,7 +66,7 @@ export default (app: TypeApplication) =>
         }),
       ),
       Effect.tap(({ refresh_token }) =>
-        setCookie(c, "refresh_token", refresh_token, {
+        setCookie(c, COOKIE.REFRESH, refresh_token, {
           httpOnly: true,
           maxAge: TOKEN_REFRESH_TIME,
           path: "/",

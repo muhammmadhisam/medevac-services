@@ -31,7 +31,6 @@ services:
       - database-mission
     environment:
       - DATABASE_URL=postgresql://medevac-mission-user:medevac-mission-password@database-mission:5432/medevac-mission-database?schema=public
-
     networks:
       - medevac-networks
 networks:

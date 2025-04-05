@@ -49,6 +49,7 @@ function init({ MissionRepo }: { MissionRepo: TypeMissionRepository }) {
     getOne(
       param: TypeGetOneParam,
     ): Effect.Effect<TypeReturnItem, TypeFailResponse> {
+      console.log({ param });
       return MissionRepo.getOne(param).pipe(
         Effect.catchTags({
           GetOneMissionError: error =>
