@@ -38,10 +38,10 @@ function init(db: PrismaClient) {
       return Effect.tryPromise({
         catch: Errors.GetAllError.new("get  History all error"),
         try: async () =>
-          await db.History.findMany({
+          await db.history.findMany({
             orderBy,
-            skip: pagination.page * pagination.limit,
-            take: pagination.limit,
+            skip: pagination ? pagination.page * pagination.limit : undefined,
+            take: pagination ? pagination.limit : undefined,
             where: { ...where },
           }),
       }).pipe(Effect.andThen(HistoryItemSchema.array().parse));

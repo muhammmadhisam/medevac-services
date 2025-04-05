@@ -5,11 +5,13 @@ import {
   ExamRepositoryContext,
   HistoryRepositoryContext,
   PatientsRepositoryContext,
+  StationPatientRepositoryContext,
 } from "../repository/index.js";
 import { ExamServiceContext } from "../services/exam/exam.service.js";
 import {
   HistoryServiceContext,
   PatientServiceContext,
+  StationPatientServiceContext,
 } from "../services/index.js";
 import { JwtServiceContext } from "../services/jwt/jwt.service.js";
 
@@ -23,6 +25,10 @@ const ExamServiceLive = ExamServiceContext.Live.pipe(
   Layer.provide(ExamRepositoryContext.Live),
   Layer.provide(PrismaClientLive),
 );
+const StationPatientServiceLive = StationPatientServiceContext.Live.pipe(
+  Layer.provide(StationPatientRepositoryContext.Live),
+  Layer.provide(PrismaClientLive),
+);
 const HistoryServiceLive = HistoryServiceContext.Live.pipe(
   Layer.provide(HistoryRepositoryContext.Live),
   Layer.provide(PrismaClientLive),
@@ -33,5 +39,6 @@ export const ServicesLive = Layer.mergeAll(
   PatientServiceLive,
   ExamServiceLive,
   HistoryServiceLive,
+  StationPatientServiceLive,
 );
 export const ServicesRuntime = ManagedRuntime.make(ServicesLive);

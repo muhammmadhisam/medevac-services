@@ -23,6 +23,7 @@ import { Context, Effect, Layer } from "effect";
 import { UsersRepositoryContext } from "../../repository/index.js";
 import { JwtServiceContext } from "../jwt/jwt.service.js";
 import { StoreRefreshTokenServiceContext } from "../store-refresh-token/store-refresh-token.service.js";
+import tapDuplicateUserByUsername from "../tap/tap-duplicate-user-by-username.js";
 import signIn from "./function/sign-in.js";
 
 function init({
@@ -74,6 +75,7 @@ function init({
     },
     signUp(data: TypeSignUp): Effect.Effect<TypeReturnItem, TypeFailResponse> {
       return Effect.Do.pipe(
+        Effect.tap(() => tapDuplicateUserByUsername(data.username)),
         Effect.bind("password", () => hashPassword(data.password)),
         Effect.flatMap(({ password }) =>
           UsersRepo.create({ ...data, password, role: undefined }),

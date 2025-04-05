@@ -24,7 +24,6 @@ generator zod {
   prismaClientPath                 = "@prisma/client" // default is client output path
 }
 
-
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -36,6 +35,7 @@ model Patient {
   first_name         String?
   last_name          String?
   qr_number          String?
+  hn_number          String?
   age                Int?
   birthday           String?
   id_card            String?
@@ -58,7 +58,7 @@ model Patient {
   update_date DateTime? @updatedAt
   delete_date DateTime?
 
-  History        History?
+  History        History[]
   Exam           Exam[]
   StationPatient StationPatient[]
   Teatment       Teatment?
@@ -80,6 +80,7 @@ model History {
   update_by       String?
   physical_status String? // Json.stringfy
   triage_lavel    String?
+  triage          String? // Json.stringfy
 
   @@index([id, patient_id])
 }

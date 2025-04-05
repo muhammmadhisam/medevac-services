@@ -38,7 +38,7 @@ export default ({ JwtService, UsersRepo }: Param) => {
       Effect.let("user_id", ({ user }) => UsersId(user.id)),
       Effect.andThen(({ user, user_id }) =>
         JwtService.generateToken({
-          exp: Math.floor(Date.now() / 1000) + 60 * 5,
+          exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24,
           user,
           user_id,
         }),

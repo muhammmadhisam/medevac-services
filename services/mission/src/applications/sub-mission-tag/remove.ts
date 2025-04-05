@@ -3,7 +3,6 @@ import { ServicesRuntime } from "@/core/runtime";
 import { SubMissionServiceContext } from "@/core/services/sub-mission/sub-mission.service";
 import {
   FailResponseSchema,
-  MissionId,
   SubMissionId,
   SuccessResponseSchema,
 } from "@/core/types/index.js";
@@ -22,7 +21,7 @@ const RequestParam = validator(
   "param",
   z.object({
     id: z.string().transform(v => SubMissionId(v)),
-    mission_id: z.string().transform(v => MissionId(v)),
+    sub_mission_id: z.string().transform(v => SubMissionId(v)),
   }),
 );
 const Docs = describeRoute({
@@ -52,7 +51,7 @@ const Docs = describeRoute({
       description: "Remove SubMission by id fail",
     },
   },
-  tags: ["SubMission"],
+  tags: ["SubMissionTag"],
 });
 
 export default (app: TypeApplication) =>

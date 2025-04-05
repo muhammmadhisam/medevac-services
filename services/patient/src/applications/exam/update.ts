@@ -13,6 +13,7 @@ import { describeRoute } from "hono-openapi";
 
 import { resolver, validator } from "hono-openapi/zod";
 import { z } from "zod";
+import { authorizationMiddleware } from "../middleware";
 
 const ResponseSchema = SuccessResponseSchema(ExamSchema);
 const RequestBody = validator(
@@ -64,19 +65,31 @@ const Docs = describeRoute({
 });
 
 export default (app: TypeApplication) =>
-  app.put("/:id", Docs, RequestParam, RequestBody, async (c) => {
-    const data = c.req.valid("json");
-    const param = c.req.valid("param");
-    const program = ExamServiceContext.pipe(
-      Effect.andThen(service => service.update(ExamId(param.id), data)),
-      Effect.andThen(data =>
-        ResponseSchema.parse({ data, message: "updated" }),
-      ),
-      Effect.andThen(data => c.json(data, 200)),
-      Effect.catchAll(error =>
-        Effect.succeed(c.json(error, { status: error.status })),
-      ),
-    );
-    const result = await ServicesRuntime.runPromise(program);
-    return result;
-  });
+  app.put(
+    "/:id",
+    Docs,
+    RequestParam,
+    RequestBody,
+    authorizationMiddleware,
+    async (c) => {
+      const user = c.get("user");
+      if (!user)
+        return c.json({ data: "unauthorization" }, { status: 401 });
+      const data = c.req.valid("json");
+      const param = c.req.valid("param");
+      const program = ExamServiceContext.pipe(
+        Effect.andThen(service =>
+          service.update(ExamId(param.id), { ...data, update_by: user.id }),
+        ),
+        Effect.andThen(data =>
+          ResponseSchema.parse({ data, message: "updated" }),
+        ),
+        Effect.andThen(data => c.json(data, 200)),
+        Effect.catchAll(error =>
+          Effect.succeed(c.json(error, { status: error.status })),
+        ),
+      );
+      const result = await ServicesRuntime.runPromise(program);
+      return result;
+    },
+  );

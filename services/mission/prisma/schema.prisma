@@ -24,34 +24,75 @@ generator zod {
   prismaClientPath                 = "@prisma/client" // default is client output path
 }
 
-
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model Mission {
-  id          String        @id @default(uuid())
-  status      MissionStatus @default(Pending)
-  title       String        @unique
-  case_number String?
-  description String?
-  end_date    DateTime?
-  address     String?
-  image       String?
-  lat         String?
-  long        String?
-  utm         String?
-  mgrs        String?
-  create_date DateTime?     @default(now())
-  update_date DateTime?     @updatedAt
-  delete_date DateTime?
-  SubMission  SubMission[]
+  id            String          @id @default(uuid())
+  status        MissionStatus   @default(Pending)
+  title         String          @unique
+  case_number   String?
+  description   String?
+  end_date      DateTime?
+  address       String?
+  image         String?
+  lat           String?
+  long          String?
+  utm           String?
+  mgrs          String?
+  create_date   DateTime?       @default(now())
+  update_date   DateTime?       @updatedAt
+  delete_date   DateTime?
+  SubMission    SubMission[]
+  Joiners       Joiner[]
+  HistoryJoiner HistoryJoiner[]
+  Patient       Patient[]
 
   @@index([id])
   @@index([status])
   @@index([title])
   @@index([create_date])
+}
+
+model Joiner {
+  id          String    @id @default(uuid())
+  mission_id  String
+  user_id     String
+  Mission     Mission   @relation(fields: [mission_id], references: [id])
+  create_date DateTime? @default(now())
+  update_date DateTime? @updatedAt
+
+  @@unique([mission_id, user_id])
+  @@index([mission_id, user_id])
+  @@index([user_id])
+}
+
+model Patient {
+  id          String    @id @default(uuid())
+  mission_id  String
+  patient_id  String
+  Mission     Mission   @relation(fields: [mission_id], references: [id])
+  create_date DateTime? @default(now())
+  update_date DateTime? @updatedAt
+
+  @@unique([mission_id, patient_id])
+  @@index([mission_id, patient_id])
+  @@index([patient_id])
+}
+
+model HistoryJoiner {
+  id          String    @id @default(uuid())
+  mission_id  String
+  user_id     String
+  Mission     Mission   @relation(fields: [mission_id], references: [id])
+  create_date DateTime? @default(now())
+  update_date DateTime? @updatedAt
+
+  @@index([mission_id, user_id])
+  @@index([user_id])
+  @@index([mission_id])
 }
 
 model SubMission {
@@ -61,8 +102,8 @@ model SubMission {
   vehicle_id String
   patient_id String
 
-  create_date  DateTime?      @default(now())
-  update_date  DateTime?      @updatedAt
+  create_date  DateTime?       @default(now())
+  update_date  DateTime?       @updatedAt
   delete_date  DateTime?
   SubMissioTag SubMissionTag[]
 
