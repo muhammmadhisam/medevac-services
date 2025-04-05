@@ -13,7 +13,7 @@
     "prisma:generate": "prisma generate"
   },
   "dependencies": {
-    "@prisma/client": "6.4.1"
+    "@prisma/client": "6.5.0"
   },
   "devDependencies": {
     "prisma": "*",
